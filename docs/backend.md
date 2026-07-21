@@ -54,6 +54,20 @@ Future source of truth for dentist/practice discovery. Public visitors can only 
 
 Admin-only collection for future review actions.
 
+### `userProfiles`
+
+Created or updated when a user signs in. A signed-in user can read/update only their own profile. Admins can read all profiles.
+
+Important fields:
+
+- `uid`
+- `email`
+- `displayName`
+- `isAdmin`
+- `lastSignedInAt`
+- `updatedAt`
+- `schemaVersion`: `1`
+
 ## Storage Paths
 
 ### `practice-assets/{practiceId}/{fileName}`
@@ -79,6 +93,8 @@ Admin access expects a Firebase Auth custom claim:
 ```
 
 Set this later using Firebase Admin SDK or a trusted admin script. Do not expose admin claim management in the public app.
+
+Email/password sign-in must be enabled in Firebase Authentication before the sign-in form can authenticate real users.
 
 ## Deploy Rules
 

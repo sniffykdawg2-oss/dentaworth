@@ -13,6 +13,13 @@ import {
 import { buildContactMessageInput } from "./backend/contact";
 import { createContactMessage, createPriceReport } from "./backend/repository";
 import { buildPriceReportInput } from "./backend/validation";
+import {
+  AuthUser,
+  sendSignInReset,
+  signInWithEmail,
+  signOutCurrentUser,
+  subscribeToAuth,
+} from "./backend/auth";
 
 type SubmissionStatus = "idle" | "submitting" | "success" | "error";
 
@@ -26,6 +33,7 @@ type Page =
   | "find-a-dentist"
   | "advertise-with-us"
   | "promote-your-practice"
+  | "sign-in"
   | "not-found";
 
 const routeTitles: Record<Page, string> = {
@@ -38,6 +46,7 @@ const routeTitles: Record<Page, string> = {
   "find-a-dentist": "Find a dentist",
   "advertise-with-us": "Advertise with us",
   "promote-your-practice": "Promote your practice",
+  "sign-in": "Sign in",
   "not-found": "Page not found",
 };
 
@@ -66,34 +75,52 @@ function getCurrentPage(): Page {
   if (path === "/find-a-dentist") return "find-a-dentist";
   if (path === "/advertise-with-us") return "advertise-with-us";
   if (path === "/promote-your-practice") return "promote-your-practice";
+  if (path === "/sign-in") return "sign-in";
 
   return "not-found";
 }
 
+function getGuideFiltersFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  const treatment = params.get("treatment") || "";
+  const county = params.get("county") || "";
+
+  return {
+    treatment: treatmentOptions.includes(treatment) ? treatment : "",
+    county: counties.includes(county) ? county : "",
+  };
+}
+
 export function App() {
   const [page, setPage] = useState<Page>(getCurrentPage);
+  const [authUser, setAuthUser] = useState<AuthUser | null>(null);
+  const [routeVersion, setRouteVersion] = useState(0);
 
   useEffect(() => {
     function handlePopState() {
       setPage(getCurrentPage());
+      setRouteVersion((version) => version + 1);
     }
 
     window.addEventListener("popstate", handlePopState);
     return () => window.removeEventListener("popstate", handlePopState);
   }, []);
 
+  useEffect(() => subscribeToAuth(setAuthUser), []);
+
   function navigate(href: string) {
     window.history.pushState(null, "", href);
     setPage(getCurrentPage());
+    setRouteVersion((version) => version + 1);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
   return (
     <>
       <PageMeta page={page} />
-      <Header currentPage={page} navigate={navigate} />
+      <Header currentPage={page} navigate={navigate} authUser={authUser} />
       <main id="main-content">
-        {page === "home" && <HomePage navigate={navigate} />}
+        {page === "home" && <HomePage navigate={navigate} routeVersion={routeVersion} />}
         {page === "self-reporting" && <SelfReportingPage />}
         {page === "about" && <AboutPage navigate={navigate} />}
         {page === "privacy-policy" && <PrivacyPolicyPage />}
@@ -102,6 +129,7 @@ export function App() {
         {page === "find-a-dentist" && <FindADentistPage navigate={navigate} />}
         {page === "advertise-with-us" && <AdvertiseWithUsPage />}
         {page === "promote-your-practice" && <PromotePracticePage />}
+        {page === "sign-in" && <SignInPage authUser={authUser} navigate={navigate} />}
         {page === "not-found" && <NotFoundPage navigate={navigate} />}
       </main>
       <Disclaimer />
@@ -128,19 +156,52 @@ function PageMeta({ page }: { page: Page }) {
 function Header({
   currentPage,
   navigate,
+  authUser,
 }: {
   currentPage: Page;
   navigate: (href: string) => void;
+  authUser: AuthUser | null;
 }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [headerTreatment, setHeaderTreatment] = useState("");
+  const [headerCounty, setHeaderCounty] = useState("");
 
   function handleNav(href: string) {
     setIsMenuOpen(false);
     navigate(href);
   }
 
+  function handleHeaderSearch(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const params = new URLSearchParams();
+
+    if (headerTreatment) params.set("treatment", headerTreatment);
+    if (headerCounty) params.set("county", headerCounty);
+
+    navigate(params.toString() ? `/?${params.toString()}` : "/");
+
+    requestAnimationFrame(() => {
+      document.getElementById("guide-heading")?.scrollIntoView({ behavior: "smooth" });
+    });
+  }
+
+  async function handleSignOut() {
+    await signOutCurrentUser();
+    navigate("/");
+  }
+
   return (
     <header className="site-header">
+      <button
+        className="drawer-toggle"
+        type="button"
+        aria-expanded={isMenuOpen}
+        aria-controls="site-drawer"
+        onClick={() => setIsMenuOpen(true)}
+      >
+        <Menu size={28} aria-hidden="true" />
+        <span className="sr-only">Open navigation</span>
+      </button>
       <a className="brand" href="/" onClick={(event) => handleLinkClick(event, "/", navigate)}>
         <span className="brand-mark" aria-hidden="true">
           D
@@ -150,21 +211,60 @@ function Header({
       <a className="skip-link" href="#main-content">
         Skip to content
       </a>
-      <button
-        className="menu-toggle"
-        type="button"
-        aria-expanded={isMenuOpen}
-        aria-controls="site-navigation"
-        onClick={() => setIsMenuOpen((open) => !open)}
-      >
-        {isMenuOpen ? <X size={20} aria-hidden="true" /> : <Menu size={20} aria-hidden="true" />}
-        <span className="sr-only">Toggle menu</span>
-      </button>
-      <nav id="site-navigation" className={isMenuOpen ? "is-open" : ""} aria-label="Primary">
-        {navItems.map((item) => {
-          const itemPage = item.href === "/" ? "home" : (item.href.slice(1) as Page);
-
-          return (
+      <form className="header-search" onSubmit={handleHeaderSearch} aria-label="Search dental prices">
+        <label>
+          <span>Search</span>
+          <select value={headerTreatment} onChange={(event) => setHeaderTreatment(event.target.value)}>
+            <option value="">Treatment or procedure</option>
+            {treatmentOptions.map((item) => (
+              <option key={item}>{item}</option>
+            ))}
+          </select>
+        </label>
+        <label>
+          <span>Location</span>
+          <select value={headerCounty} onChange={(event) => setHeaderCounty(event.target.value)}>
+            <option value="">Florida counties</option>
+            {counties.map((item) => (
+              <option key={item}>{item}</option>
+            ))}
+          </select>
+        </label>
+        <button type="submit" aria-label="Search">
+          <Search size={21} aria-hidden="true" />
+        </button>
+      </form>
+      <div className="header-actions">
+        {authUser ? (
+          <button className="header-link-button" type="button" onClick={handleSignOut}>
+            Sign out
+          </button>
+        ) : (
+          <button className="header-link-button" type="button" onClick={() => navigate("/sign-in")}>
+            Sign in
+          </button>
+        )}
+        <button className="button primary compact" type="button" onClick={() => navigate("/find-a-dentist")}>
+          Find care
+        </button>
+      </div>
+      {isMenuOpen && <button className="drawer-scrim" type="button" aria-label="Close navigation" onClick={() => setIsMenuOpen(false)} />}
+      <aside id="site-drawer" className={isMenuOpen ? "site-drawer is-open" : "site-drawer"} aria-hidden={!isMenuOpen}>
+        <div className="drawer-header">
+          <a className="brand" href="/" onClick={(event) => handleLinkClick(event, "/", navigate)}>
+            <span className="brand-mark" aria-hidden="true">
+              D
+            </span>
+            <span>Dentaworth</span>
+          </a>
+          <button type="button" onClick={() => setIsMenuOpen(false)} aria-label="Close navigation">
+            <X size={22} aria-hidden="true" />
+          </button>
+        </div>
+        <nav aria-label="Main pages">
+          {[...navItems, { label: "Advertise with us", href: "/advertise-with-us" }, { label: "Promote your practice", href: "/promote-your-practice" }, { label: "Privacy Policy", href: "/privacy-policy" }].map((item) => {
+            const itemPage = item.href === "/" ? "home" : (item.href.slice(1) as Page);
+            return (
             <a
               key={item.href}
               href={item.href}
@@ -176,17 +276,31 @@ function Header({
             >
               {item.label}
             </a>
-          );
-        })}
-      </nav>
+            );
+          })}
+        </nav>
+        <div className="drawer-account">
+          <p>{authUser ? authUser.email : "Admin and owner tools"}</p>
+          <button className="button secondary" type="button" onClick={() => handleNav(authUser ? "/" : "/sign-in")}>
+            {authUser ? "Back to guide" : "Sign in"}
+          </button>
+        </div>
+      </aside>
     </header>
   );
 }
 
-function HomePage({ navigate }: { navigate: (href: string) => void }) {
-  const [treatment, setTreatment] = useState("");
+function HomePage({ navigate, routeVersion }: { navigate: (href: string) => void; routeVersion: number }) {
+  const initialFilters = getGuideFiltersFromUrl();
+  const [treatment, setTreatment] = useState(initialFilters.treatment);
   const [state, setState] = useState("Florida");
-  const [county, setCounty] = useState("");
+  const [county, setCounty] = useState(initialFilters.county);
+
+  useEffect(() => {
+    const nextFilters = getGuideFiltersFromUrl();
+    setTreatment(nextFilters.treatment);
+    setCounty(nextFilters.county);
+  }, [routeVersion]);
 
   const filteredRows = useMemo(() => {
     const selectedProcedure = procedures.find((procedure) => procedure.label === treatment);
@@ -370,6 +484,7 @@ function SelfReportingPage() {
       eyebrow="Self reporting page"
       title="Help improve the pricing guide."
       intro="Share dental procedure pricing you recently received or paid. Submissions help Dentaworth build better county-level estimates, but they are reviewed before being used."
+      variant="care"
     >
       <BackButton />
       <div className="security-note">
@@ -442,6 +557,7 @@ function AboutPage({ navigate }: { navigate: (href: string) => void }) {
       eyebrow="About us"
       title="Why Dentaworth?"
       intro="Our experience, and those of many friends and family, led us to realize that dental pricing is a mystery. Dentaworth can help eliminate the guesswork."
+      variant="default"
     >
       <BackButton />
       <div className="content-grid">
@@ -481,6 +597,7 @@ function PrivacyPolicyPage() {
       eyebrow="Privacy Policy"
       title="Privacy Policy"
       intro="Effective Date: June 27, 2026"
+      variant="legal"
     >
       <BackButton />
       <div className="legal-copy">
@@ -591,6 +708,7 @@ function ContactPage() {
       eyebrow="Contact us"
       title="Get in touch about Dentaworth."
       intro="Send questions, corrections, pricing context, or partnership notes. Keep medical emergencies and urgent treatment questions with a licensed dental provider."
+      variant="business"
     >
       <BackButton />
       <div className="contact-layout">
@@ -640,6 +758,7 @@ function GetCareNowPage({ navigate }: { navigate: (href: string) => void }) {
       eyebrow="Get care now"
       title="Use the guide before you book dental care."
       intro="Dentaworth helps you understand common cash price ranges before you contact a dental office."
+      variant="care"
     >
       <BackButton />
       <div className="content-grid">
@@ -678,6 +797,7 @@ function FindADentistPage({ navigate }: { navigate: (href: string) => void }) {
       eyebrow="Find a dentist"
       title="Find a dentist with better pricing context."
       intro="Dentaworth is preparing tools to help patients compare dental offices alongside county-level pricing information."
+      variant="dentist"
     >
       <BackButton />
       <div className="content-grid">
@@ -716,6 +836,7 @@ function AdvertiseWithUsPage() {
       eyebrow="Advertise with us"
       title="Reach people researching dental care costs."
       intro="Dentaworth is built for visitors who are actively comparing dental treatment pricing and looking for clearer next steps."
+      variant="business"
     >
       <BackButton />
       <div className="contact-layout">
@@ -753,6 +874,7 @@ function PromotePracticePage() {
       eyebrow="Promote your practice"
       title="Promote your dental practice with pricing-aware visitors."
       intro="Dentaworth is preparing practice promotion options for dental offices that want to be discovered by people comparing care costs."
+      variant="business"
     >
       <BackButton />
       <div className="legal-copy">
@@ -774,6 +896,105 @@ function PromotePracticePage() {
         topic="practice-promotion"
       />
     </PageShell>
+  );
+}
+
+function SignInPage({
+  authUser,
+  navigate,
+}: {
+  authUser: AuthUser | null;
+  navigate: (href: string) => void;
+}) {
+  const [status, setStatus] = useState<SubmissionStatus>("idle");
+  const [resetStatus, setResetStatus] = useState<"idle" | "sent">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const email = String(formData.get("email") || "").trim();
+    const password = String(formData.get("password") || "");
+
+    setStatus("submitting");
+    setErrorMessage("");
+
+    try {
+      await signInWithEmail(email, password);
+      setStatus("success");
+      navigate("/");
+    } catch (error) {
+      setStatus("error");
+      setErrorMessage(readAuthError(error));
+    }
+  }
+
+  async function handleReset(event: React.MouseEvent<HTMLButtonElement>) {
+    event.preventDefault();
+    const form = event.currentTarget.closest("form");
+    const email = String(new FormData(form || undefined).get("email") || "").trim();
+
+    if (!email) {
+      setStatus("error");
+      setErrorMessage("Enter your email first, then request a password reset.");
+      return;
+    }
+
+    try {
+      await sendSignInReset(email);
+      setResetStatus("sent");
+      setStatus("idle");
+    } catch (error) {
+      setStatus("error");
+      setErrorMessage(readAuthError(error));
+    }
+  }
+
+  return (
+    <section className="auth-page">
+      <div className="auth-copy">
+        <p className="eyebrow">Account sign in</p>
+        <h1>Access Dentaworth review tools.</h1>
+        <p>
+          Sign in is for the owner/admin workflow: reviewing self-reported pricing, contact
+          messages, future practice profiles, and guide data.
+        </p>
+      </div>
+      <form className="form-card auth-card" onSubmit={handleSubmit} noValidate>
+        {authUser && (
+          <div className="success-message" role="status">
+            <CheckCircle2 size={19} aria-hidden="true" />
+            Signed in as {authUser.email}.
+          </div>
+        )}
+        {status === "error" && (
+          <div className="error-message" role="alert">
+            {errorMessage}
+          </div>
+        )}
+        {resetStatus === "sent" && (
+          <div className="success-message" role="status">
+            <CheckCircle2 size={19} aria-hidden="true" />
+            Password reset email sent.
+          </div>
+        )}
+        <label>
+          Email
+          <input name="email" type="email" required autoComplete="email" />
+        </label>
+        <label>
+          Password
+          <input name="password" type="password" required autoComplete="current-password" />
+        </label>
+        <button className="button primary" type="submit" disabled={status === "submitting"}>
+          {status === "submitting" ? "Signing in..." : "Sign in"}
+          <ArrowRight size={18} aria-hidden="true" />
+        </button>
+        <button className="text-button" type="button" onClick={handleReset}>
+          Send password reset
+        </button>
+      </form>
+    </section>
   );
 }
 
@@ -863,15 +1084,17 @@ function PageShell({
   title,
   intro,
   children,
+  variant = "default",
 }: {
   eyebrow: string;
   title: string;
   intro: string;
   children: React.ReactNode;
+  variant?: "default" | "care" | "dentist" | "business" | "legal" | "auth";
 }) {
   return (
     <>
-      <section className="page-hero">
+      <section className={`page-hero page-hero-${variant}`}>
         <p className="eyebrow">{eyebrow}</p>
         <h1>{title}</h1>
         <p>{intro}</p>
@@ -932,4 +1155,22 @@ function handleLinkClick(
 ) {
   event.preventDefault();
   navigate(href);
+}
+
+function readAuthError(error: unknown) {
+  if (!(error instanceof Error)) return "Unable to sign in.";
+
+  if (error.message.includes("auth/invalid-credential")) {
+    return "The email or password did not match an account.";
+  }
+
+  if (error.message.includes("auth/operation-not-allowed")) {
+    return "Email/password sign-in is not enabled in Firebase Authentication yet.";
+  }
+
+  if (error.message.includes("auth/too-many-requests")) {
+    return "Too many attempts. Wait a bit and try again.";
+  }
+
+  return error.message;
 }

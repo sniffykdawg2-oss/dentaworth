@@ -117,6 +117,16 @@ service cloud.firestore {
       allow create, update, delete: if isAdmin();
     }
 
+    match /userProfiles/{userId} {
+      allow create, update: if isSignedIn()
+        && request.auth.uid == userId
+        && request.resource.data.uid == userId
+        && request.resource.data.schemaVersion == 1;
+
+      allow read: if isAdmin() || (isSignedIn() && request.auth.uid == userId);
+      allow delete: if isAdmin();
+    }
+
     match /auditLogs/{logId} {
       allow read, write: if isAdmin();
     }
