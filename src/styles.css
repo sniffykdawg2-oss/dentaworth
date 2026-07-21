@@ -91,6 +91,18 @@ button:disabled {
   text-decoration: none;
 }
 
+.brand img {
+  display: block;
+  height: 42px;
+  object-fit: contain;
+  width: 58px;
+}
+
+.footer-brand img {
+  height: 46px;
+  width: 64px;
+}
+
 .brand-mark {
   align-items: center;
   background: #103f35;
@@ -1196,6 +1208,11 @@ tbody tr:hover {
 
   .brand span:last-child {
     font-size: 0.95rem;
+  }
+
+  .brand img {
+    height: 38px;
+    max-width: 154px;
   }
 
   .header-actions .button {

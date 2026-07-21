@@ -224,9 +224,7 @@ function Header({
         <span className="sr-only">Open navigation</span>
       </button>
       <a className="brand" href="/" onClick={(event) => handleLinkClick(event, "/", navigate)}>
-        <span className="brand-mark" aria-hidden="true">
-          D
-        </span>
+        <img src="/images/dentaworth-mark.svg" alt="" aria-hidden="true" />
         <span>Dentaworth</span>
       </a>
       <a className="skip-link" href="#main-content">
@@ -273,9 +271,7 @@ function Header({
       <aside id="site-drawer" className={isMenuOpen ? "site-drawer is-open" : "site-drawer"} aria-hidden={!isMenuOpen}>
         <div className="drawer-header">
           <a className="brand" href="/" onClick={(event) => handleLinkClick(event, "/", navigate)}>
-            <span className="brand-mark" aria-hidden="true">
-              D
-            </span>
+            <img src="/images/dentaworth-mark.svg" alt="" aria-hidden="true" />
             <span>Dentaworth</span>
           </a>
           <button type="button" onClick={() => setIsMenuOpen(false)} aria-label="Close navigation">
@@ -1371,9 +1367,7 @@ function Footer({ navigate }: { navigate: (href: string) => void }) {
     <footer className="site-footer">
       <div>
         <a className="brand footer-brand" href="/" onClick={(event) => handleLinkClick(event, "/", navigate)}>
-          <span className="brand-mark" aria-hidden="true">
-            D
-          </span>
+          <img src="/images/dentaworth-mark.svg" alt="" aria-hidden="true" />
           <span>Dentaworth</span>
         </a>
         <p>Florida dental ratings and cash price range estimates.</p>
