@@ -21,7 +21,8 @@ The project was originally started on Wix and is being moved to a GitHub-backed 
 - Firebase Hosting is deployed at `https://dentaworth.web.app`.
 - Firestore rules have been deployed.
 - Storage rules have been deployed.
-- Launch frontend pages are: cost guide, self reporting, about, privacy policy, contact, and 404.
+- Launch frontend pages are: cost guide, get care now, find a dentist, self reporting, about, advertise with us, promote your practice, privacy policy, contact, and 404.
+- The owner notes specify a bottom disclaimer, treatment/state/county search controls, capitalized Dentaworth in public copy, back buttons on secondary pages, and a security reassurance on the self-reporting page.
 - The homepage hero uses a local generated image at `public/images/dentaworth-hero.png`; keep it project-local so visual QA does not depend on remote stock image loading.
 
 ## Notes For Future Agents

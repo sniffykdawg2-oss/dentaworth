@@ -1,8 +1,27 @@
 import { FormEvent, useEffect, useMemo, useState } from "react";
-import { ArrowRight, BarChart3, CheckCircle2, Mail, Menu, Search, ShieldCheck, Star, Users, X } from "lucide-react";
-import { counties, countyCostRows, navItems, procedures, ProcedureKey } from "./content";
+import { ArrowRight, BarChart3, CheckCircle2, Mail, Menu, Search, ShieldCheck, Star, X } from "lucide-react";
+import {
+  counties,
+  countyCostRows,
+  disclaimerText,
+  footerActions,
+  navItems,
+  procedures,
+  ProcedureKey,
+  treatmentOptions,
+} from "./content";
 
-type Page = "home" | "self-reporting" | "about" | "privacy-policy" | "contact" | "not-found";
+type Page =
+  | "home"
+  | "self-reporting"
+  | "about"
+  | "privacy-policy"
+  | "contact"
+  | "get-care-now"
+  | "find-a-dentist"
+  | "advertise-with-us"
+  | "promote-your-practice"
+  | "not-found";
 
 const routeTitles: Record<Page, string> = {
   home: "Florida dental ratings and cost guide",
@@ -10,6 +29,10 @@ const routeTitles: Record<Page, string> = {
   about: "About Dentaworth",
   "privacy-policy": "Privacy Policy",
   contact: "Contact us",
+  "get-care-now": "Get care now",
+  "find-a-dentist": "Find a dentist",
+  "advertise-with-us": "Advertise with us",
+  "promote-your-practice": "Promote your practice",
   "not-found": "Page not found",
 };
 
@@ -34,6 +57,10 @@ function getCurrentPage(): Page {
   if (path === "/about") return "about";
   if (path === "/privacy-policy") return "privacy-policy";
   if (path === "/contact") return "contact";
+  if (path === "/get-care-now") return "get-care-now";
+  if (path === "/find-a-dentist") return "find-a-dentist";
+  if (path === "/advertise-with-us") return "advertise-with-us";
+  if (path === "/promote-your-practice") return "promote-your-practice";
 
   return "not-found";
 }
@@ -66,8 +93,13 @@ export function App() {
         {page === "about" && <AboutPage navigate={navigate} />}
         {page === "privacy-policy" && <PrivacyPolicyPage />}
         {page === "contact" && <ContactPage />}
+        {page === "get-care-now" && <GetCareNowPage navigate={navigate} />}
+        {page === "find-a-dentist" && <FindADentistPage navigate={navigate} />}
+        {page === "advertise-with-us" && <AdvertiseWithUsPage />}
+        {page === "promote-your-practice" && <PromotePracticePage />}
         {page === "not-found" && <NotFoundPage navigate={navigate} />}
       </main>
+      <Disclaimer />
       <Footer navigate={navigate} />
     </>
   );
@@ -147,54 +179,31 @@ function Header({
 }
 
 function HomePage({ navigate }: { navigate: (href: string) => void }) {
-  const [query, setQuery] = useState("");
+  const [treatment, setTreatment] = useState("");
+  const [state, setState] = useState("Florida");
   const [county, setCounty] = useState("");
 
   const filteredRows = useMemo(() => {
-    const normalizedQuery = query.trim().toLowerCase();
+    const selectedProcedure = procedures.find((procedure) => procedure.label === treatment);
 
     return countyCostRows.filter((row) => {
       const matchesCounty = county ? row.county === county : true;
-      const matchesQuery = normalizedQuery
-        ? [row.county, row.rating, ...procedures.map((procedure) => row[procedure.key])]
-            .join(" ")
-            .toLowerCase()
-            .includes(normalizedQuery)
-        : true;
+      const matchesTreatment = selectedProcedure ? Boolean(row[selectedProcedure.key]) : true;
 
-      return matchesCounty && matchesQuery;
+      return matchesCounty && matchesTreatment;
     });
-  }, [county, query]);
+  }, [county, treatment]);
 
   return (
     <>
-      <section className="notice-bar">
-        Cash price ranges are estimates only, for informational purposes only. They are not
-        quotations and are non-binding. Price ranges are based on independent estimations and
-        self-reported data. Dentaworth does not verify or guarantee accuracy.
-      </section>
-
       <section className="hero guide-hero">
         <div className="hero-copy">
-          <p className="eyebrow">Florida dental cost intelligence</p>
-          <h1>Feel clearer about dental costs in Florida.</h1>
+          <p className="eyebrow">Dental price tool</p>
+          <h1>Know before you go.</h1>
           <p className="hero-subtitle">
-            Search county-level rating estimates and cash price ranges for common dental treatments.
+            Search by treatment and location to compare Florida dental price ranges before you call
+            around.
           </p>
-          <div className="hero-cues" aria-label="Dentaworth guide highlights">
-            <div>
-              <BarChart3 aria-hidden="true" />
-              <span>County-level cost ranges</span>
-            </div>
-            <div>
-              <Star aria-hidden="true" />
-              <span>Dental ratings by area</span>
-            </div>
-            <div>
-              <Users aria-hidden="true" />
-              <span>Self-reported pricing support</span>
-            </div>
-          </div>
         </div>
         <figure className="hero-visual">
           <img
@@ -209,15 +218,19 @@ function HomePage({ navigate }: { navigate: (href: string) => void }) {
           </div>
           <div className="guide-controls" aria-label="Filter cost guide">
             <label>
-              Search table
-              <span className="input-shell">
-                <Search size={17} aria-hidden="true" />
-                <input
-                  value={query}
-                  onChange={(event) => setQuery(event.target.value)}
-                  placeholder="Procedure, county, rating, or price"
-                />
-              </span>
+              Treatment
+              <select value={treatment} onChange={(event) => setTreatment(event.target.value)}>
+                <option value="">All treatments</option>
+                {treatmentOptions.map((item) => (
+                  <option key={item}>{item}</option>
+                ))}
+              </select>
+            </label>
+            <label>
+              State
+              <select value={state} onChange={(event) => setState(event.target.value)}>
+                <option>Florida</option>
+              </select>
             </label>
             <label>
               County
@@ -235,7 +248,7 @@ function HomePage({ navigate }: { navigate: (href: string) => void }) {
           </div>
           <div className="quick-links" aria-label="Popular procedures">
             {["Cleaning", "Exam", "Implant", "Root canal", "Whitening", "Invisalign"].map((item) => (
-              <a key={item} href="#guide-heading" onClick={() => setQuery(item)}>
+              <a key={item} href="#guide-heading" onClick={() => setTreatment(item)}>
                 {item}
               </a>
             ))}
@@ -260,7 +273,7 @@ function HomePage({ navigate }: { navigate: (href: string) => void }) {
         {filteredRows.length === 0 && (
           <div className="empty-state">
             <h3>No matching rows</h3>
-            <p>Clear the filters or try another county name.</p>
+            <p>Clear the filters or try another treatment and county.</p>
           </div>
         )}
       </section>
@@ -341,6 +354,17 @@ function SelfReportingPage() {
       title="Help improve the pricing guide."
       intro="Share dental procedure pricing you recently received or paid. Submissions help Dentaworth build better county-level estimates, but they are reviewed before being used."
     >
+      <BackButton />
+      <div className="security-note">
+        <ShieldCheck aria-hidden="true" />
+        <div>
+          <h2>Security and privacy</h2>
+          <p>
+            Only submit information you are comfortable sharing. Personal contact details are kept
+            separate from public-facing price range content when backend storage is connected.
+          </p>
+        </div>
+      </div>
       <form className="form-card report-form" onSubmit={handleSubmit}>
         {status === "success" && (
           <div className="success-message" role="status">
@@ -394,24 +418,24 @@ function AboutPage({ navigate }: { navigate: (href: string) => void }) {
   return (
     <PageShell
       eyebrow="About us"
-      title="Dentaworth makes Florida dental pricing easier to compare."
-      intro="The site exists to organize dental cost information in a simpler, more useful format for people trying to understand procedure pricing before they contact a provider."
+      title="Why Dentaworth?"
+      intro="Our experience, and those of many friends and family, led us to realize that dental pricing is a mystery. Dentaworth can help eliminate the guesswork."
     >
+      <BackButton />
       <div className="content-grid">
         <article>
-          <h2>What Dentaworth does</h2>
+          <h2>Our mission</h2>
           <p>
-            Dentaworth publishes informational cash price ranges for common dental procedures and
-            presents them by county. The goal is not to replace a dental consultation. The goal is to
-            give people a cleaner starting point.
+            Empower patients by providing an online information marketplace for dental pricing. One
+            that enables consumers to have prior knowledge of dental cost estimates and to know what
+            other patients paid. Price transparency and peace of mind are only a few clicks away.
           </p>
         </article>
         <article>
-          <h2>What Dentaworth does not do</h2>
+          <h2>Our methodology</h2>
           <p>
-            Dentaworth does not verify every price, guarantee accuracy, diagnose treatment needs, or
-            provide medical advice. Procedure complexity and provider-specific recommendations can
-            materially affect final pricing.
+            We developed our algorithm to calculate price ranges using market data and unique
+            self-reported pricing within counties.
           </p>
         </article>
       </div>
@@ -436,11 +460,12 @@ function PrivacyPolicyPage() {
       title="Privacy Policy"
       intro="Effective Date: June 27, 2026"
     >
+      <BackButton />
       <div className="legal-copy">
         <p>
-          At dentaworth ("we," "our," or "us"), accessible from dentaworth.com, one of our main
+          At Dentaworth ("we," "our," or "us"), accessible from dentaworth.com, one of our main
           priorities is the privacy of our visitors. This Privacy Policy contains types of
-          information that is collected and recorded by dentaworth and how we use it.
+          information that is collected and recorded by Dentaworth and how we use it.
         </p>
         <p>
           If you have additional questions or require more information about our Privacy Policy, do
@@ -461,7 +486,7 @@ function PrivacyPolicyPage() {
         </p>
         <h2>How we use your information</h2>
         <p>
-          dentaworth uses collected data to provide, operate, and maintain our website and services;
+          Dentaworth uses collected data to provide, operate, and maintain our website and services;
           notify you about service changes or upcoming appointments; allow participation in
           interactive website features; provide patient support and process dental inquiries; gather
           analysis to improve the website; monitor usage; detect, prevent, and address technical
@@ -480,7 +505,7 @@ function PrivacyPolicyPage() {
           share data with service providers who help operate the website or analyze usage, and they
           are obligated not to disclose or use it for other purposes. We may also disclose personal
           data when necessary to comply with a legal obligation, protect the rights or property of
-          dentaworth, or protect the personal safety of users or the public.
+          Dentaworth, or protect the personal safety of users or the public.
         </p>
         <h2>Data security</h2>
         <p>
@@ -541,6 +566,7 @@ function ContactPage() {
       title="Get in touch about Dentaworth."
       intro="Send questions, corrections, pricing context, or partnership notes. Keep medical emergencies and urgent treatment questions with a licensed dental provider."
     >
+      <BackButton />
       <div className="contact-layout">
         <form className="form-card" onSubmit={handleSubmit} noValidate>
           {status === "success" && (
@@ -577,6 +603,137 @@ function ContactPage() {
           <a href="mailto:info@dentaworth.com">info@dentaworth.com</a>
           <p>Use email for corrections, self-reported price questions, or business inquiries.</p>
         </aside>
+      </div>
+    </PageShell>
+  );
+}
+
+function GetCareNowPage({ navigate }: { navigate: (href: string) => void }) {
+  return (
+    <PageShell
+      eyebrow="Get care now"
+      title="Use the guide before you book dental care."
+      intro="Dentaworth helps you understand common cash price ranges before you contact a dental office."
+    >
+      <BackButton />
+      <div className="content-grid">
+        <article>
+          <h2>Start with the price range</h2>
+          <p>
+            Compare treatment ranges by county, then use that context when asking offices about
+            estimates, payment options, and what is included in a quoted price.
+          </p>
+        </article>
+        <article>
+          <h2>Ask about complications</h2>
+          <p>
+            Treatment complexity can change the final cost. Ask whether the estimate assumes a
+            routine case or includes potential complications.
+          </p>
+        </article>
+      </div>
+      <div className="callout-band">
+        <div>
+          <h2>Ready to compare?</h2>
+          <p>Go back to the cost guide and search by treatment and location.</p>
+        </div>
+        <button className="button primary" type="button" onClick={() => navigate("/")}>
+          Open cost guide
+          <ArrowRight size={18} aria-hidden="true" />
+        </button>
+      </div>
+    </PageShell>
+  );
+}
+
+function FindADentistPage({ navigate }: { navigate: (href: string) => void }) {
+  return (
+    <PageShell
+      eyebrow="Find a dentist"
+      title="Find a dentist with better pricing context."
+      intro="Dentaworth is preparing tools to help patients compare dental offices alongside county-level pricing information."
+    >
+      <BackButton />
+      <div className="content-grid">
+        <article>
+          <h2>What is available now</h2>
+          <p>
+            The cost guide gives you a starting point for common procedures, including cleaning,
+            exam, X-ray, filling, whitening, extraction, root canal, crown, implant, and Invisalign.
+          </p>
+        </article>
+        <article>
+          <h2>What comes next</h2>
+          <p>
+            Future dentist discovery features can build on the same treatment and location data
+            model once the backend is connected.
+          </p>
+        </article>
+      </div>
+      <div className="callout-band">
+        <div>
+          <h2>Use the price tool first</h2>
+          <p>Search by treatment and county before contacting offices.</p>
+        </div>
+        <button className="button primary" type="button" onClick={() => navigate("/")}>
+          Search prices
+          <ArrowRight size={18} aria-hidden="true" />
+        </button>
+      </div>
+    </PageShell>
+  );
+}
+
+function AdvertiseWithUsPage() {
+  return (
+    <PageShell
+      eyebrow="Advertise with us"
+      title="Reach people researching dental care costs."
+      intro="Dentaworth is built for visitors who are actively comparing dental treatment pricing and looking for clearer next steps."
+    >
+      <BackButton />
+      <div className="contact-layout">
+        <div className="legal-copy">
+          <h2>Advertising inquiries</h2>
+          <p>
+            Dentaworth can support advertising opportunities for dental organizations that want to
+            reach patients during the research phase. Advertising must remain clearly separate from
+            cost guide methodology and informational content.
+          </p>
+          <p>
+            For advertising questions, contact{" "}
+            <a href="mailto:info@dentaworth.com">info@dentaworth.com</a>.
+          </p>
+        </div>
+        <aside className="contact-card">
+          <Mail size={22} aria-hidden="true" />
+          <h2>Email</h2>
+          <a href="mailto:info@dentaworth.com">info@dentaworth.com</a>
+        </aside>
+      </div>
+    </PageShell>
+  );
+}
+
+function PromotePracticePage() {
+  return (
+    <PageShell
+      eyebrow="Promote your practice"
+      title="Promote your dental practice with pricing-aware visitors."
+      intro="Dentaworth is preparing practice promotion options for dental offices that want to be discovered by people comparing care costs."
+    >
+      <BackButton />
+      <div className="legal-copy">
+        <h2>Practice promotion</h2>
+        <p>
+          Promotion opportunities can help dental practices share relevant information with people
+          researching treatment costs. Future backend work can support practice profiles, location
+          details, accepted services, and inquiry routing.
+        </p>
+        <p>
+          To discuss practice promotion, contact{" "}
+          <a href="mailto:info@dentaworth.com">info@dentaworth.com</a>.
+        </p>
       </div>
     </PageShell>
   );
@@ -620,6 +777,23 @@ function PageShell({
   );
 }
 
+function BackButton() {
+  return (
+    <button className="back-button" type="button" onClick={() => window.history.back()}>
+      <ArrowRight size={17} aria-hidden="true" />
+      Back
+    </button>
+  );
+}
+
+function Disclaimer() {
+  return (
+    <section className="bottom-disclaimer" aria-label="Dentaworth disclaimer">
+      <p>{disclaimerText}</p>
+    </section>
+  );
+}
+
 function Footer({ navigate }: { navigate: (href: string) => void }) {
   return (
     <footer className="site-footer">
@@ -633,7 +807,7 @@ function Footer({ navigate }: { navigate: (href: string) => void }) {
         <p>Florida dental ratings and cash price range estimates.</p>
       </div>
       <nav aria-label="Footer navigation">
-        {navItems.map((item) => (
+        {footerActions.map((item) => (
           <a
             key={item.href}
             href={item.href}

@@ -97,15 +97,13 @@ button {
   width: 32px;
 }
 
-.site-header nav,
-.site-footer nav {
+.site-header nav {
   align-items: center;
   display: flex;
   gap: 8px;
 }
 
-.site-header nav a,
-.site-footer nav a {
+.site-header nav a {
   border-radius: 8px;
   font-size: 0.92rem;
   font-weight: 750;
@@ -129,17 +127,6 @@ button {
   height: 42px;
   justify-content: center;
   width: 42px;
-}
-
-.notice-bar {
-  background: #ffffff;
-  border-bottom: 1px solid #e2ded5;
-  color: #43524d;
-  font-size: clamp(0.82rem, 1.2vw, 0.98rem);
-  font-weight: 750;
-  letter-spacing: 0;
-  line-height: 1.45;
-  padding: 10px clamp(20px, 5vw, 80px);
 }
 
 .hero,
@@ -258,9 +245,9 @@ p {
 
 .hero-cues {
   display: grid;
-  gap: 18px;
+  gap: 12px;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  margin-top: clamp(30px, 5vw, 54px);
+  margin-top: 22px;
   max-width: 720px;
 }
 
@@ -270,7 +257,7 @@ p {
   flex-direction: column;
   gap: 10px;
   justify-content: center;
-  min-height: 110px;
+  min-height: 70px;
   text-align: center;
 }
 
@@ -438,7 +425,7 @@ p {
   align-items: end;
   display: grid;
   gap: 16px;
-  grid-template-columns: minmax(260px, 1fr) minmax(220px, 300px) auto;
+  grid-template-columns: minmax(240px, 1fr) minmax(120px, 170px) minmax(200px, 260px) auto;
   margin-bottom: 18px;
 }
 
@@ -613,7 +600,8 @@ tbody tr:hover {
 .contact-card,
 .content-grid article,
 .callout-band,
-.legal-copy {
+.legal-copy,
+.security-note {
   background: #ffffff;
   border: 1px solid #e2ded5;
   border-radius: 8px;
@@ -624,6 +612,47 @@ tbody tr:hover {
   gap: 18px;
   max-width: 920px;
   padding: clamp(20px, 4vw, 34px);
+}
+
+.back-button {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  color: #103f35;
+  display: inline-flex;
+  font-weight: 850;
+  gap: 8px;
+  margin-bottom: 18px;
+  padding: 0;
+}
+
+.back-button svg {
+  transform: rotate(180deg);
+}
+
+.security-note {
+  align-items: flex-start;
+  display: flex;
+  gap: 14px;
+  margin-bottom: 18px;
+  max-width: 920px;
+  padding: 18px;
+}
+
+.security-note svg {
+  color: #2d806b;
+  flex: 0 0 auto;
+  margin-top: 4px;
+}
+
+.security-note h2 {
+  font-size: 1.15rem;
+  margin-bottom: 4px;
+}
+
+.security-note p {
+  color: #52605c;
+  margin-bottom: 0;
 }
 
 .form-grid,
@@ -688,7 +717,13 @@ tbody tr:hover {
   max-width: 900px;
 }
 
-.legal-copy h2:not(:first-child) {
+.legal-copy h2,
+.legal-copy h3 {
+  text-align: left;
+}
+
+.legal-copy h2:not(:first-child),
+.legal-copy h3:not(:first-child) {
   margin-top: 34px;
 }
 
@@ -723,6 +758,37 @@ tbody tr:hover {
   justify-content: space-between;
   padding-bottom: 34px;
   padding-top: 34px;
+}
+
+.site-footer nav {
+  align-items: start;
+  display: grid;
+  gap: 8px 18px;
+  grid-template-columns: repeat(4, minmax(92px, 1fr));
+}
+
+.site-footer nav a {
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-weight: 800;
+  line-height: 1.12;
+  padding: 8px 0;
+  text-decoration: none;
+}
+
+.bottom-disclaimer {
+  background: #fbfaf7;
+  border-top: 1px solid #e2ded5;
+  color: #52605c;
+  padding: 18px clamp(20px, 5vw, 80px);
+}
+
+.bottom-disclaimer p {
+  font-size: 0.86rem;
+  font-weight: 700;
+  line-height: 1.55;
+  margin: 0;
+  max-width: 1180px;
 }
 
 .footer-brand {
@@ -806,10 +872,6 @@ tbody tr:hover {
     width: 100%;
   }
 
-  .notice-bar {
-    font-size: 0.78rem;
-  }
-
   .hero {
     padding-bottom: 390px;
   }
@@ -872,6 +934,6 @@ tbody tr:hover {
 
   .site-footer nav {
     align-items: stretch;
-    flex-direction: column;
+    grid-template-columns: 1fr;
   }
 }

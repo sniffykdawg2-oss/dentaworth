@@ -28,6 +28,19 @@ export const procedures: Array<{ key: ProcedureKey; label: string }> = [
   { key: "invisalign", label: "Invisalign" },
 ];
 
+export const treatmentOptions = [
+  "Cleaning",
+  "Exam",
+  "X-ray",
+  "Filling",
+  "Whitening",
+  "Extraction",
+  "Root canal",
+  "Crown, ceramic",
+  "Implant",
+  "Invisalign",
+];
+
 export const countyCostRows: CountyCostRow[] = [
   {
     county: "Statewide average",
@@ -149,8 +162,23 @@ export const counties = countyCostRows
 
 export const navItems = [
   { label: "Cost guide", href: "/" },
+  { label: "Get care now", href: "/get-care-now" },
+  { label: "Find a dentist", href: "/find-a-dentist" },
   { label: "Self reporting", href: "/self-reporting" },
   { label: "About", href: "/about" },
-  { label: "Privacy", href: "/privacy-policy" },
   { label: "Contact", href: "/contact" },
 ];
+
+export const footerActions = [
+  { label: "Get care now", href: "/get-care-now" },
+  { label: "Find a dentist", href: "/find-a-dentist" },
+  { label: "Advertise with us", href: "/advertise-with-us" },
+  { label: "Promote your practice", href: "/promote-your-practice" },
+  { label: "About us", href: "/about" },
+  { label: "Self-report prices", href: "/self-reporting" },
+  { label: "Privacy Policy", href: "/privacy-policy" },
+  { label: "Contact us", href: "/contact" },
+];
+
+export const disclaimerText =
+  "Cash price ranges are estimates only, for informational purposes only. They are not quotations and are non-binding. Price ranges are based on independent estimations and self-reported data. Dentaworth does not verify or guarantee accuracy. Treatment complications may affect pricing.";
