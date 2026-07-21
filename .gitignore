@@ -6,6 +6,7 @@ dist/
 .firebase/
 firebase-debug.log
 dentaworth-local.png
+dentaworth-live.png
 .vscode/
 .idea/
 .wix/

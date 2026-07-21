@@ -16,8 +16,11 @@ The project was originally started on Wix and is being moved to a GitHub-backed 
 - The active app is a React + Vite + TypeScript frontend.
 - Firebase is intended to provide Hosting, Firestore, Auth, and Storage.
 - Firebase project id is `dentaworth`.
+- Firebase web app id is `1:361083559500:web:8d35d11dea90d120e95ee9`.
 - The Wix export has been preserved under `legacy-wix/` for reference.
-- The Firebase CLI login available during setup could not see the `dentaworth` project, so live deploy/app config still requires Firebase permissions or the Firebase web app config values.
+- Firebase Hosting is deployed at `https://dentaworth.web.app`.
+- Firestore rules have been deployed.
+- Storage deploy was blocked by missing permission `firebasestorage.defaultBucket.get` / default bucket access. Enable Firebase Storage in the console or grant a role that can manage the default bucket before deploying storage rules.
 
 ## Notes For Future Agents
 
