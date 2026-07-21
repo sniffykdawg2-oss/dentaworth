@@ -1,6 +1,6 @@
 # Dentaworth Project Notes
 
-Dentaworth is a marketplace-style website for dental operations in Florida, with plans to expand geographically. Think Craigslist-style listings, but focused on dental practice opportunities, operations, equipment, services, or related dental business needs.
+Dentaworth is currently a Florida dental ratings and cost guide, with county-level cash price range estimates for common dental procedures and a self-reporting flow for submitted pricing. It may expand later into broader dental operations marketplace features, but the launch frontend is cost-guide-first.
 
 The project was originally started on Wix and is being moved to a GitHub-backed codebase with Firebase hosting/services.
 
@@ -20,10 +20,12 @@ The project was originally started on Wix and is being moved to a GitHub-backed 
 - The Wix export has been preserved under `legacy-wix/` for reference.
 - Firebase Hosting is deployed at `https://dentaworth.web.app`.
 - Firestore rules have been deployed.
-- Storage deploy was blocked by missing permission `firebasestorage.defaultBucket.get` / default bucket access. Enable Firebase Storage in the console or grant a role that can manage the default bucket before deploying storage rules.
+- Storage rules have been deployed.
+- Launch frontend pages are: cost guide, self reporting, about, privacy policy, contact, and 404.
 
 ## Notes For Future Agents
 
 - Do not try to deploy the old Wix/Velo code directly to Firebase Hosting.
 - Use `.env.example` as the shape for frontend Firebase SDK config, and keep real `.env` files out of git.
-- Firestore listing documents are expected to include a `status` field; public reads are intended for `status == "published"`.
+- Treat the visible county pricing table data as seed/frontend content until the backend schema is implemented.
+- Self-reporting and contact forms currently have polished frontend states but are not yet saving to Firestore or sending email.

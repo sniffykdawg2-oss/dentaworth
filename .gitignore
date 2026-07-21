@@ -7,6 +7,10 @@ dist/
 firebase-debug.log
 dentaworth-local.png
 dentaworth-live.png
+dentaworth-home-*.png
+dentaworth-about.png
+dentaworth-contact.png
+dentaworth-self-reporting*.png
 .vscode/
 .idea/
 .wix/

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Dentaworth">
+  <rect width="64" height="64" rx="14" fill="#103f35"/>
+  <path d="M22 13h20c4 0 7 3 7 7v24c0 4-3 7-7 7H22c-4 0-7-3-7-7V20c0-4 3-7 7-7Z" fill="#fffdf7"/>
+  <path d="M25 24h14M25 32h14M25 40h9" stroke="#103f35" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="44" cy="44" r="5" fill="#ffcf5a"/>
+</svg>
