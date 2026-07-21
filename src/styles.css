@@ -34,6 +34,11 @@ button {
   cursor: pointer;
 }
 
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.68;
+}
+
 :focus-visible {
   outline: 3px solid #675df6;
   outline-offset: 3px;
@@ -612,6 +617,10 @@ tbody tr:hover {
   gap: 18px;
   max-width: 920px;
   padding: clamp(20px, 4vw, 34px);
+}
+
+.inquiry-form {
+  margin-top: 18px;
 }
 
 .back-button {

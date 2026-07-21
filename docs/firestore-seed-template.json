@@ -1,0 +1,31 @@
+{
+  "priceRanges": [
+    {
+      "state": "Florida",
+      "county": "Example County",
+      "procedure": "cleaning",
+      "low": 100,
+      "high": 150,
+      "currency": "USD",
+      "rating": 4.5,
+      "status": "draft",
+      "sourceSummary": "Placeholder shape only. Replace with real reviewed methodology data.",
+      "schemaVersion": 1
+    }
+  ],
+  "dentistProfiles": [
+    {
+      "practiceName": "Example Dental Practice",
+      "slug": "example-dental-practice",
+      "state": "Florida",
+      "county": "Example County",
+      "city": "Example City",
+      "websiteUrl": "https://example.com",
+      "phone": "",
+      "email": "",
+      "services": ["cleaning", "exam"],
+      "status": "draft",
+      "schemaVersion": 1
+    }
+  ]
+}

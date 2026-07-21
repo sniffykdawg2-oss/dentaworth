@@ -2,14 +2,127 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /listings/{listingId} {
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && request.auth.token.admin == true;
+    }
+
+    function isString(value) {
+      return value is string;
+    }
+
+    function optionalString(value, maxLength) {
+      return value == null || (isString(value) && value.size() <= maxLength);
+    }
+
+    function hasOnlyKeys(keys) {
+      return request.resource.data.keys().hasOnly(keys);
+    }
+
+    function isPendingCreate() {
+      return request.resource.data.status == "pending"
+        && request.resource.data.schemaVersion == 1
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.updatedAt == request.time;
+    }
+
+    function validProcedurePrices() {
+      return request.resource.data.procedurePrices is map
+        && request.resource.data.procedurePrices.keys().hasOnly([
+          "rootCanal",
+          "xray",
+          "extraction",
+          "crown",
+          "cleaning",
+          "exam",
+          "implant",
+          "filling",
+          "whitening",
+          "invisalign"
+        ]);
+    }
+
+    match /priceReports/{reportId} {
+      allow create: if hasOnlyKeys([
+          "county",
+          "state",
+          "providerName",
+          "procedurePrices",
+          "notes",
+          "source",
+          "status",
+          "schemaVersion",
+          "createdAt",
+          "updatedAt"
+        ])
+        && isPendingCreate()
+        && request.resource.data.source == "self-reporting-form"
+        && request.resource.data.state == "Florida"
+        && isString(request.resource.data.county)
+        && request.resource.data.county.size() > 0
+        && optionalString(request.resource.data.providerName, 180)
+        && optionalString(request.resource.data.notes, 3000)
+        && validProcedurePrices();
+
+      allow read, update, delete: if isAdmin();
+    }
+
+    match /contactMessages/{messageId} {
+      allow create: if hasOnlyKeys([
+          "name",
+          "email",
+          "message",
+          "topic",
+          "source",
+          "status",
+          "schemaVersion",
+          "createdAt",
+          "updatedAt"
+        ])
+        && isPendingCreate()
+        && request.resource.data.source in [
+          "contact-form",
+          "advertising-page",
+          "practice-promotion-page"
+        ]
+        && request.resource.data.topic in [
+          "general",
+          "correction",
+          "advertising",
+          "practice-promotion"
+        ]
+        && isString(request.resource.data.name)
+        && request.resource.data.name.size() > 0
+        && request.resource.data.name.size() <= 120
+        && isString(request.resource.data.email)
+        && request.resource.data.email.matches("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$")
+        && request.resource.data.email.size() <= 180
+        && isString(request.resource.data.message)
+        && request.resource.data.message.size() >= 10
+        && request.resource.data.message.size() <= 3000;
+
+      allow read, update, delete: if isAdmin();
+    }
+
+    match /priceRanges/{rangeId} {
       allow read: if resource.data.status == "published";
-      allow create: if true;
-      allow update, delete: if request.auth != null && request.auth.token.admin == true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /dentistProfiles/{profileId} {
+      allow read: if resource.data.status == "published";
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /auditLogs/{logId} {
+      allow read, write: if isAdmin();
     }
 
     match /{document=**} {
-      allow read, write: if request.auth != null && request.auth.token.admin == true;
+      allow read, write: if false;
     }
   }
 }

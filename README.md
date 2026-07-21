@@ -45,3 +45,5 @@ bun run lint
 The Firebase project id is configured as `dentaworth` in `.firebaserc`.
 
 Copy `.env.example` to `.env.local` and fill in the Firebase web app config values from the Firebase console before using live Firebase services in the browser.
+
+Backend schema and rules notes live in `docs/backend.md`.

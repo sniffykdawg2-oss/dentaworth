@@ -23,6 +23,8 @@ The project was originally started on Wix and is being moved to a GitHub-backed 
 - Storage rules have been deployed.
 - Launch frontend pages are: cost guide, get care now, find a dentist, self reporting, about, advertise with us, promote your practice, privacy policy, contact, and 404.
 - The owner notes specify a bottom disclaimer, treatment/state/county search controls, capitalized Dentaworth in public copy, back buttons on secondary pages, and a security reassurance on the self-reporting page.
+- Backend docs live in `docs/backend.md`.
+- Public form writes currently go to Firestore collections `priceReports` and `contactMessages`; private review/admin access expects Firebase Auth custom claim `admin: true`.
 - The homepage hero uses a local generated image at `public/images/dentaworth-hero.png`; keep it project-local so visual QA does not depend on remote stock image loading.
 
 ## Notes For Future Agents
@@ -30,4 +32,4 @@ The project was originally started on Wix and is being moved to a GitHub-backed 
 - Do not try to deploy the old Wix/Velo code directly to Firebase Hosting.
 - Use `.env.example` as the shape for frontend Firebase SDK config, and keep real `.env` files out of git.
 - Treat the visible county pricing table data as seed/frontend content until the backend schema is implemented.
-- Self-reporting and contact forms currently have polished frontend states but are not yet saving to Firestore or sending email.
+- Self-reporting, contact, advertise, and promote-practice forms save to Firestore. They do not send email yet.

@@ -10,6 +10,11 @@ import {
   ProcedureKey,
   treatmentOptions,
 } from "./content";
+import { buildContactMessageInput } from "./backend/contact";
+import { createContactMessage, createPriceReport } from "./backend/repository";
+import { buildPriceReportInput } from "./backend/validation";
+
+type SubmissionStatus = "idle" | "submitting" | "success" | "error";
 
 type Page =
   | "home"
@@ -340,12 +345,24 @@ function CostGuideTable({ rows }: { rows: typeof countyCostRows }) {
 }
 
 function SelfReportingPage() {
-  const [status, setStatus] = useState<"idle" | "success">("idle");
+  const [status, setStatus] = useState<SubmissionStatus>("idle");
+  const [errorMessage, setErrorMessage] = useState("");
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setStatus("success");
-    event.currentTarget.reset();
+    const form = event.currentTarget;
+    setStatus("submitting");
+    setErrorMessage("");
+
+    try {
+      const input = buildPriceReportInput(new FormData(form));
+      await createPriceReport(input);
+      setStatus("success");
+      form.reset();
+    } catch (error) {
+      setStatus("error");
+      setErrorMessage(error instanceof Error ? error.message : "Unable to submit pricing report.");
+    }
   }
 
   return (
@@ -369,7 +386,12 @@ function SelfReportingPage() {
         {status === "success" && (
           <div className="success-message" role="status">
             <CheckCircle2 size={19} aria-hidden="true" />
-            Thanks. Your pricing report is ready to save once backend submission is connected.
+            Thanks. Your pricing report was submitted for review.
+          </div>
+        )}
+        {status === "error" && (
+          <div className="error-message" role="alert">
+            {errorMessage}
           </div>
         )}
         <div className="form-grid">
@@ -405,8 +427,8 @@ function SelfReportingPage() {
             placeholder="Share anything relevant, like whether insurance was involved or whether the quote included complications."
           />
         </label>
-        <button className="button primary" type="submit">
-          Submit report
+        <button className="button primary" type="submit" disabled={status === "submitting"}>
+          {status === "submitting" ? "Submitting..." : "Submit report"}
           <ArrowRight size={18} aria-hidden="true" />
         </button>
       </form>
@@ -544,20 +566,24 @@ function PrivacyPolicyPage() {
 }
 
 function ContactPage() {
-  const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
+  const [status, setStatus] = useState<SubmissionStatus>("idle");
+  const [errorMessage, setErrorMessage] = useState("");
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const form = new FormData(event.currentTarget);
-    const email = String(form.get("email") || "");
+    const form = event.currentTarget;
+    setStatus("submitting");
+    setErrorMessage("");
 
-    if (!email.includes("@")) {
+    try {
+      const input = buildContactMessageInput(new FormData(form));
+      await createContactMessage(input, "contact-form");
+      setStatus("success");
+      form.reset();
+    } catch (error) {
       setStatus("error");
-      return;
+      setErrorMessage(error instanceof Error ? error.message : "Unable to send message.");
     }
-
-    setStatus("success");
-    event.currentTarget.reset();
   }
 
   return (
@@ -572,12 +598,12 @@ function ContactPage() {
           {status === "success" && (
             <div className="success-message" role="status">
               <CheckCircle2 size={19} aria-hidden="true" />
-              Thanks. Your message is ready to send once backend submission is connected.
+              Thanks. Your message was submitted.
             </div>
           )}
           {status === "error" && (
             <div className="error-message" role="alert">
-              Please enter a valid email address.
+              {errorMessage}
             </div>
           )}
           <label>
@@ -592,8 +618,8 @@ function ContactPage() {
             Message
             <textarea name="message" rows={6} required />
           </label>
-          <button className="button primary" type="submit">
-            Send message
+          <button className="button primary" type="submit" disabled={status === "submitting"}>
+            {status === "submitting" ? "Sending..." : "Send message"}
             <ArrowRight size={18} aria-hidden="true" />
           </button>
         </form>
@@ -711,6 +737,12 @@ function AdvertiseWithUsPage() {
           <a href="mailto:info@dentaworth.com">info@dentaworth.com</a>
         </aside>
       </div>
+      <InquiryForm
+        buttonLabel="Send advertising inquiry"
+        messageLabel="Advertising goals"
+        source="advertising-page"
+        topic="advertising"
+      />
     </PageShell>
   );
 }
@@ -735,7 +767,79 @@ function PromotePracticePage() {
           <a href="mailto:info@dentaworth.com">info@dentaworth.com</a>.
         </p>
       </div>
+      <InquiryForm
+        buttonLabel="Send practice inquiry"
+        messageLabel="Practice details"
+        source="practice-promotion-page"
+        topic="practice-promotion"
+      />
     </PageShell>
+  );
+}
+
+function InquiryForm({
+  buttonLabel,
+  messageLabel,
+  source,
+  topic,
+}: {
+  buttonLabel: string;
+  messageLabel: string;
+  source: "advertising-page" | "practice-promotion-page";
+  topic: "advertising" | "practice-promotion";
+}) {
+  const [status, setStatus] = useState<SubmissionStatus>("idle");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    setStatus("submitting");
+    setErrorMessage("");
+
+    try {
+      const input = buildContactMessageInput(new FormData(form), topic);
+      await createContactMessage(input, source);
+      setStatus("success");
+      form.reset();
+    } catch (error) {
+      setStatus("error");
+      setErrorMessage(error instanceof Error ? error.message : "Unable to submit inquiry.");
+    }
+  }
+
+  return (
+    <form className="form-card inquiry-form" onSubmit={handleSubmit} noValidate>
+      {status === "success" && (
+        <div className="success-message" role="status">
+          <CheckCircle2 size={19} aria-hidden="true" />
+          Thanks. Your inquiry was submitted.
+        </div>
+      )}
+      {status === "error" && (
+        <div className="error-message" role="alert">
+          {errorMessage}
+        </div>
+      )}
+      <div className="form-grid">
+        <label>
+          Name
+          <input name="name" required autoComplete="name" />
+        </label>
+        <label>
+          Email
+          <input name="email" type="email" required autoComplete="email" />
+        </label>
+      </div>
+      <label>
+        {messageLabel}
+        <textarea name="message" rows={5} required />
+      </label>
+      <button className="button primary" type="submit" disabled={status === "submitting"}>
+        {status === "submitting" ? "Sending..." : buttonLabel}
+        <ArrowRight size={18} aria-hidden="true" />
+      </button>
+    </form>
   );
 }
 
