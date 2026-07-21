@@ -1,5 +1,11 @@
 # dependencies
 node_modules/
+dist/
+.env
+.env.local
+.firebase/
+firebase-debug.log
+dentaworth-local.png
 .vscode/
 .idea/
 .wix/
