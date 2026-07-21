@@ -5,9 +5,20 @@ import {
   setPersistence,
   signInWithEmailAndPassword,
   signOut,
+  updateProfile,
   User,
 } from "firebase/auth";
-import { doc, serverTimestamp, setDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  onSnapshot,
+  orderBy,
+  query,
+  serverTimestamp,
+  setDoc,
+} from "firebase/firestore";
 import { auth, db } from "../firebase";
 
 export type AuthUser = {
@@ -15,6 +26,15 @@ export type AuthUser = {
   email: string | null;
   displayName: string | null;
   isAdmin: boolean;
+};
+
+export type SavedOperation = {
+  id: string;
+  treatment: string;
+  county: string;
+  state: string;
+  notes: string;
+  createdAt?: unknown;
 };
 
 export function subscribeToAuth(callback: (user: AuthUser | null) => void) {
@@ -52,6 +72,73 @@ export function sendSignInReset(email: string) {
 
 export function signOutCurrentUser() {
   return signOut(auth);
+}
+
+export async function updateAccountProfile(displayName: string) {
+  if (!auth.currentUser) {
+    throw new Error("You must be signed in to update your account.");
+  }
+
+  const normalizedDisplayName = displayName.trim();
+
+  await updateProfile(auth.currentUser, {
+    displayName: normalizedDisplayName || null,
+  });
+
+  await setDoc(
+    doc(db, "userProfiles", auth.currentUser.uid),
+    {
+      uid: auth.currentUser.uid,
+      email: auth.currentUser.email,
+      displayName: normalizedDisplayName || null,
+      updatedAt: serverTimestamp(),
+      schemaVersion: 1,
+    },
+    { merge: true },
+  );
+}
+
+export function subscribeToSavedOperations(
+  userId: string,
+  callback: (operations: SavedOperation[]) => void,
+) {
+  const savedOperationsQuery = query(
+    collection(db, "userProfiles", userId, "savedOperations"),
+    orderBy("createdAt", "desc"),
+  );
+
+  return onSnapshot(savedOperationsQuery, (snapshot) => {
+    callback(
+      snapshot.docs.map((savedOperationDoc) => ({
+        id: savedOperationDoc.id,
+        ...(savedOperationDoc.data() as Omit<SavedOperation, "id">),
+      })),
+    );
+  });
+}
+
+export async function createSavedOperation(
+  userId: string,
+  input: Pick<SavedOperation, "treatment" | "county" | "state" | "notes">,
+) {
+  if (!auth.currentUser || auth.currentUser.uid !== userId) {
+    throw new Error("You must be signed in to save an operation.");
+  }
+
+  return addDoc(collection(db, "userProfiles", userId, "savedOperations"), {
+    ...input,
+    createdAt: serverTimestamp(),
+    updatedAt: serverTimestamp(),
+    schemaVersion: 1,
+  });
+}
+
+export function deleteSavedOperation(userId: string, operationId: string) {
+  if (!auth.currentUser || auth.currentUser.uid !== userId) {
+    throw new Error("You must be signed in to remove a saved operation.");
+  }
+
+  return deleteDoc(doc(db, "userProfiles", userId, "savedOperations", operationId));
 }
 
 async function upsertUserProfile(user: User, isAdmin: boolean) {

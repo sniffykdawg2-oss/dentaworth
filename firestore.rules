@@ -125,6 +125,42 @@ service cloud.firestore {
 
       allow read: if isAdmin() || (isSignedIn() && request.auth.uid == userId);
       allow delete: if isAdmin();
+
+      match /savedOperations/{operationId} {
+        allow create: if isSignedIn()
+          && request.auth.uid == userId
+          && request.resource.data.keys().hasOnly([
+            "treatment",
+            "county",
+            "state",
+            "notes",
+            "schemaVersion",
+            "createdAt",
+            "updatedAt"
+          ])
+          && request.resource.data.schemaVersion == 1
+          && request.resource.data.state == "Florida"
+          && request.resource.data.treatment in [
+            "Cleaning",
+            "Exam",
+            "X-ray",
+            "Filling",
+            "Whitening",
+            "Extraction",
+            "Root canal",
+            "Crown",
+            "Implant",
+            "Invisalign"
+          ]
+          && isString(request.resource.data.county)
+          && request.resource.data.county.size() > 0
+          && optionalString(request.resource.data.notes, 1000)
+          && request.resource.data.createdAt == request.time
+          && request.resource.data.updatedAt == request.time;
+
+        allow read, delete: if isSignedIn() && request.auth.uid == userId;
+        allow update: if false;
+      }
     }
 
     match /auditLogs/{logId} {

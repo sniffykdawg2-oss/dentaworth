@@ -68,6 +68,10 @@ Important fields:
 - `updatedAt`
 - `schemaVersion`: `1`
 
+Subcollections:
+
+- `savedOperations`: signed-in users can save treatment/county research items for their own account center.
+
 ## Storage Paths
 
 ### `practice-assets/{practiceId}/{fileName}`
@@ -108,3 +112,4 @@ firebase deploy --project dentaworth --only firestore,storage
 - `/contact` writes to `contactMessages`
 - `/advertise-with-us` writes to `contactMessages`
 - `/promote-your-practice` writes to `contactMessages`
+- `/account` writes profile updates to `userProfiles/{uid}` and saved operations to `userProfiles/{uid}/savedOperations`

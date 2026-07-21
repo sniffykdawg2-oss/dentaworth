@@ -277,6 +277,11 @@ button:disabled {
 }
 
 .guide-hero {
+  background:
+    linear-gradient(90deg, rgba(7, 31, 79, 0.96) 0%, rgba(7, 31, 79, 0.86) 38%, rgba(7, 31, 79, 0.34) 68%, rgba(7, 31, 79, 0.12) 100%),
+    url("/images/dentaworth-hero.png");
+  background-position: center;
+  background-size: cover;
   isolation: isolate;
 }
 
@@ -296,6 +301,11 @@ button:disabled {
   align-self: center;
   position: relative;
   z-index: 2;
+}
+
+.guide-hero .hero-copy {
+  max-width: 680px;
+  padding-bottom: 130px;
 }
 
 .eyebrow {
@@ -406,6 +416,10 @@ p {
   min-height: 430px;
   position: relative;
   z-index: 1;
+}
+
+.guide-hero .hero-visual {
+  display: none;
 }
 
 .hero-visual::before {
@@ -713,6 +727,7 @@ tbody tr:hover {
   background: #fbfaf7;
   padding-bottom: clamp(54px, 8vw, 104px);
   padding-top: clamp(54px, 8vw, 104px);
+  position: relative;
 }
 
 .page-hero h1 {
@@ -720,11 +735,39 @@ tbody tr:hover {
 }
 
 .page-hero-care {
-  background:
-    linear-gradient(90deg, rgba(7, 31, 79, 0.9), rgba(16, 63, 53, 0.68)),
-    url("/images/dentaworth-hero.png");
+  background: #071f4f;
+  isolation: isolate;
+  min-height: 520px;
+  overflow: hidden;
+  padding-right: min(48vw, 640px);
+}
+
+.page-hero-care::before {
+  background: #7dd9df;
+  border-radius: 999px;
+  bottom: clamp(54px, 8vw, 96px);
+  content: "";
+  height: min(30vw, 390px);
+  position: absolute;
+  right: clamp(28px, 6vw, 90px);
+  width: min(30vw, 390px);
+  z-index: -1;
+}
+
+.page-hero-care::after {
+  background-image: url("/images/dentaworth-hero.png");
   background-position: center;
   background-size: cover;
+  border: 8px solid rgba(255, 255, 255, 0.18);
+  border-radius: 8px;
+  bottom: clamp(46px, 7vw, 84px);
+  box-shadow: 0 28px 60px rgba(0, 0, 0, 0.32);
+  content: "";
+  height: min(28vw, 340px);
+  position: absolute;
+  right: clamp(30px, 6vw, 96px);
+  width: min(38vw, 520px);
+  z-index: 0;
 }
 
 .page-hero-care h1,
@@ -746,6 +789,10 @@ tbody tr:hover {
 
 .page-hero-legal {
   background: #ffffff;
+}
+
+.page-hero-account {
+  background: #e8f6ef;
 }
 
 .auth-page {
@@ -773,6 +820,80 @@ tbody tr:hover {
 
 .text-button {
   justify-self: start;
+}
+
+.account-layout {
+  align-items: start;
+  display: grid;
+  gap: 20px;
+  grid-template-columns: minmax(260px, 340px) minmax(0, 1fr);
+}
+
+.account-summary {
+  background: #103f35;
+  border-radius: 8px;
+  color: #ffffff;
+  display: grid;
+  gap: 14px;
+  padding: clamp(22px, 4vw, 34px);
+  position: sticky;
+  top: 116px;
+}
+
+.account-summary h2,
+.account-summary p {
+  color: #ffffff;
+  margin-bottom: 0;
+}
+
+.account-summary span {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: #ffffff;
+  font-weight: 850;
+  justify-self: start;
+  padding: 8px 10px;
+}
+
+.account-panels {
+  display: grid;
+  gap: 18px;
+}
+
+.saved-operations {
+  background: #ffffff;
+  border: 1px solid #e2ded5;
+  border-radius: 8px;
+  padding: clamp(22px, 4vw, 34px);
+}
+
+.compact-heading {
+  margin-bottom: 14px;
+}
+
+.saved-list {
+  display: grid;
+  gap: 12px;
+}
+
+.saved-item {
+  align-items: center;
+  border: 1px solid #e2ded5;
+  border-radius: 8px;
+  display: flex;
+  gap: 18px;
+  justify-content: space-between;
+  padding: 16px;
+}
+
+.saved-item h3,
+.saved-item p {
+  margin-bottom: 0;
+}
+
+.saved-item p {
+  color: #52605c;
 }
 
 .page-section {
@@ -1004,8 +1125,23 @@ tbody tr:hover {
   .hero,
   .method-section,
   .contact-layout,
-  .auth-page {
+  .auth-page,
+  .account-layout {
     grid-template-columns: 1fr;
+  }
+
+  .page-hero-care {
+    min-height: 460px;
+    padding-right: clamp(20px, 5vw, 80px);
+  }
+
+  .page-hero-care::before,
+  .page-hero-care::after {
+    opacity: 0.24;
+  }
+
+  .account-summary {
+    position: static;
   }
 
   .hero {
@@ -1085,8 +1221,17 @@ tbody tr:hover {
     height: 52px;
   }
 
+  .saved-item {
+    align-items: start;
+    flex-direction: column;
+  }
+
   .hero {
-    padding-bottom: 390px;
+    padding-bottom: 60px;
+  }
+
+  .guide-hero .hero-copy {
+    display: none;
   }
 
   .hero-cues {
@@ -1103,7 +1248,9 @@ tbody tr:hover {
   }
 
   .hero-search-card {
-    bottom: 26px;
+    bottom: auto;
+    margin: 34px auto 0;
+    position: relative;
     width: calc(100% - 40px);
   }
 
