@@ -134,12 +134,12 @@ button {
 .notice-bar {
   background: #ffffff;
   border-bottom: 1px solid #e2ded5;
-  color: #111817;
-  font-size: clamp(1rem, 2vw, 1.55rem);
-  font-weight: 850;
+  color: #43524d;
+  font-size: clamp(0.82rem, 1.2vw, 0.98rem);
+  font-weight: 750;
   letter-spacing: 0;
-  line-height: 1.25;
-  padding: 18px clamp(20px, 5vw, 80px);
+  line-height: 1.45;
+  padding: 10px clamp(20px, 5vw, 80px);
 }
 
 .hero,
@@ -151,16 +151,37 @@ button {
 }
 
 .hero {
-  background: #fbfaf7;
+  background: #071f4f;
+  color: #ffffff;
   display: grid;
   gap: clamp(28px, 5vw, 80px);
-  grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.7fr);
-  padding-bottom: clamp(42px, 6vw, 88px);
-  padding-top: clamp(42px, 6vw, 88px);
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 0.82fr);
+  overflow: hidden;
+  padding-bottom: 160px;
+  padding-top: clamp(56px, 7vw, 96px);
+  position: relative;
+}
+
+.guide-hero {
+  isolation: isolate;
+}
+
+.guide-hero::after {
+  background: #fbfaf7;
+  border-radius: 55% 55% 0 0 / 42% 42% 0 0;
+  bottom: -1px;
+  content: "";
+  height: 95px;
+  left: -10%;
+  position: absolute;
+  right: -10%;
+  z-index: -1;
 }
 
 .hero-copy {
   align-self: center;
+  position: relative;
+  z-index: 2;
 }
 
 .eyebrow {
@@ -186,6 +207,11 @@ h1 {
   line-height: 0.92;
   margin-bottom: 18px;
   max-width: 920px;
+}
+
+.hero h1 {
+  color: #ffffff;
+  max-width: 760px;
 }
 
 h2 {
@@ -217,6 +243,10 @@ p {
   max-width: 720px;
 }
 
+.hero-subtitle {
+  color: rgba(255, 255, 255, 0.86);
+}
+
 .text-link {
   color: #111817;
   display: inline-flex;
@@ -226,54 +256,126 @@ p {
   text-underline-offset: 5px;
 }
 
-.hero-panel {
+.hero-cues {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: clamp(30px, 5vw, 54px);
+  max-width: 720px;
+}
+
+.hero-cues div {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  min-height: 110px;
+  text-align: center;
+}
+
+.hero-cues svg {
+  color: #ffcf5a;
+  height: 34px;
+  width: 34px;
+}
+
+.hero-cues span {
+  color: #ffffff;
+  font-weight: 800;
+  line-height: 1.28;
+}
+
+.hero-visual {
   align-self: end;
+  margin: 0;
+  min-height: 430px;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-visual::before {
+  background: #7dd9df;
+  border-radius: 999px;
+  bottom: 24px;
+  content: "";
+  height: min(34vw, 440px);
+  position: absolute;
+  right: 0;
+  width: min(34vw, 440px);
+  z-index: -1;
+}
+
+.hero-visual img {
+  border: 8px solid rgba(255, 255, 255, 0.18);
+  border-radius: 8px;
+  bottom: 18px;
+  box-shadow: 0 28px 60px rgba(0, 0, 0, 0.32);
+  height: 360px;
+  object-fit: cover;
+  object-position: center;
+  position: absolute;
+  right: 0;
+  width: min(42vw, 560px);
+  z-index: 2;
+}
+
+.hero-search-card {
   background: #ffffff;
   border: 1px solid #e2ded5;
   border-radius: 8px;
-  box-shadow: 0 22px 60px rgba(16, 63, 53, 0.12);
-  padding: clamp(22px, 4vw, 34px);
+  bottom: 28px;
+  box-shadow: 0 24px 55px rgba(17, 24, 23, 0.18);
+  color: #111817;
+  grid-column: 1 / -1;
+  justify-self: center;
+  max-width: 1180px;
+  padding: clamp(22px, 3vw, 34px);
+  position: absolute;
+  width: calc(100% - clamp(40px, 10vw, 160px));
+  z-index: 5;
 }
 
-.hero-panel h2 {
-  font-size: clamp(1.45rem, 3vw, 2.4rem);
+.search-card-heading {
+  align-items: baseline;
+  display: flex;
+  gap: 18px;
+  justify-content: space-between;
+  margin-bottom: 18px;
 }
 
-.hero-panel p {
-  color: #53615d;
+.search-card-heading h2 {
+  font-size: clamp(1.35rem, 2.6vw, 2rem);
   margin-bottom: 0;
 }
 
-.tooth-symbol {
-  align-items: center;
-  background: #e9f6f2;
-  border-radius: 8px;
-  display: inline-flex;
-  height: 76px;
-  justify-content: center;
-  margin-bottom: 24px;
-  width: 76px;
+.search-card-heading a {
+  color: #103f35;
+  font-weight: 850;
+  text-underline-offset: 4px;
 }
 
-.tooth-symbol span {
-  background: #ffffff;
-  border: 3px solid #103f35;
-  border-radius: 48% 48% 42% 42%;
-  display: block;
-  height: 46px;
-  position: relative;
-  width: 38px;
+.quick-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  margin-top: 18px;
 }
 
-.tooth-symbol span::after {
-  background: #ffcf5a;
-  border-radius: 999px;
-  content: "";
-  height: 8px;
-  left: 11px;
-  position: absolute;
-  top: 14px;
-  width: 8px;
+.quick-links a {
+  border-right: 1px solid #ded8cd;
+  color: #071f4f;
+  font-weight: 750;
+  padding: 4px 18px;
+  text-decoration: none;
+}
+
+.quick-links a:first-child {
+  padding-left: 0;
+}
+
+.quick-links a:last-child {
+  border-right: 0;
 }
 
 .section {
@@ -283,6 +385,7 @@ p {
 
 .table-section {
   background: #f3f1eb;
+  padding-top: clamp(84px, 10vw, 130px);
 }
 
 .section-heading {
@@ -335,7 +438,7 @@ p {
   align-items: end;
   display: grid;
   gap: 16px;
-  grid-template-columns: minmax(260px, 1fr) minmax(220px, 300px);
+  grid-template-columns: minmax(260px, 1fr) minmax(220px, 300px) auto;
   margin-bottom: 18px;
 }
 
@@ -637,8 +740,36 @@ tbody tr:hover {
     grid-template-columns: 1fr;
   }
 
-  .hero-panel {
-    align-self: stretch;
+  .hero {
+    padding-bottom: 300px;
+  }
+
+  .hero-visual {
+    min-height: 300px;
+  }
+
+  .hero-visual::before {
+    height: 280px;
+    right: 50%;
+    transform: translateX(50%);
+    width: 280px;
+  }
+
+  .hero-visual img {
+    height: 280px;
+    left: 50%;
+    object-position: center 22%;
+    right: auto;
+    transform: translateX(-50%);
+    width: min(86vw, 440px);
+  }
+
+  .hero-search-card {
+    bottom: 34px;
+  }
+
+  .guide-controls {
+    grid-template-columns: 1fr;
   }
 
   .procedure-grid {
@@ -676,7 +807,40 @@ tbody tr:hover {
   }
 
   .notice-bar {
-    font-size: 1rem;
+    font-size: 0.78rem;
+  }
+
+  .hero {
+    padding-bottom: 390px;
+  }
+
+  .hero-cues {
+    grid-template-columns: 1fr;
+    margin-top: 24px;
+  }
+
+  .hero-cues div {
+    align-items: center;
+    flex-direction: row;
+    justify-content: flex-start;
+    min-height: auto;
+    text-align: left;
+  }
+
+  .hero-search-card {
+    bottom: 26px;
+    width: calc(100% - 40px);
+  }
+
+  .search-card-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .quick-links a {
+    border-right: 0;
+    padding: 8px 14px 8px 0;
   }
 
   h1 {

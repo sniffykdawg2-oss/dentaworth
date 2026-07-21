@@ -1,15 +1,5 @@
 import { FormEvent, useEffect, useMemo, useState } from "react";
-import {
-  ArrowRight,
-  BarChart3,
-  CheckCircle2,
-  Mail,
-  Menu,
-  Search,
-  ShieldCheck,
-  Star,
-  X,
-} from "lucide-react";
+import { ArrowRight, BarChart3, CheckCircle2, Mail, Menu, Search, ShieldCheck, Star, Users, X } from "lucide-react";
 import { counties, countyCostRows, navItems, procedures, ProcedureKey } from "./content";
 
 type Page = "home" | "self-reporting" | "about" | "privacy-policy" | "contact" | "not-found";
@@ -187,23 +177,69 @@ function HomePage({ navigate }: { navigate: (href: string) => void }) {
       <section className="hero guide-hero">
         <div className="hero-copy">
           <p className="eyebrow">Florida dental cost intelligence</p>
-          <h1>Florida ratings and cost guide</h1>
+          <h1>Feel clearer about dental costs in Florida.</h1>
           <p className="hero-subtitle">
             Search county-level rating estimates and cash price ranges for common dental treatments.
           </p>
-          <a className="text-link" href="#method-note">
-            Treatment complications may affect pricing
-          </a>
-        </div>
-        <div className="hero-panel" aria-label="Dentaworth summary">
-          <div className="tooth-symbol" aria-hidden="true">
-            <span />
+          <div className="hero-cues" aria-label="Dentaworth guide highlights">
+            <div>
+              <BarChart3 aria-hidden="true" />
+              <span>County-level cost ranges</span>
+            </div>
+            <div>
+              <Star aria-hidden="true" />
+              <span>Dental ratings by area</span>
+            </div>
+            <div>
+              <Users aria-hidden="true" />
+              <span>Self-reported pricing support</span>
+            </div>
           </div>
-          <h2>Dental prices are easier to compare when the numbers sit in one place.</h2>
-          <p>
-            Dentaworth organizes public-facing cost ranges and self-reported prices so patients can
-            compare counties before calling around.
-          </p>
+        </div>
+        <figure className="hero-visual">
+          <img
+            src="/images/dentaworth-hero.png"
+            alt="Dental care team preparing a patient room"
+          />
+        </figure>
+        <div className="hero-search-card" aria-label="Find dental pricing">
+          <div className="search-card-heading">
+            <h2>Find the dental price range you need</h2>
+            <a href="#method-note">Treatment complications may affect pricing</a>
+          </div>
+          <div className="guide-controls" aria-label="Filter cost guide">
+            <label>
+              Search table
+              <span className="input-shell">
+                <Search size={17} aria-hidden="true" />
+                <input
+                  value={query}
+                  onChange={(event) => setQuery(event.target.value)}
+                  placeholder="Procedure, county, rating, or price"
+                />
+              </span>
+            </label>
+            <label>
+              County
+              <select value={county} onChange={(event) => setCounty(event.target.value)}>
+                <option value="">All counties</option>
+                {counties.map((item) => (
+                  <option key={item}>{item}</option>
+                ))}
+              </select>
+            </label>
+            <a className="button primary" href="#guide-heading">
+              Search
+              <Search size={18} aria-hidden="true" />
+            </a>
+          </div>
+          <div className="quick-links" aria-label="Popular procedures">
+            {["Cleaning", "Exam", "Implant", "Root canal", "Whitening", "Invisalign"].map((item) => (
+              <a key={item} href="#guide-heading" onClick={() => setQuery(item)}>
+                {item}
+              </a>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -217,29 +253,6 @@ function HomePage({ navigate }: { navigate: (href: string) => void }) {
             Submit pricing
             <ArrowRight size={18} aria-hidden="true" />
           </button>
-        </div>
-
-        <div className="guide-controls" aria-label="Filter cost guide">
-          <label>
-            Search table
-            <span className="input-shell">
-              <Search size={17} aria-hidden="true" />
-              <input
-                value={query}
-                onChange={(event) => setQuery(event.target.value)}
-                placeholder="Search county, rating, or price"
-              />
-            </span>
-          </label>
-          <label>
-            County
-            <select value={county} onChange={(event) => setCounty(event.target.value)}>
-              <option value="">All counties</option>
-              {counties.map((item) => (
-                <option key={item}>{item}</option>
-              ))}
-            </select>
-          </label>
         </div>
 
         <CostGuideTable rows={filteredRows} />
@@ -421,29 +434,84 @@ function PrivacyPolicyPage() {
     <PageShell
       eyebrow="Privacy Policy"
       title="Privacy Policy"
-      intro="This policy explains the basic information Dentaworth may collect through the website and how that information is used."
+      intro="Effective Date: June 27, 2026"
     >
       <div className="legal-copy">
+        <p>
+          At dentaworth ("we," "our," or "us"), accessible from dentaworth.com, one of our main
+          priorities is the privacy of our visitors. This Privacy Policy contains types of
+          information that is collected and recorded by dentaworth and how we use it.
+        </p>
+        <p>
+          If you have additional questions or require more information about our Privacy Policy, do
+          not hesitate to contact us.
+        </p>
         <h2>Information we collect</h2>
         <p>
-          Dentaworth may collect information you choose to submit through forms, including contact
-          details, county information, dental procedure pricing, and notes related to submitted
-          pricing reports.
+          We collect several different types of information for various purposes to provide and
+          improve our service to you. While using our site, such as filling out a self-report form,
+          we may ask you to provide certain personally identifiable information that can be used to
+          contact or identify you. This may include first and last name, email address, and dental
+          information that you voluntarily submit through our site.
         </p>
-        <h2>How information is used</h2>
         <p>
-          Submitted information may be used to respond to contact requests, review pricing reports,
-          improve published cost ranges, and maintain the website.
+          We also collect information on how the website is accessed and used. This may include your
+          computer's internet protocol address, browser type, browser version, pages visited, time
+          and date of visit, time spent on pages, and other diagnostic data.
         </p>
-        <h2>Accuracy and public display</h2>
+        <h2>How we use your information</h2>
         <p>
-          Dentaworth may aggregate or summarize submitted pricing information. Personal contact
-          information should not be displayed publicly unless permission is explicitly given.
+          dentaworth uses collected data to provide, operate, and maintain our website and services;
+          notify you about service changes or upcoming appointments; allow participation in
+          interactive website features; provide patient support and process dental inquiries; gather
+          analysis to improve the website; monitor usage; detect, prevent, and address technical
+          issues; and communicate with you for marketing or promotional purposes with your consent.
+        </p>
+        <h2>Cookies and web beacons</h2>
+        <p>
+          Like many websites, dentaworth.com uses cookies. Cookies may store information including
+          visitor preferences and pages accessed or visited. This information is used to optimize the
+          user experience by customizing page content based on browser type or other information.
+          You can choose to disable cookies through your individual browser options.
+        </p>
+        <h2>Sharing and disclosure of data</h2>
+        <p>
+          We do not sell, trade, or rent your personal identification information to others. We may
+          share data with service providers who help operate the website or analyze usage, and they
+          are obligated not to disclose or use it for other purposes. We may also disclose personal
+          data when necessary to comply with a legal obligation, protect the rights or property of
+          dentaworth, or protect the personal safety of users or the public.
+        </p>
+        <h2>Data security</h2>
+        <p>
+          The security of your data is important to us. We use industry-standard measures, such as
+          SSL encryption, to protect personal information. However, no method of transmission over
+          the Internet or method of electronic storage is 100% secure, and we cannot guarantee
+          absolute security.
+        </p>
+        <h2>Your data protection rights</h2>
+        <p>
+          Depending on your location, you may have rights regarding your personal information,
+          including the right to access copies of your personal data, request correction of
+          inaccurate information, request erasure under certain conditions, and object to or restrict
+          processing under certain conditions. If you make a request, we have one month to respond.
+        </p>
+        <h2>Children's privacy</h2>
+        <p>
+          We do not knowingly collect personally identifiable information from children under the age
+          of 18. If you believe a child provided this kind of information on our website, contact us
+          immediately and we will do our best to promptly remove it from our records.
+        </p>
+        <h2>Changes to this Privacy Policy</h2>
+        <p>
+          We may update this Privacy Policy from time to time. We will notify you of changes by
+          posting the new Privacy Policy on this page and updating the effective date. You are
+          advised to review this Privacy Policy periodically for changes.
         </p>
         <h2>Contact</h2>
         <p>
           Questions about this policy can be sent to{" "}
-          <a href="mailto:hello@dentaworth.com">hello@dentaworth.com</a>.
+          <a href="mailto:info@dentaworth.com">info@dentaworth.com</a>.
         </p>
       </div>
     </PageShell>
@@ -506,7 +574,7 @@ function ContactPage() {
         <aside className="contact-card">
           <Mail size={22} aria-hidden="true" />
           <h2>Email</h2>
-          <a href="mailto:hello@dentaworth.com">hello@dentaworth.com</a>
+          <a href="mailto:info@dentaworth.com">info@dentaworth.com</a>
           <p>Use email for corrections, self-reported price questions, or business inquiries.</p>
         </aside>
       </div>

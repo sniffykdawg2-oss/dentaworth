@@ -22,6 +22,7 @@ The project was originally started on Wix and is being moved to a GitHub-backed 
 - Firestore rules have been deployed.
 - Storage rules have been deployed.
 - Launch frontend pages are: cost guide, self reporting, about, privacy policy, contact, and 404.
+- The homepage hero uses a local generated image at `public/images/dentaworth-hero.png`; keep it project-local so visual QA does not depend on remote stock image loading.
 
 ## Notes For Future Agents
 
