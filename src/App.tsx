@@ -4,12 +4,17 @@ import {
   BarChart3,
   Bookmark,
   CheckCircle2,
+  ClipboardCheck,
+  FileText,
   Mail,
+  MapPin,
   Menu,
   Search,
   ShieldCheck,
   Star,
+  Stethoscope,
   UserRound,
+  Users,
   X,
 } from "lucide-react";
 import {
@@ -403,6 +408,120 @@ function HomePage({ navigate, routeVersion }: { navigate: (href: string) => void
         </div>
       </section>
 
+      <section className="section home-services" aria-labelledby="home-services-heading">
+        <div className="section-heading split-heading">
+          <div>
+            <p className="eyebrow">Start your search</p>
+            <h2 id="home-services-heading">Compare common dental procedures.</h2>
+          </div>
+          <button className="button secondary dark" type="button" onClick={() => navigate("/get-care-now")}>
+            How to use the guide
+            <ArrowRight size={18} aria-hidden="true" />
+          </button>
+        </div>
+        <div className="procedure-spotlight-grid">
+          {[
+            {
+              title: "Routine care",
+              items: ["Cleaning", "Exam", "X-ray"],
+              description: "Set expectations before booking preventive visits or first appointments.",
+            },
+            {
+              title: "Restorative work",
+              items: ["Filling", "Crown, ceramic", "Root canal"],
+              description: "Compare common treatment ranges before talking through a treatment plan.",
+            },
+            {
+              title: "Major treatment",
+              items: ["Extraction", "Implant", "Invisalign"],
+              description: "Use county-level ranges as a starting point for bigger financial decisions.",
+            },
+          ].map((group) => (
+            <article key={group.title} className="procedure-spotlight-card">
+              <Stethoscope aria-hidden="true" />
+              <h3>{group.title}</h3>
+              <p>{group.description}</p>
+              <div>
+                {group.items.map((item) => (
+                  <a key={item} href="#guide-heading" onClick={() => setTreatment(item)}>
+                    {item}
+                  </a>
+                ))}
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="section browse-section" aria-labelledby="browse-heading">
+        <div className="browse-copy">
+          <p className="eyebrow">Browse Florida</p>
+          <h2 id="browse-heading">Find price context by county.</h2>
+          <p>
+            Dental cash prices can vary by local market. Start with a county, then compare the
+            procedures most relevant to your appointment.
+          </p>
+        </div>
+        <div className="county-link-grid" aria-label="Popular counties">
+          {counties.slice(0, 8).map((item) => (
+            <a
+              key={item}
+              href={`/?county=${encodeURIComponent(item)}`}
+              onClick={(event) => {
+                event.preventDefault();
+                navigate(`/?county=${encodeURIComponent(item)}`);
+                requestAnimationFrame(() => {
+                  document.getElementById("guide-heading")?.scrollIntoView({ behavior: "smooth" });
+                });
+              }}
+            >
+              <MapPin size={18} aria-hidden="true" />
+              {item}
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <section className="section how-section" aria-labelledby="how-heading">
+        <div className="section-heading centered-heading">
+          <p className="eyebrow">How Dentaworth works</p>
+          <h2 id="how-heading">A clearer path before you call around.</h2>
+          <p>
+            Dentaworth is built to help people understand dental pricing earlier in the care
+            journey, without pretending estimates are final quotes.
+          </p>
+        </div>
+        <div className="how-step-grid">
+          {[
+            {
+              icon: Search,
+              title: "Search by treatment",
+              text: "Choose the procedure you are researching and narrow results by Florida county.",
+            },
+            {
+              icon: BarChart3,
+              title: "Compare local ranges",
+              text: "Use county-level cash price ranges to frame questions for dental offices.",
+            },
+            {
+              icon: ClipboardCheck,
+              title: "Ask better questions",
+              text: "Confirm what is included, whether complications change pricing, and what payment options exist.",
+            },
+          ].map((step, index) => {
+            const Icon = step.icon;
+            return (
+              <article key={step.title} className="how-step-card">
+                <span>{index + 1}</span>
+                <Icon aria-hidden="true" />
+                <h3>{step.title}</h3>
+                <p>{step.text}</p>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
       <section className="section table-section" aria-labelledby="guide-heading">
         <div className="section-heading split-heading">
           <div>
@@ -423,6 +542,49 @@ function HomePage({ navigate, routeVersion }: { navigate: (href: string) => void
             <p>Clear the filters or try another treatment and county.</p>
           </div>
         )}
+      </section>
+
+      <section className="section audience-section" aria-labelledby="audience-heading">
+        <div className="section-heading centered-heading">
+          <p className="eyebrow">Built for both sides</p>
+          <h2 id="audience-heading">Patients need context. Practices need visibility.</h2>
+        </div>
+        <div className="audience-grid">
+          <article>
+            <Users aria-hidden="true" />
+            <h3>For patients</h3>
+            <p>
+              Compare procedure ranges, save operations in your account, and submit pricing you
+              have received to improve the guide over time.
+            </p>
+            <div className="card-actions">
+              <button className="button primary" type="button" onClick={() => navigate("/account")}>
+                Open account
+                <ArrowRight size={18} aria-hidden="true" />
+              </button>
+              <button className="button secondary dark" type="button" onClick={() => navigate("/self-reporting")}>
+                Self-report prices
+              </button>
+            </div>
+          </article>
+          <article>
+            <FileText aria-hidden="true" />
+            <h3>For dental practices</h3>
+            <p>
+              Dentaworth is preparing practice profiles and promotion options for offices that want
+              to reach people researching treatment costs.
+            </p>
+            <div className="card-actions">
+              <button className="button primary" type="button" onClick={() => navigate("/promote-your-practice")}>
+                Promote your practice
+                <ArrowRight size={18} aria-hidden="true" />
+              </button>
+              <button className="button secondary dark" type="button" onClick={() => navigate("/advertise-with-us")}>
+                Advertise
+              </button>
+            </div>
+          </article>
+        </div>
       </section>
 
       <section className="section method-section" id="method-note">
