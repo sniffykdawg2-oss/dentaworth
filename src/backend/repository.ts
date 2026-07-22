@@ -1,5 +1,5 @@
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
-import { db } from "../firebase";
+import { db, requireFirebaseService } from "../firebase";
 import {
   collectionNames,
   ContactMessageInput,
@@ -7,9 +7,10 @@ import {
 } from "./schema";
 
 export async function createPriceReport(input: PriceReportInput) {
+  const configuredDb = requireFirebaseService(db, "Firestore");
   const now = serverTimestamp();
 
-  return addDoc(collection(db, collectionNames.priceReports), {
+  return addDoc(collection(configuredDb, collectionNames.priceReports), {
     ...input,
     source: "self-reporting-form",
     status: "pending",
@@ -23,9 +24,10 @@ export async function createContactMessage(
   input: ContactMessageInput,
   source: "contact-form" | "advertising-page" | "practice-promotion-page" = "contact-form",
 ) {
+  const configuredDb = requireFirebaseService(db, "Firestore");
   const now = serverTimestamp();
 
-  return addDoc(collection(db, collectionNames.contactMessages), {
+  return addDoc(collection(configuredDb, collectionNames.contactMessages), {
     ...input,
     source,
     status: "pending",
