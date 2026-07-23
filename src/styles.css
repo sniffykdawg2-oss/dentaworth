@@ -984,6 +984,29 @@ p {
   margin-top: 22px;
 }
 
+.dentist-directory {
+  margin-bottom: 24px;
+}
+
+.directory-grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.directory-grid article {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: clamp(22px, 3vw, 30px);
+}
+
+.directory-grid p {
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
 /* Inputs */
 label {
   color: var(--ink-2);
@@ -1669,6 +1692,116 @@ tbody tr:last-child td {
 }
 
 /* ==========================================================================
+   Admin dashboard
+   ========================================================================== */
+.admin-shell {
+  display: grid;
+  gap: 18px;
+}
+
+.admin-tabs {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 8px;
+}
+
+.admin-tabs button {
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  color: var(--muted);
+  flex: 1 1 160px;
+  font-weight: 700;
+  min-height: 44px;
+}
+
+.admin-tabs button[aria-selected="true"] {
+  background: var(--navy);
+  color: #fff;
+}
+
+.admin-tabs button:not([aria-selected="true"]):hover {
+  background: var(--surface-2);
+  color: var(--ink);
+}
+
+.admin-grid {
+  align-items: start;
+  display: grid;
+  gap: 18px;
+  grid-template-columns: minmax(0, 0.95fr) minmax(320px, 1.05fr);
+}
+
+.admin-panel,
+.admin-form {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: clamp(22px, 3vw, 30px);
+}
+
+.admin-panel {
+  display: grid;
+  gap: 14px;
+}
+
+.admin-list {
+  display: grid;
+  gap: 12px;
+}
+
+.admin-list article {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+}
+
+.admin-list h3 {
+  margin-bottom: 4px;
+}
+
+.admin-list p {
+  color: var(--muted);
+  margin-bottom: 8px;
+  overflow-wrap: anywhere;
+}
+
+.checkbox-group {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  display: grid;
+  gap: 10px 14px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 0;
+  padding: 16px;
+}
+
+.checkbox-group legend {
+  color: var(--ink-2);
+  font-weight: 700;
+  padding: 0 8px;
+}
+
+.checkbox-group label {
+  align-items: center;
+  display: flex;
+  font-size: 0.9rem;
+  gap: 8px;
+}
+
+.checkbox-group input {
+  min-height: auto;
+  width: auto;
+}
+
+/* ==========================================================================
    Footer + disclaimer
    ========================================================================== */
 .site-footer {
@@ -1785,7 +1918,9 @@ tbody tr:last-child td {
   }
 
   .procedure-spotlight-grid,
-  .how-step-grid {
+  .how-step-grid,
+  .directory-grid,
+  .admin-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -1888,7 +2023,10 @@ tbody tr:last-child td {
   .content-grid,
   .procedure-spotlight-grid,
   .how-step-grid,
-  .county-link-grid {
+  .directory-grid,
+  .county-link-grid,
+  .admin-grid,
+  .checkbox-group {
     grid-template-columns: 1fr;
   }
 

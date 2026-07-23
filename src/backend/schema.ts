@@ -58,22 +58,35 @@ export type PriceRangeRecord = {
   schemaVersion: 1;
 };
 
+export type PriceRangeInput = Omit<
+  PriceRangeRecord,
+  "createdAt" | "updatedAt" | "publishedAt" | "schemaVersion"
+>;
+
 export type DentistProfileRecord = {
   practiceName: string;
   slug: string;
   state: "Florida";
   county: string;
   city?: string;
+  address?: string;
+  zipCode?: string;
   websiteUrl?: string;
   phone?: string;
   email?: string;
   services: ProcedureKey[];
+  notes?: string;
   status: "draft" | "published" | "archived";
   createdAt: unknown;
   updatedAt: unknown;
   publishedAt?: unknown;
   schemaVersion: 1;
 };
+
+export type DentistProfileInput = Omit<
+  DentistProfileRecord,
+  "createdAt" | "updatedAt" | "publishedAt" | "schemaVersion"
+>;
 
 export const collectionNames = {
   priceReports: "priceReports",

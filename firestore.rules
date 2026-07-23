@@ -45,6 +45,25 @@ service cloud.firestore {
         ]);
     }
 
+    function validProcedureKey(value) {
+      return value in [
+        "rootCanal",
+        "xray",
+        "extraction",
+        "crown",
+        "cleaning",
+        "exam",
+        "implant",
+        "filling",
+        "whitening",
+        "invisalign"
+      ];
+    }
+
+    function validProfileAdminFlag() {
+      return request.resource.data.isAdmin == (request.auth.token.admin == true);
+    }
+
     match /priceReports/{reportId} {
       allow create: if hasOnlyKeys([
           "county",
@@ -109,19 +128,98 @@ service cloud.firestore {
 
     match /priceRanges/{rangeId} {
       allow read: if resource.data.status == "published";
-      allow create, update, delete: if isAdmin();
+      allow create, update: if isAdmin()
+        && request.resource.data.keys().hasOnly([
+          "state",
+          "county",
+          "procedure",
+          "low",
+          "high",
+          "currency",
+          "rating",
+          "status",
+          "sourceSummary",
+          "createdAt",
+          "updatedAt",
+          "publishedAt",
+          "schemaVersion"
+        ])
+        && request.resource.data.state == "Florida"
+        && isString(request.resource.data.county)
+        && request.resource.data.county.size() > 0
+        && validProcedureKey(request.resource.data.procedure)
+        && request.resource.data.low is number
+        && request.resource.data.high is number
+        && request.resource.data.low >= 0
+        && request.resource.data.high >= request.resource.data.low
+        && request.resource.data.currency == "USD"
+        && request.resource.data.status in ["draft", "published", "archived"]
+        && isString(request.resource.data.sourceSummary)
+        && request.resource.data.sourceSummary.size() > 0
+        && request.resource.data.schemaVersion == 1;
+      allow delete: if isAdmin();
     }
 
     match /dentistProfiles/{profileId} {
       allow read: if resource.data.status == "published";
-      allow create, update, delete: if isAdmin();
+      allow create, update: if isAdmin()
+        && request.resource.data.keys().hasOnly([
+          "practiceName",
+          "slug",
+          "state",
+          "county",
+          "city",
+          "address",
+          "zipCode",
+          "websiteUrl",
+          "phone",
+          "email",
+          "services",
+          "notes",
+          "status",
+          "createdAt",
+          "updatedAt",
+          "publishedAt",
+          "schemaVersion"
+        ])
+        && isString(request.resource.data.practiceName)
+        && request.resource.data.practiceName.size() > 0
+        && request.resource.data.practiceName.size() <= 180
+        && isString(request.resource.data.slug)
+        && request.resource.data.slug == profileId
+        && request.resource.data.state == "Florida"
+        && isString(request.resource.data.county)
+        && request.resource.data.county.size() > 0
+        && optionalString(request.resource.data.city, 120)
+        && optionalString(request.resource.data.address, 220)
+        && optionalString(request.resource.data.zipCode, 20)
+        && optionalString(request.resource.data.websiteUrl, 300)
+        && optionalString(request.resource.data.phone, 40)
+        && optionalString(request.resource.data.email, 180)
+        && optionalString(request.resource.data.notes, 3000)
+        && request.resource.data.services is list
+        && request.resource.data.services.size() > 0
+        && request.resource.data.services.size() <= 10
+        && request.resource.data.status in ["draft", "published", "archived"]
+        && request.resource.data.schemaVersion == 1;
+      allow delete: if isAdmin();
     }
 
     match /userProfiles/{userId} {
       allow create, update: if isSignedIn()
         && request.auth.uid == userId
         && request.resource.data.uid == userId
-        && request.resource.data.schemaVersion == 1;
+        && request.resource.data.keys().hasOnly([
+          "uid",
+          "email",
+          "displayName",
+          "isAdmin",
+          "lastSignedInAt",
+          "updatedAt",
+          "schemaVersion"
+        ])
+        && request.resource.data.schemaVersion == 1
+        && validProfileAdminFlag();
 
       allow read: if isAdmin() || (isSignedIn() && request.auth.uid == userId);
       allow delete: if isAdmin();
@@ -148,7 +246,7 @@ service cloud.firestore {
             "Whitening",
             "Extraction",
             "Root canal",
-            "Crown",
+            "Crown, ceramic",
             "Implant",
             "Invisalign"
           ]

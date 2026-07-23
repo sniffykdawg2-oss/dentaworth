@@ -2,12 +2,24 @@
   "priceRanges": [
     {
       "state": "Florida",
-      "county": "Example County",
+      "county": "Statewide average",
       "procedure": "cleaning",
       "low": 100,
       "high": 150,
       "currency": "USD",
       "rating": 4.5,
+      "status": "draft",
+      "sourceSummary": "Placeholder shape only. Replace with real reviewed methodology data.",
+      "schemaVersion": 1
+    },
+    {
+      "state": "Florida",
+      "county": "Broward",
+      "procedure": "implant",
+      "low": 3680,
+      "high": 4416,
+      "currency": "USD",
+      "rating": 4.8,
       "status": "draft",
       "sourceSummary": "Placeholder shape only. Replace with real reviewed methodology data.",
       "schemaVersion": 1
@@ -18,11 +30,14 @@
       "practiceName": "Example Dental Practice",
       "slug": "example-dental-practice",
       "state": "Florida",
-      "county": "Example County",
+      "county": "Broward",
       "city": "Example City",
+      "address": "",
+      "zipCode": "",
       "websiteUrl": "https://example.com",
       "phone": "",
       "email": "",
+      "notes": "Internal launch notes only. Do not publish unverified claims.",
       "services": ["cleaning", "exam"],
       "status": "draft",
       "schemaVersion": 1
