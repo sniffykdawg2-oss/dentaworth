@@ -47,3 +47,9 @@ The Firebase project id is configured as `dentaworth` in `.firebaserc`.
 Copy `.env.example` to `.env.local` and fill in the Firebase web app config values from the Firebase console before using live Firebase services in the browser.
 
 Backend schema and rules notes live in `docs/backend.md`.
+
+Set an owner/admin claim from a trusted machine:
+
+```bash
+GOOGLE_APPLICATION_CREDENTIALS=/absolute/path/to/service-account.json bun run admin:claim USER_UID_HERE
+```

@@ -11,13 +11,20 @@ export type ModerationFields = {
 
 export type ProcedurePriceMap = Partial<Record<ProcedureKey, number>>;
 
+export type SubmissionGuard = {
+  submissionGuard: {
+    formStartedAt: unknown;
+    website: "";
+  };
+};
+
 export type PriceReportInput = {
   county: string;
   state: "Florida";
   providerName?: string;
   procedurePrices: ProcedurePriceMap;
   notes?: string;
-};
+} & SubmissionGuard;
 
 export type PriceReportRecord = PriceReportInput &
   ModerationFields & {
@@ -32,7 +39,7 @@ export type ContactMessageInput = {
   email: string;
   message: string;
   topic: "general" | "correction" | "advertising" | "practice-promotion";
-};
+} & SubmissionGuard;
 
 export type ContactMessageRecord = ContactMessageInput &
   ModerationFields & {

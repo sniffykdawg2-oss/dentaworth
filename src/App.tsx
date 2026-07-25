@@ -689,6 +689,7 @@ function CostGuideTable({ rows }: { rows: CountyCostRow[] }) {
 function SelfReportingPage() {
   const [status, setStatus] = useState<SubmissionStatus>("idle");
   const [errorMessage, setErrorMessage] = useState("");
+  const [formStartedAt, setFormStartedAt] = useState(() => Date.now());
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -701,6 +702,7 @@ function SelfReportingPage() {
       await createPriceReport(input);
       setStatus("success");
       form.reset();
+      setFormStartedAt(Date.now());
     } catch (error) {
       setStatus("error");
       setErrorMessage(error instanceof Error ? error.message : "Unable to submit pricing report.");
@@ -726,6 +728,7 @@ function SelfReportingPage() {
         </div>
       </div>
       <form className="form-card report-form" onSubmit={handleSubmit}>
+        <SpamTrap formStartedAt={formStartedAt} />
         {status === "success" && (
           <div className="success-message" role="status">
             <CheckCircle2 size={19} aria-hidden="true" />
@@ -913,6 +916,7 @@ function PrivacyPolicyPage() {
 function ContactPage() {
   const [status, setStatus] = useState<SubmissionStatus>("idle");
   const [errorMessage, setErrorMessage] = useState("");
+  const [formStartedAt, setFormStartedAt] = useState(() => Date.now());
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -925,6 +929,7 @@ function ContactPage() {
       await createContactMessage(input, "contact-form");
       setStatus("success");
       form.reset();
+      setFormStartedAt(Date.now());
     } catch (error) {
       setStatus("error");
       setErrorMessage(error instanceof Error ? error.message : "Unable to send message.");
@@ -941,6 +946,7 @@ function ContactPage() {
       <BackButton />
       <div className="contact-layout">
         <form className="form-card" onSubmit={handleSubmit} noValidate>
+          <SpamTrap formStartedAt={formStartedAt} />
           {status === "success" && (
             <div className="success-message" role="status">
               <CheckCircle2 size={19} aria-hidden="true" />
@@ -1278,6 +1284,7 @@ function InquiryForm({
 }) {
   const [status, setStatus] = useState<SubmissionStatus>("idle");
   const [errorMessage, setErrorMessage] = useState("");
+  const [formStartedAt, setFormStartedAt] = useState(() => Date.now());
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -1290,6 +1297,7 @@ function InquiryForm({
       await createContactMessage(input, source);
       setStatus("success");
       form.reset();
+      setFormStartedAt(Date.now());
     } catch (error) {
       setStatus("error");
       setErrorMessage(error instanceof Error ? error.message : "Unable to submit inquiry.");
@@ -1298,6 +1306,7 @@ function InquiryForm({
 
   return (
     <form className="form-card inquiry-form" onSubmit={handleSubmit} noValidate>
+      <SpamTrap formStartedAt={formStartedAt} />
       {status === "success" && (
         <div className="success-message" role="status">
           <CheckCircle2 size={19} aria-hidden="true" />
@@ -1328,6 +1337,18 @@ function InquiryForm({
         <ArrowRight size={18} aria-hidden="true" />
       </button>
     </form>
+  );
+}
+
+function SpamTrap({ formStartedAt }: { formStartedAt: number }) {
+  return (
+    <div className="bot-field" aria-hidden="true">
+      <label>
+        Website
+        <input name="website" tabIndex={-1} autoComplete="off" />
+      </label>
+      <input type="hidden" name="formStartedAt" value={formStartedAt} />
+    </div>
   );
 }
 

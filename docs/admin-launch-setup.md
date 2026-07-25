@@ -22,18 +22,14 @@ The `/admin` dashboard requires a Firebase custom claim:
 
 Set this with the Firebase Admin SDK from a trusted environment, such as a local script or Google Cloud Shell. Do not expose claim-setting in the public app.
 
-Example Admin SDK snippet:
+This repo includes a local helper script:
 
-```js
-import { initializeApp, cert } from "firebase-admin/app";
-import { getAuth } from "firebase-admin/auth";
-
-initializeApp({
-  credential: cert("./service-account.json"),
-});
-
-await getAuth().setCustomUserClaims("USER_UID_HERE", { admin: true });
+```bash
+GOOGLE_APPLICATION_CREDENTIALS=/absolute/path/to/service-account.json bun run admin:claim USER_UID_HERE
 ```
+
+You can get the user's UID from Firebase Console > Authentication > Users.
+Do not commit the service account JSON file. Keep it outside the repo.
 
 After setting the claim, sign out and sign back in so the browser receives a fresh ID token.
 
@@ -54,7 +50,13 @@ After setting the claim, sign out and sign back in so the browser receives a fre
 - The Find a Dentist page reads `dentistProfiles` where `status == "published"`.
 - Draft and archived records are admin-only.
 
-## 5. Final Smoke Test
+## 5. Public Submission Spam Guard
+
+Public Firestore writes include a hidden honeypot field and a short form-time check enforced by Firestore rules. This blocks simple bot posts without adding paid infrastructure.
+
+For stronger protection later, enable Firebase App Check for the web app and enforce it on Firestore after testing real submissions.
+
+## 6. Final Smoke Test
 
 Before launch:
 

@@ -1,5 +1,6 @@
 import { maxLengths, PriceReportInput, ProcedurePriceMap } from "./schema";
 import { counties, ProcedureKey, procedures } from "../content";
+import { Timestamp } from "firebase/firestore";
 
 const procedureKeys = new Set<ProcedureKey>(procedures.map((procedure) => procedure.key));
 
@@ -61,5 +62,24 @@ export function buildPriceReportInput(formData: FormData): PriceReportInput {
     providerName: providerName || undefined,
     procedurePrices,
     notes: notes || undefined,
+    submissionGuard: buildSubmissionGuard(formData),
+  };
+}
+
+export function buildSubmissionGuard(formData: FormData) {
+  const startedAt = Number(formData.get("formStartedAt"));
+  const website = cleanText(formData.get("website"), 200);
+
+  if (!Number.isFinite(startedAt) || startedAt <= 0) {
+    throw new Error("Reload the page and try again.");
+  }
+
+  if (website) {
+    throw new Error("Unable to submit this form.");
+  }
+
+  return {
+    formStartedAt: Timestamp.fromMillis(startedAt),
+    website: "" as const,
   };
 }

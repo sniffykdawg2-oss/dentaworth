@@ -1,5 +1,5 @@
 import { ContactMessageInput, maxLengths } from "./schema";
-import { cleanLongText, cleanText, isValidEmail } from "./validation";
+import { buildSubmissionGuard, cleanLongText, cleanText, isValidEmail } from "./validation";
 
 export function buildContactMessageInput(
   formData: FormData,
@@ -21,5 +21,5 @@ export function buildContactMessageInput(
     throw new Error("Enter a message with at least 10 characters.");
   }
 
-  return { name, email, message, topic };
+  return { name, email, message, topic, submissionGuard: buildSubmissionGuard(formData) };
 }

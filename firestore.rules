@@ -29,6 +29,16 @@ service cloud.firestore {
         && request.resource.data.updatedAt == request.time;
     }
 
+    function hasValidSubmissionGuard() {
+      return request.resource.data.submissionGuard is map
+        && request.resource.data.submissionGuard.keys().hasOnly(["formStartedAt", "website"])
+        && request.resource.data.submissionGuard.website == ""
+        && request.resource.data.submissionGuard.formStartedAt is timestamp
+        && request.resource.data.submissionGuard.formStartedAt < request.time
+        && request.resource.data.submissionGuard.formStartedAt > request.time - duration.value(1, "h")
+        && request.time > request.resource.data.submissionGuard.formStartedAt + duration.value(3, "s");
+    }
+
     function validProcedurePrices() {
       return request.resource.data.procedurePrices is map
         && request.resource.data.procedurePrices.keys().hasOnly([
@@ -73,11 +83,13 @@ service cloud.firestore {
           "notes",
           "source",
           "status",
+          "submissionGuard",
           "schemaVersion",
           "createdAt",
           "updatedAt"
         ])
         && isPendingCreate()
+        && hasValidSubmissionGuard()
         && request.resource.data.source == "self-reporting-form"
         && request.resource.data.state == "Florida"
         && isString(request.resource.data.county)
@@ -97,11 +109,13 @@ service cloud.firestore {
           "topic",
           "source",
           "status",
+          "submissionGuard",
           "schemaVersion",
           "createdAt",
           "updatedAt"
         ])
         && isPendingCreate()
+        && hasValidSubmissionGuard()
         && request.resource.data.source in [
           "contact-form",
           "advertising-page",

@@ -29,6 +29,8 @@ Access requires:
 - a signed-in Firebase user
 - Firebase custom claim `admin: true`
 
+The repo includes `bun run admin:claim <uid>` for setting the owner/admin custom claim from a trusted local environment with `GOOGLE_APPLICATION_CREDENTIALS` pointed at a Firebase service account JSON file.
+
 The public site reads only `published` records from `priceRanges` and `dentistProfiles`. If no published `priceRanges` exist yet, the homepage falls back to the current seed table in `src/content.ts`.
 
 ## Collections
@@ -48,6 +50,7 @@ Important fields:
 - `status`: `pending`, later reviewed by admin
 - `schemaVersion`: `1`
 - `createdAt`, `updatedAt`
+- `submissionGuard`: hidden honeypot and form-start timestamp checked by Firestore rules
 
 ### `contactMessages`
 
@@ -63,6 +66,7 @@ Important fields:
 - `status`: `pending`
 - `schemaVersion`: `1`
 - `createdAt`, `updatedAt`
+- `submissionGuard`: hidden honeypot and form-start timestamp checked by Firestore rules
 
 ### `priceRanges`
 
@@ -153,6 +157,8 @@ Admin access expects a Firebase Auth custom claim:
 Set this later using Firebase Admin SDK or a trusted admin script. Do not expose admin claim management in the public app.
 
 Email/password sign-in must be enabled in Firebase Authentication before the sign-in form can authenticate real users.
+
+Public forms currently save to Firestore only. Email notifications are planned for Resend, but are intentionally deferred until the email/domain setup is ready.
 
 ## Deploy Rules
 

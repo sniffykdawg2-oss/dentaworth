@@ -1336,6 +1336,18 @@ tbody tr:last-child td {
   padding: clamp(22px, 4vw, 36px);
 }
 
+.bot-field {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  left: -10000px;
+  position: absolute;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
 .inquiry-form {
   margin-top: 18px;
 }

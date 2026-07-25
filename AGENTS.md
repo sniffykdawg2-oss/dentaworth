@@ -39,3 +39,6 @@ The project was originally started on Wix and is being moved to a GitHub-backed 
 - Use `.env.example` as the shape for frontend Firebase SDK config, and keep real `.env` files out of git.
 - Treat the visible county pricing table data as seed/frontend content until the backend schema is implemented.
 - Self-reporting, contact, advertise, and promote-practice forms save to Firestore. They do not send email yet.
+- Email notifications should use Resend when implemented later.
+- Public Firestore form submissions include `submissionGuard` with a hidden honeypot and form-start timestamp. Firestore rules require an empty `website` field and at least 3 seconds between form render and submit.
+- A local admin-claim helper exists: `GOOGLE_APPLICATION_CREDENTIALS=/absolute/path/to/service-account.json bun run admin:claim USER_UID_HERE`. Keep service account JSON files outside the repo.
