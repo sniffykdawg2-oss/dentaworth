@@ -51,5 +51,5 @@ Backend schema and rules notes live in `docs/backend.md`.
 Set an owner/admin claim from a trusted machine:
 
 ```bash
-GOOGLE_APPLICATION_CREDENTIALS=/absolute/path/to/service-account.json bun run admin:claim USER_UID_HERE
+bun run admin:claim USER_UID_HERE
 ```

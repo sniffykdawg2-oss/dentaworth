@@ -141,7 +141,7 @@ service cloud.firestore {
     }
 
     match /priceRanges/{rangeId} {
-      allow read: if resource.data.status == "published";
+      allow read: if isAdmin() || resource.data.status == "published";
       allow create, update: if isAdmin()
         && request.resource.data.keys().hasOnly([
           "state",
@@ -175,7 +175,7 @@ service cloud.firestore {
     }
 
     match /dentistProfiles/{profileId} {
-      allow read: if resource.data.status == "published";
+      allow read: if isAdmin() || resource.data.status == "published";
       allow create, update: if isAdmin()
         && request.resource.data.keys().hasOnly([
           "practiceName",

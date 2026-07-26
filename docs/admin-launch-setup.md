@@ -25,11 +25,16 @@ Set this with the Firebase Admin SDK from a trusted environment, such as a local
 This repo includes a local helper script:
 
 ```bash
+bun run admin:claim USER_UID_HERE
+```
+
+The helper uses your Firebase CLI login by default. If you prefer a service account, you can also run:
+
+```bash
 GOOGLE_APPLICATION_CREDENTIALS=/absolute/path/to/service-account.json bun run admin:claim USER_UID_HERE
 ```
 
-You can get the user's UID from Firebase Console > Authentication > Users.
-Do not commit the service account JSON file. Keep it outside the repo.
+You can get the user's UID from Firebase Console > Authentication > Users. Do not commit service account JSON files. Keep them outside the repo.
 
 After setting the claim, sign out and sign back in so the browser receives a fresh ID token.
 

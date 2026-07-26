@@ -29,7 +29,7 @@ Access requires:
 - a signed-in Firebase user
 - Firebase custom claim `admin: true`
 
-The repo includes `bun run admin:claim <uid>` for setting the owner/admin custom claim from a trusted local environment with `GOOGLE_APPLICATION_CREDENTIALS` pointed at a Firebase service account JSON file.
+The repo includes `bun run admin:claim <uid>` for setting the owner/admin custom claim from a trusted local environment. It uses the Firebase CLI login by default and can also use `GOOGLE_APPLICATION_CREDENTIALS` when pointed at a Firebase service account JSON file.
 
 The public site reads only `published` records from `priceRanges` and `dentistProfiles`. If no published `priceRanges` exist yet, the homepage falls back to the current seed table in `src/content.ts`.
 
