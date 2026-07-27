@@ -1,4 +1,4 @@
-import { maxLengths, PriceReportInput, ProcedurePriceMap } from "./schema";
+import { maxLengths, NewsletterSubscriptionInput, PriceReportInput, ProcedurePriceMap } from "./schema";
 import { counties, ProcedureKey, procedures } from "../content";
 import { Timestamp } from "firebase/firestore";
 
@@ -64,6 +64,16 @@ export function buildPriceReportInput(formData: FormData): PriceReportInput {
     notes: notes || undefined,
     submissionGuard: buildSubmissionGuard(formData),
   };
+}
+
+export function buildNewsletterSubscriptionInput(formData: FormData): NewsletterSubscriptionInput {
+  const email = cleanText(formData.get("email"), maxLengths.email).toLowerCase();
+
+  if (!isValidEmail(email)) {
+    throw new Error("Enter a valid email address.");
+  }
+
+  return { email, submissionGuard: buildSubmissionGuard(formData) };
 }
 
 export function buildSubmissionGuard(formData: FormData) {

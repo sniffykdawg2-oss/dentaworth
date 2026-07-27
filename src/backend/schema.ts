@@ -95,12 +95,24 @@ export type DentistProfileInput = Omit<
   "createdAt" | "updatedAt" | "publishedAt" | "schemaVersion"
 >;
 
+export type NewsletterSubscriptionInput = {
+  email: string;
+} & SubmissionGuard;
+
+export type NewsletterSubscriptionRecord = NewsletterSubscriptionInput & {
+  createdAt: unknown;
+  updatedAt: unknown;
+  source: "footer-newsletter";
+  schemaVersion: 1;
+};
+
 export const collectionNames = {
   priceReports: "priceReports",
   contactMessages: "contactMessages",
   priceRanges: "priceRanges",
   dentistProfiles: "dentistProfiles",
   auditLogs: "auditLogs",
+  newsletterSubscribers: "newsletterSubscribers",
 } as const;
 
 export const maxLengths = {

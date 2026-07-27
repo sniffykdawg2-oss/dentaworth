@@ -160,25 +160,17 @@ export const counties = countyCostRows
   .map((row) => row.county)
   .filter((county) => county !== "Statewide average");
 
-export const navItems = [
-  { label: "Cost guide", href: "/" },
-  { label: "Get care now", href: "/get-care-now" },
-  { label: "Find a dentist", href: "/find-a-dentist" },
-  { label: "Self reporting", href: "/self-reporting" },
-  { label: "About", href: "/about" },
-  { label: "Contact", href: "/contact" },
-];
-
-export const footerActions = [
-  { label: "Get care now", href: "/get-care-now" },
-  { label: "Find a dentist", href: "/find-a-dentist" },
-  { label: "Advertise with us", href: "/advertise-with-us" },
-  { label: "Promote your practice", href: "/promote-your-practice" },
-  { label: "About us", href: "/about" },
-  { label: "Self-report prices", href: "/self-reporting" },
-  { label: "Privacy Policy", href: "/privacy-policy" },
-  { label: "Contact us", href: "/contact" },
-];
-
 export const disclaimerText =
   "Cash price ranges are estimates only, for informational purposes only. They are not quotations and are non-binding. Price ranges are based on independent estimations and self-reported data. Dentaworth does not verify or guarantee accuracy. Treatment complications may affect pricing.";
+
+/** Each slogan is pre-split into two lines so the hero always reserves the
+ * same two-line height — no empty gap for shorter phrases. */
+export const heroSlogans: Array<[string, string]> = [
+  ["Know before", "you go."],
+  ["Own your", "smile."],
+  ["Ask before", "you pay."],
+  ["Price clarity,", "finally."],
+  ["See the range,", "then decide."],
+];
+
+export const smileCycleWords = ["Own", "Love", "Maintain", "Protect"];

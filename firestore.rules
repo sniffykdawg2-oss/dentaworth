@@ -140,6 +140,27 @@ service cloud.firestore {
       allow read, update, delete: if isAdmin();
     }
 
+    match /newsletterSubscribers/{subscriptionId} {
+      allow create: if hasOnlyKeys([
+          "email",
+          "source",
+          "submissionGuard",
+          "schemaVersion",
+          "createdAt",
+          "updatedAt"
+        ])
+        && request.resource.data.schemaVersion == 1
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.updatedAt == request.time
+        && hasValidSubmissionGuard()
+        && request.resource.data.source == "footer-newsletter"
+        && isString(request.resource.data.email)
+        && request.resource.data.email.matches("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$")
+        && request.resource.data.email.size() <= 180;
+
+      allow read, update, delete: if isAdmin();
+    }
+
     match /priceRanges/{rangeId} {
       allow read: if isAdmin() || resource.data.status == "published";
       allow create, update: if isAdmin()

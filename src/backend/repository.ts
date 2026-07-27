@@ -17,6 +17,7 @@ import {
   ContactMessageRecord,
   DentistProfileInput,
   DentistProfileRecord,
+  NewsletterSubscriptionInput,
   PriceRangeInput,
   PriceRangeRecord,
   PriceReportInput,
@@ -51,6 +52,19 @@ export async function createContactMessage(
     ...input,
     source,
     status: "pending",
+    schemaVersion: 1,
+    createdAt: now,
+    updatedAt: now,
+  });
+}
+
+export async function createNewsletterSubscription(input: NewsletterSubscriptionInput) {
+  const configuredDb = requireFirebaseService(db, "Firestore");
+  const now = serverTimestamp();
+
+  return addDoc(collection(configuredDb, collectionNames.newsletterSubscribers), {
+    ...input,
+    source: "footer-newsletter",
     schemaVersion: 1,
     createdAt: now,
     updatedAt: now,
