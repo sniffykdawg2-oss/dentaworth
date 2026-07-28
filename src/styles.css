@@ -14,13 +14,12 @@
   --navy: #0b2c63;
   --navy-700: #123a7a;
   --navy-900: #071c40;
-  --green: #0f4034;
-  --green-700: #12513f;
-  --teal: #2d806b;
+  --accent: #2f8fd6;
+  --accent-strong: #1668a8;
+  --accent-soft: #8fd0f5;
   --sky-deep: #2f6fa8;
   --sky-deep-700: #255a89;
   --sky-tint: #eaf3fb;
-  --teal-soft: #7dd9df;
   --amber: #ffce55;
   --amber-strong: #f6b93b;
   --amber-ink: #3a2b06;
@@ -54,7 +53,7 @@
   --shadow-md: 0 6px 20px rgba(16, 26, 25, 0.09);
   --shadow-lg: 0 22px 54px rgba(9, 24, 48, 0.18);
   --shadow-hard: 5px 5px 0 rgba(11, 44, 99, 0.1);
-  --ring: 0 0 0 3px rgba(45, 128, 107, 0.35);
+  --ring: 0 0 0 3px rgba(47, 143, 214, 0.35);
 
   --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-display: "Fraunces", Georgia, "Times New Roman", serif;
@@ -110,14 +109,61 @@ img {
   max-width: 100%;
 }
 
+svg {
+  display: block;
+  flex-shrink: 0;
+}
+
 :focus-visible {
-  outline: 3px solid var(--teal);
+  outline: 3px solid var(--accent);
   outline-offset: 2px;
   border-radius: 3px;
 }
 
 ::selection {
-  background: rgba(45, 128, 107, 0.2);
+  background: rgba(47, 143, 214, 0.2);
+}
+
+/* ---------- Scroll reveal ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 800ms var(--ease), transform 800ms var(--ease);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-stagger.is-visible > * {
+  animation: rise 700ms var(--ease) both;
+}
+
+.reveal-stagger.is-visible > *:nth-child(1) {
+  animation-delay: 0ms;
+}
+
+.reveal-stagger.is-visible > *:nth-child(2) {
+  animation-delay: 120ms;
+}
+
+.reveal-stagger.is-visible > *:nth-child(3) {
+  animation-delay: 240ms;
+}
+
+.reveal-stagger.is-visible > *:nth-child(4) {
+  animation-delay: 360ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal-stagger > * {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
 }
 
 /* ---------- Motion primitives ---------- */
@@ -238,15 +284,17 @@ img {
 }
 
 .brand img {
+  border-radius: 9px;
   display: block;
-  height: 38px;
+  height: 40px;
   object-fit: contain;
-  width: 52px;
+  width: 40px;
 }
 
 .footer-brand img {
-  height: 42px;
-  width: 58px;
+  border-radius: 10px;
+  height: 44px;
+  width: 44px;
 }
 
 .drawer-toggle {
@@ -376,7 +424,7 @@ img {
 .text-button {
   background: transparent;
   border: 0;
-  color: var(--teal);
+  color: var(--accent);
   font-weight: 700;
   justify-self: start;
   padding: 6px 2px;
@@ -385,7 +433,7 @@ img {
 }
 
 .text-button:hover {
-  color: var(--green);
+  color: var(--accent-strong);
   text-decoration: underline;
 }
 
@@ -529,23 +577,26 @@ img {
    ========================================================================== */
 .eyebrow {
   align-items: center;
-  color: var(--teal);
+  color: var(--accent-strong);
   display: inline-flex;
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  font-weight: 600;
-  gap: 8px;
-  letter-spacing: 0.1em;
+  font-family: var(--font-sans);
+  font-size: 0.76rem;
+  font-weight: 700;
+  gap: 9px;
+  letter-spacing: 0.14em;
   margin: 0 0 14px;
   text-transform: uppercase;
 }
 
 .eyebrow::before {
-  background: var(--amber-strong);
+  background: var(--accent);
+  border-radius: var(--radius-pill);
+  box-shadow: 0 0 0 4px rgba(47, 143, 214, 0.18);
   content: "";
   display: inline-block;
-  height: 2px;
-  width: 18px;
+  flex: 0 0 auto;
+  height: 7px;
+  width: 7px;
 }
 
 h1,
@@ -914,9 +965,17 @@ p {
   position: relative;
 }
 
+.home-services-flow {
+  bottom: -40px;
+  height: 260px;
+  left: auto;
+  right: -40px;
+  width: 480px;
+}
+
 /* ---------- Decorative background art ---------- */
 .bg-art {
-  color: var(--sky-deep);
+  color: var(--accent);
   pointer-events: none;
   position: absolute;
   z-index: -1;
@@ -924,27 +983,33 @@ p {
 
 .bg-art circle {
   fill: currentColor;
-  opacity: 0.16;
+  opacity: 0.24;
 }
 
 .bg-art path {
   fill: none;
-  opacity: 0.14;
+  opacity: 0.22;
   stroke: currentColor;
 }
 
 .dot-ring-decoration {
-  height: 260px;
-  right: -70px;
-  top: 30px;
-  width: 260px;
+  height: 340px;
+  right: -90px;
+  top: 10px;
+  width: 340px;
+}
+
+.dot-ring-decoration.dot-ring-secondary {
+  color: var(--sky-deep);
+  height: 200px;
+  width: 200px;
 }
 
 .flow-line-decoration {
   bottom: -30px;
-  height: 300px;
+  height: 360px;
   left: -60px;
-  width: 560px;
+  width: 660px;
 }
 
 /* ---------- Procedures: copy + image, not repeated cards ---------- */
@@ -1017,13 +1082,18 @@ p {
 
 .split-media-figure {
   aspect-ratio: 1 / 1;
-  border: 1.5px solid var(--ink);
-  box-shadow: var(--shadow-hard);
+  clip-path: polygon(18% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 24%);
   margin: 0;
-  overflow: hidden;
+  position: relative;
 }
 
 .split-media-figure img {
+  -webkit-mask-image: linear-gradient(130deg, transparent 0%, transparent 12%, #000 48%, #000 100%),
+    linear-gradient(to top, transparent 0%, #000 28%);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(130deg, transparent 0%, transparent 12%, #000 48%, #000 100%),
+    linear-gradient(to top, transparent 0%, #000 28%);
+  mask-composite: intersect;
   display: block;
   height: 100%;
   object-fit: cover;
@@ -1078,8 +1148,7 @@ p {
 .florida-map-frame {
   aspect-ratio: 460 / 420;
   background: var(--surface);
-  border: 1.5px solid var(--ink);
-  box-shadow: var(--shadow-hard);
+  clip-path: polygon(0% 9%, 91% 0%, 100% 100%, 0% 100%);
   overflow: hidden;
   padding: clamp(16px, 2.4vw, 28px);
   position: relative;
@@ -1092,20 +1161,24 @@ p {
   width: 100%;
 }
 
+.florida-water {
+  fill: url(#florida-water);
+}
+
 .florida-county-lines {
   stroke-linejoin: round;
 }
 
 .florida-county-other {
-  fill: var(--surface-2);
-  stroke: var(--surface);
+  fill: #f5f1e4;
+  stroke: #fff;
   stroke-width: 1.2;
 }
 
 .florida-county-tracked {
   fill: var(--sky-tint);
   stroke: var(--sky-deep);
-  stroke-width: 1.6;
+  stroke-width: 1.8;
 }
 
 .florida-pin {
@@ -1113,16 +1186,22 @@ p {
 }
 
 .florida-pin-halo {
-  fill: rgba(255, 206, 85, 0.4);
+  fill: rgba(47, 143, 214, 0.22);
   opacity: 0;
   transition: opacity 160ms var(--ease);
 }
 
-.florida-pin-dot {
+.florida-pin-mark {
   fill: var(--sky-deep);
-  stroke: var(--surface);
-  stroke-width: 2;
-  transition: fill 160ms var(--ease);
+  stroke: #fff;
+  stroke-width: 1.5;
+  transition: fill 160ms var(--ease), transform 160ms var(--ease);
+  transform-box: fill-box;
+  transform-origin: bottom center;
+}
+
+.florida-pin-dot {
+  fill: #fff;
 }
 
 .florida-pin text {
@@ -1140,9 +1219,10 @@ p {
   opacity: 1;
 }
 
-.florida-pin:hover .florida-pin-dot,
-.florida-pin.is-active .florida-pin-dot {
-  fill: var(--amber-ink);
+.florida-pin:hover .florida-pin-mark,
+.florida-pin.is-active .florida-pin-mark {
+  fill: var(--accent-strong);
+  transform: scale(1.15);
 }
 
 /* ---------- How it works: connected strip, not 3 identical cards ---------- */
@@ -1182,7 +1262,7 @@ p {
 }
 
 .process-step svg {
-  color: var(--teal);
+  color: var(--accent);
   margin: 14px 0 16px;
 }
 
@@ -1293,6 +1373,13 @@ p {
   top: -40px;
 }
 
+.audience-section .dot-ring-secondary {
+  bottom: -60px;
+  left: -60px;
+  right: auto;
+  top: auto;
+}
+
 .split-panel {
   border: 1.5px solid var(--ink);
   box-shadow: var(--shadow-hard);
@@ -1325,12 +1412,12 @@ p {
 }
 
 .split-panel svg {
-  color: var(--teal);
+  color: var(--accent);
   margin-bottom: 20px;
 }
 
 .split-panel article:last-child svg {
-  color: var(--teal-soft);
+  color: var(--accent-soft);
 }
 
 .split-panel h3 {
@@ -1402,7 +1489,7 @@ textarea:hover {
 input:focus,
 select:focus,
 textarea:focus {
-  border-color: var(--teal);
+  border-color: var(--accent);
   box-shadow: var(--ring);
   outline: none;
 }
@@ -1518,13 +1605,13 @@ textarea {
 .page-hero-care .eyebrow,
 .page-hero-business .eyebrow,
 .page-hero-provider .eyebrow {
-  color: var(--teal-soft);
+  color: var(--accent-soft);
 }
 
 .page-hero-care .eyebrow::before,
 .page-hero-business .eyebrow::before,
 .page-hero-provider .eyebrow::before {
-  background: var(--teal-soft);
+  background: var(--accent-soft);
 }
 
 .page-hero-care p,
@@ -1579,7 +1666,7 @@ textarea {
   align-items: center;
   background: transparent;
   border: 0;
-  color: var(--teal);
+  color: var(--accent);
   display: inline-flex;
   font-weight: 700;
   gap: 8px;
@@ -1589,7 +1676,7 @@ textarea {
 }
 
 .back-button:hover {
-  color: var(--green);
+  color: var(--accent-strong);
   gap: 12px;
 }
 
@@ -1609,7 +1696,7 @@ textarea {
 }
 
 .security-note svg {
-  color: var(--teal);
+  color: var(--accent);
   flex: 0 0 auto;
   margin-top: 3px;
 }
@@ -1740,7 +1827,7 @@ textarea {
 }
 
 .legal-copy a {
-  color: var(--teal);
+  color: var(--accent);
   font-weight: 600;
 }
 
@@ -1761,7 +1848,7 @@ textarea {
 }
 
 .contact-card svg {
-  color: var(--teal);
+  color: var(--accent);
 }
 
 .contact-card h2 {
@@ -1821,7 +1908,7 @@ textarea {
 }
 
 .provider-note svg {
-  color: var(--teal);
+  color: var(--accent);
   flex: 0 0 auto;
   margin-top: 2px;
 }
@@ -1855,7 +1942,7 @@ textarea {
 }
 
 .account-summary svg {
-  color: var(--teal-soft);
+  color: var(--accent-soft);
 }
 
 .account-summary h2 {
@@ -2078,7 +2165,7 @@ textarea {
 }
 
 .admin-pages-list a svg {
-  color: var(--teal);
+  color: var(--accent);
   flex: 0 0 auto;
 }
 
@@ -2147,7 +2234,7 @@ textarea {
 }
 
 .drug-card .eyebrow::before {
-  background: var(--teal);
+  background: var(--accent);
 }
 
 .drug-card h3 {
@@ -2196,7 +2283,7 @@ textarea {
 }
 
 .help-faq-item summary::after {
-  color: var(--teal);
+  color: var(--accent);
   content: "+";
   flex: 0 0 auto;
   font-family: var(--font-mono);
@@ -2368,7 +2455,7 @@ textarea {
 }
 
 .result-field-value svg {
-  color: var(--teal);
+  color: var(--accent);
   flex: 0 0 auto;
 }
 
@@ -2488,7 +2575,7 @@ textarea {
 }
 
 .newsletter-form input:focus {
-  border-color: var(--teal-soft);
+  border-color: var(--accent-soft);
 }
 
 .newsletter-form button {
@@ -2507,7 +2594,7 @@ textarea {
 }
 
 .newsletter-status {
-  color: var(--teal-soft);
+  color: var(--accent-soft);
   font-size: 0.84rem;
   font-weight: 600;
   margin: 0;

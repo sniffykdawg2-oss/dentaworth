@@ -2,15 +2,27 @@ import { useState } from "react";
 import { ArrowRight, BarChart3, ClipboardCheck, FileText, Search, Users } from "lucide-react";
 import { counties, heroSlogans, smileCycleWords, treatmentOptions } from "../content";
 import { useWordCycle } from "../hooks/textEffects";
+import { useReveal } from "../hooks/useReveal";
 import { Typeahead } from "../components/Typeahead";
 import { FloridaMap } from "../components/FloridaMap";
 import { DotRing, FlowLine } from "../components/BackgroundArt";
+
+function revealClass(isVisible: boolean, extra = "") {
+  return `${extra} reveal${isVisible ? " is-visible" : ""}`.trim();
+}
 
 export function HomePage({ navigate }: { navigate: (href: string) => void }) {
   const [treatment, setTreatment] = useState("");
   const [county, setCounty] = useState("");
   const { item: heroSlogan, isExiting: isHeroSloganExiting } = useWordCycle(heroSlogans, 5000);
   const { index: cycleWordIndex, isExiting: isCycleWordExiting } = useWordCycle(smileCycleWords);
+  const proceduresReveal = useReveal<HTMLElement>();
+  const browseReveal = useReveal<HTMLElement>();
+  const howReveal = useReveal<HTMLElement>();
+  const stepsReveal = useReveal<HTMLDivElement>();
+  const smileReveal = useReveal<HTMLElement>();
+  const audienceReveal = useReveal<HTMLElement>();
+  const panelReveal = useReveal<HTMLDivElement>();
 
   function runSearch() {
     const params = new URLSearchParams();
@@ -68,8 +80,13 @@ export function HomePage({ navigate }: { navigate: (href: string) => void }) {
         </div>
       </section>
 
-      <section className="section home-services" aria-labelledby="home-services-heading">
+      <section
+        ref={proceduresReveal.ref}
+        className={revealClass(proceduresReveal.isVisible, "section home-services")}
+        aria-labelledby="home-services-heading"
+      >
         <DotRing className="dot-ring-decoration" />
+        <FlowLine className="flow-line-decoration home-services-flow" />
         <div className="section-heading">
           <p className="eyebrow">Start your search</p>
           <h2 id="home-services-heading">Compare common dental procedures.</h2>
@@ -127,7 +144,11 @@ export function HomePage({ navigate }: { navigate: (href: string) => void }) {
         </div>
       </section>
 
-      <section className="section browse-section" aria-labelledby="browse-heading">
+      <section
+        ref={browseReveal.ref}
+        className={revealClass(browseReveal.isVisible, "section browse-section")}
+        aria-labelledby="browse-heading"
+      >
         <DotRing className="dot-ring-decoration" />
         <div className="browse-copy">
           <p className="eyebrow">Browse Florida</p>
@@ -156,7 +177,11 @@ export function HomePage({ navigate }: { navigate: (href: string) => void }) {
         </div>
       </section>
 
-      <section className="section how-section" aria-labelledby="how-heading">
+      <section
+        ref={howReveal.ref}
+        className={revealClass(howReveal.isVisible, "section how-section")}
+        aria-labelledby="how-heading"
+      >
         <DotRing className="dot-ring-decoration" />
         <div className="section-heading centered-heading">
           <p className="eyebrow">How Dentaworth works</p>
@@ -166,7 +191,10 @@ export function HomePage({ navigate }: { navigate: (href: string) => void }) {
             journey, without pretending estimates are final quotes.
           </p>
         </div>
-        <div className="process-strip">
+        <div
+          ref={stepsReveal.ref}
+          className={`process-strip reveal-stagger${stepsReveal.isVisible ? " is-visible" : ""}`}
+        >
           {[
             {
               icon: Search,
@@ -188,7 +216,7 @@ export function HomePage({ navigate }: { navigate: (href: string) => void }) {
             return (
               <article key={step.title} className="process-step">
                 <span className="process-step-number">STEP {index + 1}</span>
-                <Icon aria-hidden="true" />
+                <Icon size={26} strokeWidth={1.75} aria-hidden="true" />
                 <h3>{step.title}</h3>
                 <p>{step.text}</p>
               </article>
@@ -197,7 +225,11 @@ export function HomePage({ navigate }: { navigate: (href: string) => void }) {
         </div>
       </section>
 
-      <section className="section smile-section" aria-labelledby="smile-heading">
+      <section
+        ref={smileReveal.ref}
+        className={revealClass(smileReveal.isVisible, "section smile-section")}
+        aria-labelledby="smile-heading"
+      >
         <DotRing className="dot-ring-decoration" />
         <div className="smile-copy">
           <h2 id="smile-heading">
@@ -230,15 +262,23 @@ export function HomePage({ navigate }: { navigate: (href: string) => void }) {
         </figure>
       </section>
 
-      <section className="section audience-section" aria-labelledby="audience-heading">
+      <section
+        ref={audienceReveal.ref}
+        className={revealClass(audienceReveal.isVisible, "section audience-section")}
+        aria-labelledby="audience-heading"
+      >
         <FlowLine className="flow-line-decoration" />
+        <DotRing className="dot-ring-decoration dot-ring-secondary" />
         <div className="section-heading centered-heading">
           <p className="eyebrow">Built for both sides</p>
           <h2 id="audience-heading">Patients need context. Practices need visibility.</h2>
         </div>
-        <div className="split-panel">
+        <div
+          ref={panelReveal.ref}
+          className={`split-panel reveal-stagger${panelReveal.isVisible ? " is-visible" : ""}`}
+        >
           <article>
-            <Users aria-hidden="true" />
+            <Users size={30} strokeWidth={1.75} aria-hidden="true" />
             <h3>For patients</h3>
             <p>
               Compare procedure ranges, save operations in your account, and submit pricing you
@@ -255,7 +295,7 @@ export function HomePage({ navigate }: { navigate: (href: string) => void }) {
             </div>
           </article>
           <article>
-            <FileText aria-hidden="true" />
+            <FileText size={30} strokeWidth={1.75} aria-hidden="true" />
             <h3>For dental practices</h3>
             <p>
               Dentaworth is preparing practice profiles and promotion options for offices that want

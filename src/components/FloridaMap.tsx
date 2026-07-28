@@ -24,6 +24,8 @@ const labelOffsets: Record<string, { dx: number; dy: number; anchor?: "start" | 
   Broward: { dx: 14, dy: 4, anchor: "start" },
 };
 
+const pinPath = "M0 0C0 0 -9 -14.5 -9 -21A9 9 0 1 1 9 -21C9 -14.5 0 0 0 0Z";
+
 export function FloridaMap({
   counties,
   activeCounty,
@@ -35,8 +37,20 @@ export function FloridaMap({
 }) {
   return (
     <svg className="florida-map" viewBox="0 0 460 420" role="img" aria-label="Map of tracked Florida counties">
-      <path className="florida-county-lines florida-county-other" d={floridaOtherCountyPaths} />
-      <path className="florida-county-lines florida-county-tracked" d={floridaTrackedCountyPaths} />
+      <defs>
+        <radialGradient id="florida-water" cx="30%" cy="20%" r="90%">
+          <stop offset="0%" stopColor="#eef7fd" />
+          <stop offset="100%" stopColor="#cfe7f5" />
+        </radialGradient>
+        <filter id="florida-land-shadow" x="-20%" y="-20%" width="140%" height="140%">
+          <feDropShadow dx="0" dy="3" stdDeviation="4" floodColor="#0b2c63" floodOpacity="0.18" />
+        </filter>
+      </defs>
+      <rect className="florida-water" x="0" y="0" width="460" height="420" />
+      <g filter="url(#florida-land-shadow)">
+        <path className="florida-county-lines florida-county-other" d={floridaOtherCountyPaths} />
+        <path className="florida-county-lines florida-county-tracked" d={floridaTrackedCountyPaths} />
+      </g>
       {counties.map((county) => {
         const position = countyPins[county];
         if (!position) return null;
@@ -59,8 +73,9 @@ export function FloridaMap({
               }
             }}
           >
-            <circle r="11" className="florida-pin-halo" />
-            <circle r="5.5" className="florida-pin-dot" />
+            <circle className="florida-pin-halo" cy="-18" r="15" />
+            <path className="florida-pin-mark" d={pinPath} />
+            <circle className="florida-pin-dot" cy="-21" r="3.2" />
             <text x={label.dx} y={label.dy} textAnchor={label.anchor}>
               {county}
             </text>
