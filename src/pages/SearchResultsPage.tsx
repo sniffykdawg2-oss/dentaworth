@@ -90,7 +90,6 @@ export function SearchResultsPage({ navigate, routeVersion }: { navigate: (href:
   return (
     <section className="search-results-page">
       <div className="search-results-header">
-        <p className="eyebrow">Search results</p>
         <h1>
           Showing results for: <span>{treatmentLabel}</span> in <span>{countyLabel}</span>
         </h1>

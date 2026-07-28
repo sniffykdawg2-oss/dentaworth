@@ -14,7 +14,6 @@ export type PageHeroVariant =
   | "editorial";
 
 export function PageShell({
-  eyebrow,
   title,
   intro,
   children,
@@ -29,7 +28,6 @@ export function PageShell({
   return (
     <>
       <section className={`page-hero page-hero-${variant}`}>
-        <p className="eyebrow">{eyebrow}</p>
         <h1>{title}</h1>
         <p>{intro}</p>
       </section>

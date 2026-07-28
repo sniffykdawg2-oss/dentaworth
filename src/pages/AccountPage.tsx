@@ -28,7 +28,6 @@ export function AccountPage({ authUser, navigate }: { authUser: AuthUser | null;
     return (
       <section className="auth-page">
         <div className="auth-copy">
-          <p className="eyebrow">Account center</p>
           <h1>Sign in to view your account.</h1>
           <p>Saved operations, profile settings, and future review tools live behind sign in.</p>
         </div>

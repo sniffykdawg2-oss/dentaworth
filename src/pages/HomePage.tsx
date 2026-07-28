@@ -84,7 +84,6 @@ export function HomePage({ navigate }: { navigate: (href: string) => void }) {
         <DotRing className="dot-ring-decoration" />
         <FlowLine className="flow-line-decoration home-services-flow" />
         <div className="section-heading">
-          <p className="eyebrow">Start your search</p>
           <h2 id="home-services-heading">Compare common dental procedures.</h2>
         </div>
         <div className="split-media-block">
@@ -147,7 +146,6 @@ export function HomePage({ navigate }: { navigate: (href: string) => void }) {
       >
         <DotRing className="dot-ring-decoration" />
         <div className="browse-copy">
-          <p className="eyebrow">Browse Florida</p>
           <h2 id="browse-heading">Find price context by county.</h2>
           <p>
             Dental cash prices can vary by local market. Here is a look at a few of the Florida
@@ -178,7 +176,6 @@ export function HomePage({ navigate }: { navigate: (href: string) => void }) {
       >
         <DotRing className="dot-ring-decoration" />
         <div className="section-heading centered-heading">
-          <p className="eyebrow">How Dentaworth works</p>
           <h2 id="how-heading">A clearer path before you call around.</h2>
           <p>
             Dentaworth is built to help people understand dental pricing earlier in the care
@@ -264,7 +261,6 @@ export function HomePage({ navigate }: { navigate: (href: string) => void }) {
         <FlowLine className="flow-line-decoration" />
         <DotRing className="dot-ring-decoration dot-ring-secondary" />
         <div className="section-heading centered-heading">
-          <p className="eyebrow">Built for both sides</p>
           <h2 id="audience-heading">Patients need context. Practices need visibility.</h2>
         </div>
         <div

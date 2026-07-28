@@ -108,7 +108,8 @@ export function AuthGatewayPage({
       <div className="auth-art auth-art-rings" aria-hidden="true" />
       <div className="auth-art auth-art-flow" aria-hidden="true" />
       <a className="auth-logo" href="/" onClick={(event) => { event.preventDefault(); navigate("/"); }}>
-        <span>DentaWorth</span>
+        <span>Denta</span>
+        <span className="brand-worth">Worth</span>
       </a>
 
       <div className="auth-panel-shell">

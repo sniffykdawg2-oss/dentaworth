@@ -52,7 +52,6 @@ export function AdminPage({ authUser, navigate }: { authUser: AuthUser | null; n
     return (
       <section className="auth-page">
         <div className="auth-copy">
-          <p className="eyebrow">Admin dashboard</p>
           <h1>Sign in to manage Dentaworth.</h1>
           <p>Admin tools require Firebase Auth and an owner-approved admin claim.</p>
         </div>

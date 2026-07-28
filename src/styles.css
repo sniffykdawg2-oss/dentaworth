@@ -282,6 +282,10 @@ svg {
   transition: opacity 160ms var(--ease);
 }
 
+.brand-worth {
+  color: var(--accent);
+}
+
 .brand:hover {
   opacity: 0.82;
 }
@@ -699,6 +703,9 @@ p {
 }
 
 .button svg {
+  align-self: center;
+  flex: 0 0 auto;
+  margin-top: 1px;
   transition: transform 200ms var(--ease);
 }
 
@@ -959,12 +966,15 @@ p {
 }
 
 .home-services .section-heading h2 {
-  margin-left: clamp(0px, 6vw, 64px);
+  font-size: clamp(3.1rem, 5.8vw, 5.2rem);
+  line-height: 1.04;
+  margin-left: 0;
+  max-width: 12.5ch;
 }
 
 @media (min-width: 981px) {
   .home-services .split-media-figure {
-    margin-top: -96px;
+    margin-top: 0;
   }
 }
 
@@ -1111,6 +1121,13 @@ p {
   grid-template-columns: minmax(0, 0.6fr) minmax(320px, 1fr);
   overflow: hidden;
   position: relative;
+}
+
+.browse-copy h2,
+.how-section .section-heading h2,
+.audience-section .section-heading h2 {
+  font-size: clamp(2.6rem, 5vw, 4.5rem);
+  line-height: 1.05;
 }
 
 .browse-section .dot-ring-decoration {
@@ -1420,7 +1437,7 @@ p {
 }
 
 .split-panel h3 {
-  font-size: 1.6rem;
+  font-size: clamp(2rem, 3vw, 2.6rem);
   margin-bottom: 10px;
 }
 
@@ -1429,6 +1446,14 @@ p {
   flex-wrap: wrap;
   gap: 12px;
   margin-top: 22px;
+}
+
+.card-actions .button svg {
+  transform: translateY(9px);
+}
+
+.card-actions .button.primary:hover svg {
+  transform: translate(3px, 9px);
 }
 
 .dentist-directory {
