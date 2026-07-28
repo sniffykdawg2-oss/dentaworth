@@ -29,7 +29,7 @@ export function HomePage({ navigate }: { navigate: (href: string) => void }) {
         <div className="hero-copy">
           <div className="hero-slogan-wrap">
             <h1 className={isHeroSloganExiting ? "hero-slogan is-exiting" : "hero-slogan"}>
-              {heroSlogan[0]}
+              {heroSlogan[0]}{" "}
               <br />
               {heroSlogan[1]}
             </h1>
