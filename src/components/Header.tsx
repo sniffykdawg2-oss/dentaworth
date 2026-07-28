@@ -51,8 +51,7 @@ export function Header({
           <span className="sr-only">Open navigation</span>
         </button>
         <a className="brand" href="/" onClick={(event) => handleLinkClick(event, "/", navigate)}>
-          <img src="/images/dentaworth-mark.svg" alt="" aria-hidden="true" />
-          <span>Dentaworth</span>
+          <img src="/images/dentaworth-logo.svg" alt="DentaWorth" />
         </a>
         <a className="skip-link" href="#main-content">
           Skip to content
@@ -109,8 +108,7 @@ export function Header({
       <aside id="site-drawer" className={isMenuOpen ? "site-drawer is-open" : "site-drawer"} aria-hidden={!isMenuOpen}>
         <div className="drawer-header">
           <a className="brand" href="/" onClick={(event) => handleLinkClick(event, "/", navigate)}>
-            <img src="/images/dentaworth-mark.svg" alt="" aria-hidden="true" />
-            <span>Dentaworth</span>
+            <img src="/images/dentaworth-logo.svg" alt="DentaWorth" />
           </a>
           <button type="button" onClick={() => setIsMenuOpen(false)} aria-label="Close navigation">
             <X size={22} aria-hidden="true" />

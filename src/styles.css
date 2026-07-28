@@ -271,14 +271,7 @@ svg {
 
 .brand {
   align-items: center;
-  color: var(--navy);
   display: inline-flex;
-  font-family: var(--font-display);
-  font-size: 1.28rem;
-  font-weight: 700;
-  font-style: italic;
-  gap: 10px;
-  letter-spacing: -0.01em;
   text-decoration: none;
   transition: opacity 160ms var(--ease);
 }
@@ -288,17 +281,15 @@ svg {
 }
 
 .brand img {
-  border-radius: 9px;
   display: block;
-  height: 40px;
+  height: 48px;
   object-fit: contain;
-  width: 40px;
+  width: 180px;
 }
 
 .footer-brand img {
-  border-radius: 10px;
-  height: 44px;
-  width: 44px;
+  height: 52px;
+  width: 194px;
 }
 
 .drawer-toggle {
@@ -1299,8 +1290,8 @@ p {
 }
 
 .smile-copy h2 {
-  font-size: clamp(2rem, 3.6vw, 3rem);
-  line-height: 1.18;
+  font-size: clamp(2.6rem, 5.2vw, 4.4rem);
+  line-height: 1.12;
 }
 
 .cycle-word-wrap {
@@ -1959,13 +1950,7 @@ textarea {
 .auth-logo {
   align-items: center;
   animation: rise 520ms var(--ease) both;
-  color: var(--navy);
   display: inline-flex;
-  font-family: var(--font-display);
-  font-size: clamp(1.45rem, 3vw, 2rem);
-  font-style: italic;
-  font-weight: 800;
-  gap: 12px;
   margin-bottom: 22px;
   text-decoration: none;
   transition: transform 180ms var(--ease), opacity 180ms var(--ease);
@@ -1977,10 +1962,10 @@ textarea {
 }
 
 .auth-logo img {
-  border-radius: 13px;
-  box-shadow: 0 12px 24px rgba(11, 44, 99, 0.14);
-  height: 52px;
-  width: 52px;
+  display: block;
+  height: clamp(64px, 8vw, 82px);
+  object-fit: contain;
+  width: min(78vw, 310px);
 }
 
 .auth-panel-shell {

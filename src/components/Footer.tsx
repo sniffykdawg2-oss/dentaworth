@@ -7,8 +7,7 @@ export function Footer({ navigate }: { navigate: (href: string) => void }) {
       <div className="footer-top">
         <div className="footer-brand-col">
           <a className="brand footer-brand" href="/" onClick={(event) => handleLinkClick(event, "/", navigate)}>
-            <img src="/images/dentaworth-mark.svg" alt="" aria-hidden="true" />
-            <span>Dentaworth</span>
+            <img src="/images/dentaworth-logo.svg" alt="DentaWorth" />
           </a>
           <p>Florida dental ratings and cash price range estimates.</p>
           <Newsletter />
