@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { ArrowRight, BarChart3, ClipboardCheck, FileText, Search, Users } from "lucide-react";
-import { counties, heroSlogans, smileCycleWords, treatmentOptions } from "../content";
+import { counties, countySlides, heroSlogans, smileCycleWords, treatmentOptions } from "../content";
 import { useWordCycle } from "../hooks/textEffects";
 import { useReveal } from "../hooks/useReveal";
 import { Typeahead } from "../components/Typeahead";
-import { FloridaMap } from "../components/FloridaMap";
+import { CountySlideshow } from "../components/CountySlideshow";
 import { DotRing, FlowLine } from "../components/BackgroundArt";
 
 function revealClass(isVisible: boolean, extra = "") {
@@ -29,10 +29,6 @@ export function HomePage({ navigate }: { navigate: (href: string) => void }) {
     if (treatment) params.set("treatment", treatment);
     if (county) params.set("county", county);
     navigate(params.toString() ? `/search?${params.toString()}` : "/search");
-  }
-
-  function searchCounty(selectedCounty: string) {
-    navigate(`/search?county=${encodeURIComponent(selectedCounty)}`);
   }
 
   return (
@@ -154,8 +150,8 @@ export function HomePage({ navigate }: { navigate: (href: string) => void }) {
           <p className="eyebrow">Browse Florida</p>
           <h2 id="browse-heading">Find price context by county.</h2>
           <p>
-            Dental cash prices can vary by local market. Select a county on the map to see pricing
-            context for that area.
+            Dental cash prices can vary by local market. Here is a look at a few of the Florida
+            counties Dentaworth tracks pricing for.
           </p>
           <div className="browse-stats">
             <div>
@@ -172,9 +168,7 @@ export function HomePage({ navigate }: { navigate: (href: string) => void }) {
             </div>
           </div>
         </div>
-        <div className="florida-map-frame">
-          <FloridaMap counties={counties} onSelectCounty={searchCounty} />
-        </div>
+        <CountySlideshow slides={countySlides} />
       </section>
 
       <section

@@ -271,7 +271,13 @@ svg {
 
 .brand {
   align-items: center;
+  color: var(--navy);
   display: inline-flex;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1;
   text-decoration: none;
   transition: opacity 160ms var(--ease);
 }
@@ -280,16 +286,8 @@ svg {
   opacity: 0.82;
 }
 
-.brand img {
-  display: block;
-  height: 48px;
-  object-fit: contain;
-  width: 180px;
-}
-
-.footer-brand img {
-  height: 52px;
-  width: 194px;
+.footer-brand {
+  font-size: 1.62rem;
 }
 
 .drawer-toggle {
@@ -1290,8 +1288,8 @@ p {
 }
 
 .smile-copy h2 {
-  font-size: clamp(2.6rem, 5.2vw, 4.4rem);
-  line-height: 1.12;
+  font-size: clamp(3.2rem, 6.4vw, 5.4rem);
+  line-height: 1.08;
 }
 
 .cycle-word-wrap {
@@ -1950,7 +1948,13 @@ textarea {
 .auth-logo {
   align-items: center;
   animation: rise 520ms var(--ease) both;
+  color: var(--navy);
   display: inline-flex;
+  font-family: var(--font-display);
+  font-size: clamp(2.05rem, 5vw, 3.25rem);
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1;
   margin-bottom: 22px;
   text-decoration: none;
   transition: transform 180ms var(--ease), opacity 180ms var(--ease);
@@ -1959,13 +1963,6 @@ textarea {
 .auth-logo:hover {
   opacity: 0.82;
   transform: translateY(-2px);
-}
-
-.auth-logo img {
-  display: block;
-  height: clamp(64px, 8vw, 82px);
-  object-fit: contain;
-  width: min(78vw, 310px);
 }
 
 .auth-panel-shell {
@@ -3050,11 +3047,6 @@ textarea {
 
   .auth-logo {
     margin-bottom: 16px;
-  }
-
-  .auth-logo img {
-    height: 44px;
-    width: 44px;
   }
 
   .auth-panel-shell {

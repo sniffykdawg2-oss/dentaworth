@@ -160,6 +160,16 @@ export const counties = countyCostRows
   .map((row) => row.county)
   .filter((county) => county !== "Statewide average");
 
+export const countySlides = [
+  { name: "Alachua", src: "/images/counties/alachua.jpg", alt: "Alachua County courthouse and civil justice center" },
+  { name: "Baker", src: "/images/counties/baker.jpg", alt: "Downtown Macclenny in Baker County" },
+  { name: "Bay County", src: "/images/counties/bay-county.jpg", alt: "Bay County courthouse in Panama City" },
+  { name: "Bradford", src: "/images/counties/bradford.jpg", alt: "Bradford County courthouse" },
+  { name: "Brevard", src: "/images/counties/brevard.jpg", alt: "Brevard County courthouse in Titusville" },
+  { name: "Broward", src: "/images/counties/broward.jpg", alt: "Hollywood, Florida water tower in Broward County" },
+  { name: "Calhoun", src: "/images/counties/calhoun.jpg", alt: "Calhoun County courthouse" },
+];
+
 export const disclaimerText =
   "Cash price ranges are estimates only, for informational purposes only. They are not quotations and are non-binding. Price ranges are based on independent estimations and self-reported data. Dentaworth does not verify or guarantee accuracy. Treatment complications may affect pricing.";
 
@@ -173,4 +183,4 @@ export const heroSlogans: Array<[string, string]> = [
   ["See the range,", "then decide."],
 ];
 
-export const smileCycleWords = ["Own", "Love", "Maintain", "Protect"];
+export const smileCycleWords = ["Own", "Love", "Keep", "Bare"];
