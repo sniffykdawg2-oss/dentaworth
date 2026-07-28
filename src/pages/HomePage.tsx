@@ -83,11 +83,11 @@ export function HomePage({ navigate }: { navigate: (href: string) => void }) {
       >
         <DotRing className="dot-ring-decoration" />
         <FlowLine className="flow-line-decoration home-services-flow" />
-        <div className="section-heading">
-          <h2 id="home-services-heading">Compare common dental procedures.</h2>
-        </div>
         <div className="split-media-block">
           <div className="split-media-copy">
+            <div className="section-heading">
+              <h2 id="home-services-heading">Compare common dental procedures.</h2>
+            </div>
             <p>
               From routine cleanings to major treatment, Dentaworth breaks procedures into three
               groups so you always know roughly where a quote should land before you book.
@@ -170,6 +170,43 @@ export function HomePage({ navigate }: { navigate: (href: string) => void }) {
       </section>
 
       <section
+        ref={smileReveal.ref}
+        className={revealClass(smileReveal.isVisible, "section smile-section")}
+        aria-labelledby="smile-heading"
+      >
+        <DotRing className="dot-ring-decoration" />
+        <div className="smile-copy">
+          <h2 id="smile-heading">
+            Smiles are what we see first.
+            <br />
+            <span className="cycle-word-wrap">
+              {smileCycleWords.map((word, index) => (
+                <span
+                  key={word}
+                  className={
+                    index !== cycleWordIndex ? "cycle-word is-hidden" : isCycleWordExiting ? "cycle-word is-exiting" : "cycle-word"
+                  }
+                >
+                  {word}
+                </span>
+              ))}
+            </span>{" "}
+            yours.
+          </h2>
+        </div>
+        <figure className="smile-figure">
+          <img src="/images/mother-daughter-smile.jpg" alt="A mother smiling with her daughter" loading="lazy" />
+          <figcaption>
+            <span>Read our blog</span>
+            <button className="button primary compact" type="button" onClick={() => navigate("/blog")}>
+              Visit the blog
+              <ArrowRight size={16} aria-hidden="true" />
+            </button>
+          </figcaption>
+        </figure>
+      </section>
+
+      <section
         ref={howReveal.ref}
         className={revealClass(howReveal.isVisible, "section how-section")}
         aria-labelledby="how-heading"
@@ -214,43 +251,6 @@ export function HomePage({ navigate }: { navigate: (href: string) => void }) {
             );
           })}
         </div>
-      </section>
-
-      <section
-        ref={smileReveal.ref}
-        className={revealClass(smileReveal.isVisible, "section smile-section")}
-        aria-labelledby="smile-heading"
-      >
-        <DotRing className="dot-ring-decoration" />
-        <div className="smile-copy">
-          <h2 id="smile-heading">
-            Smiles are what we see first.
-            <br />
-            <span className="cycle-word-wrap">
-              {smileCycleWords.map((word, index) => (
-                <span
-                  key={word}
-                  className={
-                    index !== cycleWordIndex ? "cycle-word is-hidden" : isCycleWordExiting ? "cycle-word is-exiting" : "cycle-word"
-                  }
-                >
-                  {word}
-                </span>
-              ))}
-            </span>{" "}
-            yours.
-          </h2>
-        </div>
-        <figure className="smile-figure">
-          <img src="/images/mother-daughter-smile.jpg" alt="A mother smiling with her daughter" loading="lazy" />
-          <figcaption>
-            <span>Read our blog</span>
-            <button className="button primary compact" type="button" onClick={() => navigate("/blog")}>
-              Visit the blog
-              <ArrowRight size={16} aria-hidden="true" />
-            </button>
-          </figcaption>
-        </figure>
       </section>
 
       <section
