@@ -1,5 +1,6 @@
 import {
   browserLocalPersistence,
+  createUserWithEmailAndPassword,
   onAuthStateChanged,
   sendPasswordResetEmail,
   setPersistence,
@@ -69,6 +70,16 @@ export async function signInWithEmail(email: string, password: string) {
   const token = await credential.user.getIdTokenResult();
 
   await upsertUserProfile(credential.user, Boolean(token.claims.admin));
+
+  return credential.user;
+}
+
+export async function createAccountWithEmail(email: string, password: string) {
+  const configuredAuth = requireFirebaseService(auth, "Firebase Auth");
+
+  await setPersistence(configuredAuth, browserLocalPersistence);
+  const credential = await createUserWithEmailAndPassword(configuredAuth, email, password);
+  await upsertUserProfile(credential.user, false);
 
   return credential.user;
 }

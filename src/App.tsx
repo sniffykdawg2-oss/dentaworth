@@ -30,6 +30,7 @@ export function App() {
   const [page, setPage] = useState<Page>(getCurrentPage);
   const [authUser, setAuthUser] = useState<AuthUser | null>(null);
   const [routeVersion, setRouteVersion] = useState(0);
+  const isAuthRoute = page === "sign-in" || page === "provider-login";
 
   useEffect(() => {
     function handlePopState() {
@@ -53,8 +54,8 @@ export function App() {
   return (
     <>
       <PageMeta page={page} />
-      <DevelopmentBanner />
-      <Header currentPage={page} navigate={navigate} authUser={authUser} />
+      {!isAuthRoute && <DevelopmentBanner />}
+      {!isAuthRoute && <Header currentPage={page} navigate={navigate} authUser={authUser} />}
       <main id="main-content">
         {page === "home" && <HomePage navigate={navigate} />}
         {page === "search" && <SearchResultsPage navigate={navigate} routeVersion={routeVersion} />}
@@ -77,8 +78,8 @@ export function App() {
         {page === "admin" && <AdminPage authUser={authUser} navigate={navigate} />}
         {page === "not-found" && <NotFoundPage navigate={navigate} />}
       </main>
-      <Disclaimer />
-      <Footer navigate={navigate} />
+      {!isAuthRoute && <Disclaimer />}
+      {!isAuthRoute && <Footer navigate={navigate} />}
     </>
   );
 }
