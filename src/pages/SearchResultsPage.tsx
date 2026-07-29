@@ -6,8 +6,6 @@ import { subscribeToPublishedDentistProfiles, subscribeToPublishedPriceRanges } 
 import { DentistProfileRecord, PriceRangeRecord } from "../backend/schema";
 import { buildCountyRowsFromPriceRanges, getProcedureLabel } from "../pageHelpers";
 
-const representativeProcedures: ProcedureKey[] = ["cleaning", "exam", "filling"];
-
 function resolveProcedureKey(rawTreatment: string): ProcedureKey | null {
   const normalized = rawTreatment.trim().toLowerCase();
   if (!normalized) return null;
@@ -74,7 +72,8 @@ export function SearchResultsPage({ navigate, routeVersion }: { navigate: (href:
       const haystack = [
         row.county,
         row.rating,
-        resolvedProcedureKey ? getProcedureLabel(resolvedProcedureKey) : representativeProcedures.map(getProcedureLabel).join(" "),
+        ...procedures.map((procedure) => procedure.label),
+        ...procedures.map((procedure) => row[procedure.key]),
         ...dentistsForCounty.map((profile) => profile.practiceName),
       ]
         .join(" ")
@@ -82,7 +81,7 @@ export function SearchResultsPage({ navigate, routeVersion }: { navigate: (href:
 
       return haystack.includes(normalized);
     });
-  }, [matchingRows, refineQuery, resolvedProcedureKey, publishedDentists]);
+  }, [matchingRows, refineQuery, publishedDentists]);
 
   const treatmentLabel = resolvedProcedureKey ? getProcedureLabel(resolvedProcedureKey) : rawFilters.treatment || "All treatments";
   const countyLabel = resolvedCounty || (rawFilters.county ? rawFilters.county : "Florida (all counties)");
@@ -124,13 +123,7 @@ export function SearchResultsPage({ navigate, routeVersion }: { navigate: (href:
                       {getProcedureLabel(resolvedProcedureKey)}
                     </span>
                   ) : (
-                    <div className="result-chip-group">
-                      {representativeProcedures.map((key) => (
-                        <span className="result-chip" key={key}>
-                          {getProcedureLabel(key)}
-                        </span>
-                      ))}
-                    </div>
+                    <span className="result-field-value">All procedures</span>
                   )}
                 </div>
                 <div className="result-field">
@@ -150,10 +143,9 @@ export function SearchResultsPage({ navigate, routeVersion }: { navigate: (href:
                 <div className="result-field result-field-price">
                   <span className="result-field-label">Price range</span>
                   <span className="result-field-value result-price">
-                    $
                     {resolvedProcedureKey
-                      ? row[resolvedProcedureKey] || "Not yet available"
-                      : representativeProcedures.map((key) => row[key]).filter(Boolean)[0] || "Not yet available"}
+                      ? `$${row[resolvedProcedureKey] || "Not yet available"}`
+                      : `${procedures.length} ranges`}
                   </span>
                 </div>
                 <div className="result-field result-field-rating">
@@ -164,6 +156,16 @@ export function SearchResultsPage({ navigate, routeVersion }: { navigate: (href:
                   Get care
                   <ArrowRight size={16} aria-hidden="true" />
                 </button>
+                {!resolvedProcedureKey && (
+                  <dl className="result-price-breakdown" aria-label={`${row.county} procedure price ranges`}>
+                    {procedures.map((procedure) => (
+                      <div key={procedure.key}>
+                        <dt>{procedure.label}</dt>
+                        <dd>${row[procedure.key]}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                )}
               </article>
             );
           })}
