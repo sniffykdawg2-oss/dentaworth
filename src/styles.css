@@ -4269,3 +4269,62 @@ textarea {
     top: calc(var(--header-h) + 10px);
   }
 }
+
+/* Final route-polish overrides: keep these last so older repeated sections cannot win. */
+.page-section > .back-button {
+  backdrop-filter: blur(12px) !important;
+  background: rgba(255, 255, 255, 0.78) !important;
+  border: 1px solid rgba(47, 143, 214, 0.18) !important;
+  border-radius: var(--radius-pill) !important;
+  box-shadow: 0 12px 34px rgba(9, 24, 48, 0.08) !important;
+  color: var(--navy) !important;
+  left: auto !important;
+  margin: 0 !important;
+  padding: 10px 16px !important;
+  position: fixed !important;
+  right: clamp(20px, 5vw, 80px) !important;
+  top: calc(var(--header-h) + 14px) !important;
+  z-index: 75 !important;
+}
+
+.drugs-layout {
+  background:
+    linear-gradient(90deg, #f3efe3 0%, #f3efe3 28%, #f7fbff 28%, #f7fbff 100%) !important;
+  grid-template-columns: minmax(250px, 0.34fr) minmax(0, 1fr) !important;
+}
+
+.drug-card {
+  background: transparent !important;
+  border: 0 !important;
+  border-top: 1.5px solid rgba(11, 44, 99, 0.18) !important;
+  min-height: 190px !important;
+  padding: 22px 0 0 !important;
+  transform: none !important;
+}
+
+.drug-card:hover {
+  border-color: rgba(11, 44, 99, 0.38) !important;
+  transform: none !important;
+}
+
+.drug-card h3 {
+  font-size: clamp(1.35rem, 2vw, 1.85rem) !important;
+}
+
+.drug-card .eyebrow {
+  display: none !important;
+}
+
+@media (max-width: 980px) {
+  .drugs-layout {
+    background: linear-gradient(180deg, #f3efe3 0%, #f3efe3 34%, #f7fbff 34%, #f7fbff 100%) !important;
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .page-section > .back-button {
+    right: 16px !important;
+    top: calc(var(--header-h) + 10px) !important;
+  }
+}
