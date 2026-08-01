@@ -1763,9 +1763,9 @@ textarea {
   color: var(--navy);
   margin: 0;
   padding: 10px 16px;
-  position: fixed;
+  position: absolute;
   right: clamp(20px, 5vw, 80px);
-  top: calc(var(--header-h) + 14px);
+  top: clamp(18px, 3vw, 32px);
   z-index: 75;
 }
 
@@ -4281,9 +4281,9 @@ textarea {
   left: auto !important;
   margin: 0 !important;
   padding: 10px 16px !important;
-  position: fixed !important;
+  position: absolute !important;
   right: clamp(20px, 5vw, 80px) !important;
-  top: calc(var(--header-h) + 14px) !important;
+  top: clamp(18px, 3vw, 32px) !important;
   z-index: 75 !important;
 }
 
@@ -4325,6 +4325,6 @@ textarea {
 @media (max-width: 640px) {
   .page-section > .back-button {
     right: 16px !important;
-    top: calc(var(--header-h) + 10px) !important;
+    top: 14px !important;
   }
 }
