@@ -40,6 +40,15 @@ export function AuthGatewayPage({
     navigate(href);
   }
 
+  function handlePageBack() {
+    if (window.history.length > 1) {
+      window.history.back();
+      return;
+    }
+
+    navigate("/");
+  }
+
   async function handleSignIn(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -107,6 +116,10 @@ export function AuthGatewayPage({
     <section className={isProvider ? "auth-gateway is-provider" : "auth-gateway"}>
       <div className="auth-art auth-art-rings" aria-hidden="true" />
       <div className="auth-art auth-art-flow" aria-hidden="true" />
+      <button className="auth-page-back" type="button" onClick={handlePageBack}>
+        <ArrowLeft size={18} aria-hidden="true" />
+        Back
+      </button>
       <a className="auth-logo" href="/" onClick={(event) => { event.preventDefault(); navigate("/"); }}>
         <span>Denta</span>
         <span className="brand-worth">Worth</span>

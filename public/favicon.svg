@@ -1,35 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="DentaWorth">
-  <defs>
-    <linearGradient id="dwArchGradient" x1="16" y1="11" x2="80" y2="82" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#0b2c63" />
-      <stop offset="0.48" stop-color="#2f8fd6" />
-      <stop offset="1" stop-color="#8fd0f5" />
-    </linearGradient>
-    <linearGradient id="dwBarGradient" x1="35" y1="40" x2="67" y2="72" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#8fd0f5" />
-      <stop offset="1" stop-color="#2f8fd6" />
-    </linearGradient>
-  </defs>
-  <rect x="2" y="2" width="92" height="92" rx="24" fill="#ffffff" stroke="#c9ecff" stroke-width="3" />
-  <path
-    d="M18 61C18 34.5 30.4 18 48 18C65.6 18 78 34.5 78 61"
-    fill="none"
-    stroke="#0b2c63"
-    stroke-linecap="round"
-    stroke-width="9"
-  />
-  <path
-    d="M18 61C18 34.5 30.4 18 48 18C65.6 18 78 34.5 78 61"
-    fill="none"
-    stroke="url(#dwArchGradient)"
-    stroke-dasharray="8 6"
-    stroke-linecap="round"
-    stroke-width="11"
-  />
-  <path d="M34 61V49" stroke="url(#dwBarGradient)" stroke-linecap="round" stroke-width="7" />
-  <path d="M48 61V39" stroke="url(#dwBarGradient)" stroke-linecap="round" stroke-width="7" />
-  <path d="M62 61V30" stroke="url(#dwBarGradient)" stroke-linecap="round" stroke-width="7" />
-  <circle cx="34" cy="43" r="4" fill="#2f8fd6" />
-  <circle cx="48" cy="33" r="4" fill="#2f8fd6" />
-  <circle cx="62" cy="24" r="4" fill="#2f8fd6" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="DentaWorth DW">
+  <rect width="96" height="96" rx="20" fill="#ffffff" />
+  <text x="10" y="68" fill="#0b2c63" font-family="Inter, Arial, sans-serif" font-size="54" font-weight="900">D</text>
+  <text x="43" y="68" fill="#2f8fd6" font-family="Inter, Arial, sans-serif" font-size="54" font-weight="900">W</text>
 </svg>

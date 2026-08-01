@@ -1755,11 +1755,18 @@ textarea {
 }
 
 .page-section > .back-button {
-  left: max(20px, calc((100vw - 1180px) / 2));
+  backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(47, 143, 214, 0.18);
+  border-radius: var(--radius-pill);
+  box-shadow: 0 12px 34px rgba(9, 24, 48, 0.08);
+  color: var(--navy);
   margin: 0;
-  position: absolute;
-  top: -42px;
-  z-index: 5;
+  padding: 10px 16px;
+  position: fixed;
+  right: clamp(20px, 5vw, 80px);
+  top: calc(var(--header-h) + 14px);
+  z-index: 75;
 }
 
 .security-note {
@@ -2371,6 +2378,8 @@ textarea {
   margin-right: calc(50% - 50vw);
   padding-left: max(22px, calc((100vw - 1180px) / 2));
   padding-right: max(22px, calc((100vw - 1180px) / 2));
+  position: relative;
+  overflow: hidden;
 }
 
 .care-playbook,
@@ -2397,8 +2406,9 @@ textarea {
 
 .care-playbook {
   background:
-    linear-gradient(120deg, rgba(7, 28, 64, 0.94) 0%, rgba(11, 44, 99, 0.84) 44%, rgba(223, 243, 255, 0.94) 44.2%, rgba(247, 251, 255, 0.98) 100%);
-  gap: clamp(34px, 6vw, 78px);
+    linear-gradient(120deg, rgba(7, 28, 64, 0.94) 0%, rgba(11, 44, 99, 0.84) 53%, rgba(223, 243, 255, 0.94) 53.2%, rgba(247, 251, 255, 0.98) 100%);
+  gap: clamp(54px, 7vw, 104px);
+  grid-template-columns: minmax(300px, 0.95fr) minmax(0, 1.05fr);
 }
 
 .care-command {
@@ -2437,6 +2447,7 @@ textarea {
 
 .care-checklist {
   gap: 16px;
+  padding-left: clamp(22px, 4vw, 76px);
 }
 
 .care-checklist article {
@@ -2476,6 +2487,7 @@ textarea {
     linear-gradient(135deg, #dff3ff 0%, #f7fbff 62%, #eef7f2 100%);
   border: 0;
   margin-top: 0;
+  padding-bottom: clamp(130px, 12vw, 190px);
 }
 
 .question-ladder h2 {
@@ -2497,7 +2509,10 @@ textarea {
 }
 
 .care-callout {
-  margin-top: 0;
+  margin: clamp(-110px, -7vw, -70px) auto clamp(54px, 8vw, 110px);
+  max-width: min(84vw, 1500px);
+  position: relative;
+  z-index: 4;
 }
 
 .dentist-radar {
@@ -2713,7 +2728,7 @@ textarea {
 
 .drugs-layout {
   background:
-    linear-gradient(90deg, #f3efe3 0%, #f3efe3 34%, #f7fbff 34%, #f7fbff 100%);
+    linear-gradient(90deg, #f3efe3 0%, #f3efe3 28%, #f7fbff 28%, #f7fbff 100%);
   gap: clamp(34px, 5vw, 72px);
 }
 
@@ -2777,7 +2792,7 @@ textarea {
 }
 
 .drugs-layout {
-  grid-template-columns: minmax(250px, 0.42fr) minmax(0, 1fr);
+  grid-template-columns: minmax(250px, 0.34fr) minmax(0, 1fr);
 }
 
 .drugs-grid {
@@ -2815,6 +2830,101 @@ textarea {
   background: rgba(255, 255, 255, 0.62);
 }
 
+.care-playbook::before,
+.dentist-radar::before,
+.report-layout::before,
+.ad-layout::before,
+.provider-stage::before,
+.contact-router::before,
+.help-hub::before,
+.editorial-board::before,
+.news-timeline-intro::before,
+.drugs-layout::before {
+  animation: float-soft 12s var(--ease) infinite alternate;
+  background:
+    radial-gradient(circle at center, transparent 47%, rgba(47, 143, 214, 0.22) 48%, rgba(47, 143, 214, 0.22) 50%, transparent 51%),
+    radial-gradient(circle at center, transparent 62%, rgba(47, 143, 214, 0.14) 63%, rgba(47, 143, 214, 0.14) 65%, transparent 66%);
+  content: "";
+  height: clamp(220px, 28vw, 440px);
+  opacity: 0.75;
+  pointer-events: none;
+  position: absolute;
+  right: max(-120px, -8vw);
+  top: clamp(20px, 6vw, 86px);
+  width: clamp(220px, 28vw, 440px);
+}
+
+.care-playbook::after,
+.question-ladder::after,
+.dentist-comparison-strip::after,
+.provider-flow::after,
+.contact-layout::after,
+.page-section > .inquiry-form::after,
+.drugs-layout::after {
+  animation: flow-drift 10s var(--ease) infinite alternate;
+  background:
+    radial-gradient(ellipse at 20% 52%, transparent 45%, rgba(47, 143, 214, 0.2) 46%, rgba(47, 143, 214, 0.2) 48%, transparent 49%),
+    radial-gradient(ellipse at 78% 46%, transparent 46%, rgba(143, 208, 245, 0.2) 47%, rgba(143, 208, 245, 0.2) 49%, transparent 50%);
+  content: "";
+  height: 280px;
+  left: max(-180px, -12vw);
+  opacity: 0.85;
+  pointer-events: none;
+  position: absolute;
+  top: 8%;
+  transform: rotate(-8deg);
+  width: min(820px, 72vw);
+}
+
+.care-playbook > *,
+.question-ladder > *,
+.dentist-radar > *,
+.dentist-comparison-strip > *,
+.report-layout > *,
+.ad-layout > *,
+.provider-stage > *,
+.provider-flow > *,
+.contact-router > *,
+.contact-layout > *,
+.help-hub > *,
+.editorial-board > *,
+.news-timeline-intro > *,
+.drugs-layout > *,
+.page-section > .inquiry-form > * {
+  animation: section-rise 720ms var(--ease) both;
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes section-rise {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float-soft {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(-28px, 22px, 0) scale(1.04);
+  }
+}
+
+@keyframes flow-drift {
+  from {
+    transform: translate3d(0, 0, 0) rotate(-8deg);
+  }
+  to {
+    transform: translate3d(34px, 16px, 0) rotate(-4deg);
+  }
+}
+
 /* ==========================================================================
    Auth
    ========================================================================== */
@@ -2832,6 +2942,27 @@ textarea {
   padding: clamp(28px, 5vw, 54px) 20px;
   position: relative;
   transition: background 420ms var(--ease);
+}
+
+.auth-page-back {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(11, 44, 99, 0.14);
+  border-radius: var(--radius-pill);
+  color: var(--navy);
+  display: inline-flex;
+  font-weight: 800;
+  gap: 8px;
+  min-height: 42px;
+  padding: 0 16px;
+  position: fixed;
+  right: clamp(18px, 4vw, 42px);
+  top: clamp(18px, 4vw, 42px);
+  z-index: 20;
+}
+
+.auth-page-back:hover {
+  background: #dff3ff;
 }
 
 .auth-gateway.is-provider {
@@ -3484,15 +3615,17 @@ textarea {
 }
 
 .drug-card {
-  background: var(--surface);
-  border: 1px solid var(--border-strong);
-  padding: 20px;
+  background: transparent;
+  border: 0;
+  border-top: 1.5px solid rgba(11, 44, 99, 0.18);
+  min-height: 190px;
+  padding: 22px 0 0;
   transition: border-color 160ms var(--ease), transform 160ms var(--ease);
 }
 
 .drug-card:hover {
-  border-color: var(--accent);
-  transform: translateY(-2px);
+  border-color: rgba(11, 44, 99, 0.38);
+  transform: none;
 }
 
 .drug-card .eyebrow {
@@ -3505,7 +3638,7 @@ textarea {
 }
 
 .drug-card h3 {
-  font-size: 1.08rem;
+  font-size: clamp(1.35rem, 2vw, 1.85rem);
   margin-bottom: 8px;
 }
 
@@ -4124,5 +4257,15 @@ textarea {
   .auth-art-flow {
     opacity: 0.55;
     right: -180px;
+  }
+
+  .auth-page-back {
+    right: 16px;
+    top: 16px;
+  }
+
+  .page-section > .back-button {
+    right: 16px;
+    top: calc(var(--header-h) + 10px);
   }
 }
