@@ -11,6 +11,14 @@ export function NewsPage() {
       variant="editorial"
     >
       <BackButton />
+      <section className="news-timeline-intro">
+        <p className="eyebrow">Product log</p>
+        <h2>Launch notes, feature updates, and coverage changes will live here.</h2>
+        <p>
+          The news page is intentionally factual: product updates only, no pretend press, no
+          invented awards, and no filler announcements.
+        </p>
+      </section>
       {newsPosts.length > 0 ? (
         <div className="post-list">
           {newsPosts.map((post) => (

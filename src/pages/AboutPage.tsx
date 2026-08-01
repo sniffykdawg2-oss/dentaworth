@@ -1,4 +1,4 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Database, SearchCheck, ShieldCheck } from "lucide-react";
 import { PageShell } from "../components/PageShell";
 import { BackButton } from "../components/BackButton";
 
@@ -11,23 +11,56 @@ export function AboutPage({ navigate }: { navigate: (href: string) => void }) {
       variant="default"
     >
       <BackButton />
-      <div className="content-grid">
-        <article>
-          <h2>Our mission</h2>
+      <section className="about-manifesto">
+        <div>
+          <p className="eyebrow">The simple idea</p>
+          <h2>Dental pricing should not feel like opening a mystery envelope.</h2>
           <p>
             Empower patients by providing an online information marketplace for dental pricing. One
             that enables consumers to have prior knowledge of dental cost estimates and to know what
             other patients paid. Price transparency and peace of mind are only a few clicks away.
           </p>
-        </article>
-        <article>
-          <h2>Our methodology</h2>
-          <p>
-            We developed our algorithm to calculate price ranges using market data and unique
-            self-reported pricing within counties.
-          </p>
-        </article>
+        </div>
+        <aside aria-label="Dentaworth principles">
+          <span>Clear ranges</span>
+          <span>County context</span>
+          <span>Reviewed submissions</span>
+          <span>No fake certainty</span>
+        </aside>
+      </section>
+      <div className="method-stack">
+        {[
+          {
+            icon: SearchCheck,
+            title: "Start with patient questions",
+            text: "The guide is organized around what people search before they call an office: treatment, location, likely cash range, and what to ask next.",
+          },
+          {
+            icon: Database,
+            title: "Blend seed data with reports",
+            text: "Current ranges use launch data and can improve as reviewed self-reported pricing comes in by county and procedure.",
+          },
+          {
+            icon: ShieldCheck,
+            title: "Keep review separate from publishing",
+            text: "Public submissions enter a review queue before they influence the guide, which keeps the site useful without pretending raw submissions are verified prices.",
+          },
+        ].map((item) => (
+          <article key={item.title}>
+            <item.icon size={24} aria-hidden="true" />
+            <h3>{item.title}</h3>
+            <p>{item.text}</p>
+          </article>
+        ))}
       </div>
+      <section className="about-method-note">
+        <h2>What the methodology is, and what it is not.</h2>
+          <p>
+          Dentaworth provides informational ranges, not quotes, clinical recommendations, insurance
+          guarantees, or rankings of individual dentists. That boundary matters. Real dental prices
+          change with complexity, materials, sedation, imaging, and office policies.
+          </p>
+      </section>
       <div className="callout-band">
         <div>
           <h2>Have recent pricing to share?</h2>

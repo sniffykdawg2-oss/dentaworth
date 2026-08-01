@@ -1,4 +1,4 @@
-import { Mail } from "lucide-react";
+import { FileQuestion, Mail, SearchCheck, ShieldQuestion } from "lucide-react";
 import { PageShell } from "../components/PageShell";
 import { BackButton } from "../components/BackButton";
 
@@ -44,13 +44,28 @@ export function HelpCenterPage() {
       variant="help"
     >
       <BackButton />
-      <div className="help-faq-list">
-        {faqs.map((faq) => (
-          <details className="help-faq-item" key={faq.question}>
-            <summary>{faq.question}</summary>
-            <p>{faq.answer}</p>
-          </details>
-        ))}
+      <div className="help-hub">
+        <aside className="help-map">
+          {[
+            { icon: SearchCheck, title: "Using the guide", text: "How ranges, counties, ratings, and searches fit together." },
+            { icon: ShieldQuestion, title: "Trust and review", text: "How submitted pricing is handled before anything public changes." },
+            { icon: FileQuestion, title: "Provider questions", text: "How dentists and advertisers can ask about listings." },
+          ].map((item) => (
+            <article key={item.title}>
+              <item.icon size={22} aria-hidden="true" />
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
+            </article>
+          ))}
+        </aside>
+        <div className="help-faq-list">
+          {faqs.map((faq) => (
+            <details className="help-faq-item" key={faq.question}>
+              <summary>{faq.question}</summary>
+              <p>{faq.answer}</p>
+            </details>
+          ))}
+        </div>
       </div>
       <div className="help-contact-band">
         <div>

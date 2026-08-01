@@ -24,46 +24,50 @@ export function DrugsAZPage() {
       variant="drugs"
     >
       <BackButton />
-      <div className="drugs-toolbar">
-        <label className="drugs-search">
-          Search by name or category
-          <input
-            type="search"
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-            placeholder="e.g. Amoxicillin, antibiotic, anesthetic"
-          />
-        </label>
-        <nav className="drugs-alpha-nav" aria-label="Jump to letter">
-          {letters.map((letter) => (
-            <a key={letter} href={`#drug-${letter}`}>
-              {letter}
-            </a>
-          ))}
-        </nav>
-        <p className="drugs-disclaimer">{drugDirectoryDisclaimer}</p>
-      </div>
+      <div className="drugs-layout">
+        <aside className="drugs-toolbar">
+          <label className="drugs-search">
+            Search by name or category
+            <input
+              type="search"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder="e.g. Amoxicillin, antibiotic, anesthetic"
+            />
+          </label>
+          <nav className="drugs-alpha-nav" aria-label="Jump to letter">
+            {letters.map((letter) => (
+              <a key={letter} href={`#drug-${letter}`}>
+                {letter}
+              </a>
+            ))}
+          </nav>
+          <p className="drugs-disclaimer">{drugDirectoryDisclaimer}</p>
+        </aside>
 
-      {filtered.length > 0 ? (
-        <div className="drugs-grid">
-          {filtered.map((drug, index) => {
-            const letter = drug.name[0].toUpperCase();
-            const isFirstOfLetter = index === 0 || filtered[index - 1].name[0].toUpperCase() !== letter;
-            return (
-              <article key={drug.name} id={isFirstOfLetter ? `drug-${letter}` : undefined} className="drug-card">
-                <p className="eyebrow">{drug.category}</p>
-                <h3>{drug.name}</h3>
-                <p>{drug.note}</p>
-              </article>
-            );
-          })}
+        <div>
+          {filtered.length > 0 ? (
+            <div className="drugs-grid">
+              {filtered.map((drug, index) => {
+                const letter = drug.name[0].toUpperCase();
+                const isFirstOfLetter = index === 0 || filtered[index - 1].name[0].toUpperCase() !== letter;
+                return (
+                  <article key={drug.name} id={isFirstOfLetter ? `drug-${letter}` : undefined} className="drug-card">
+                    <p className="eyebrow">{drug.category}</p>
+                    <h3>{drug.name}</h3>
+                    <p>{drug.note}</p>
+                  </article>
+                );
+              })}
+            </div>
+          ) : (
+            <div className="empty-state">
+              <h3>No matches</h3>
+              <p>Try a different name or category.</p>
+            </div>
+          )}
         </div>
-      ) : (
-        <div className="empty-state">
-          <h3>No matches</h3>
-          <p>Try a different name or category.</p>
-        </div>
-      )}
+      </div>
     </PageShell>
   );
 }

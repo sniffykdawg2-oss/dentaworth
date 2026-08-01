@@ -18,6 +18,7 @@ import {
   DentistProfileInput,
   DentistProfileRecord,
   NewsletterSubscriptionInput,
+  NewsletterSubscriptionRecord,
   PriceRangeInput,
   PriceRangeRecord,
   PriceReportInput,
@@ -221,6 +222,7 @@ export type AdminPriceReportRecord = FirestoreRecord<PriceReportRecord>;
 export type AdminContactMessageRecord = FirestoreRecord<ContactMessageRecord>;
 export type AdminPriceRangeRecord = FirestoreRecord<PriceRangeRecord>;
 export type AdminDentistProfileRecord = FirestoreRecord<DentistProfileRecord>;
+export type AdminNewsletterSubscriptionRecord = FirestoreRecord<NewsletterSubscriptionRecord>;
 
 function buildPriceRangeId(state: string, county: string, procedure: string) {
   return `${slugify(state)}-${slugify(county)}-${procedure}`;

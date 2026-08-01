@@ -6,6 +6,7 @@ import { AuthUser } from "../backend/auth";
 import {
   AdminContactMessageRecord,
   AdminDentistProfileRecord,
+  AdminNewsletterSubscriptionRecord,
   AdminPriceRangeRecord,
   AdminPriceReportRecord,
   deleteAdminRecord,
@@ -24,11 +25,12 @@ import { AdminRecordList, AdminReviewPanel } from "../components/AdminPanels";
 type SubmissionStatus = "idle" | "submitting" | "success" | "error";
 
 export function AdminPage({ authUser, navigate }: { authUser: AuthUser | null; navigate: (href: string) => void }) {
-  const [activeTab, setActiveTab] = useState<"review" | "prices" | "dentists" | "pages">("review");
+  const [activeTab, setActiveTab] = useState<"review" | "prices" | "dentists" | "newsletter" | "pages">("review");
   const [priceReports, setPriceReports] = useState<AdminPriceReportRecord[]>([]);
   const [contactMessages, setContactMessages] = useState<AdminContactMessageRecord[]>([]);
   const [priceRanges, setPriceRanges] = useState<AdminPriceRangeRecord[]>([]);
   const [dentistProfiles, setDentistProfiles] = useState<AdminDentistProfileRecord[]>([]);
+  const [newsletterSubscribers, setNewsletterSubscribers] = useState<AdminNewsletterSubscriptionRecord[]>([]);
   const [status, setStatus] = useState<SubmissionStatus>("idle");
   const [message, setMessage] = useState("");
 
@@ -39,12 +41,14 @@ export function AdminPage({ authUser, navigate }: { authUser: AuthUser | null; n
     const unsubscribeContactMessages = subscribeToAdminCollection("contactMessages", setContactMessages);
     const unsubscribePriceRanges = subscribeToAdminCollection("priceRanges", setPriceRanges);
     const unsubscribeDentistProfiles = subscribeToAdminCollection("dentistProfiles", setDentistProfiles);
+    const unsubscribeNewsletterSubscribers = subscribeToAdminCollection("newsletterSubscribers", setNewsletterSubscribers);
 
     return () => {
       unsubscribePriceReports();
       unsubscribeContactMessages();
       unsubscribePriceRanges();
       unsubscribeDentistProfiles();
+      unsubscribeNewsletterSubscribers();
     };
   }, [authUser]);
 
@@ -86,6 +90,7 @@ export function AdminPage({ authUser, navigate }: { authUser: AuthUser | null; n
   const pendingMessages = contactMessages.filter((record) => record.status === "pending");
   const sortedPriceRanges = sortByUpdatedAt(priceRanges);
   const sortedDentistProfiles = sortByUpdatedAt(dentistProfiles);
+  const sortedNewsletterSubscribers = sortByUpdatedAt(newsletterSubscribers);
   const pageGroups = groupPagesByGroup();
 
   async function runAdminAction(action: () => Promise<unknown>, successMessage: string) {
@@ -188,6 +193,7 @@ export function AdminPage({ authUser, navigate }: { authUser: AuthUser | null; n
             { id: "review", label: "Review queue" },
             { id: "prices", label: "Price ranges" },
             { id: "dentists", label: "Dentists" },
+            { id: "newsletter", label: "Newsletter" },
             { id: "pages", label: "Pages" },
           ].map((tab) => (
             <button
@@ -423,6 +429,20 @@ export function AdminPage({ authUser, navigate }: { authUser: AuthUser | null; n
               )}
             />
           </div>
+        )}
+
+        {activeTab === "newsletter" && (
+          <AdminRecordList
+            title="Newsletter subscribers"
+            emptyText="No newsletter subscribers yet."
+            records={sortedNewsletterSubscribers}
+            renderRecord={(record) => (
+              <>
+                <h3>{record.email}</h3>
+                <p>{record.source} · schema v{record.schemaVersion}</p>
+              </>
+            )}
+          />
         )}
 
         {activeTab === "pages" && (

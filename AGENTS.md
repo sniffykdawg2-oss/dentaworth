@@ -40,6 +40,8 @@ The project was originally started on Wix and is being moved to a GitHub-backed 
 - Use `.env.example` as the shape for frontend Firebase SDK config, and keep real `.env` files out of git.
 - Treat the visible county pricing table data as seed/frontend content until the backend schema is implemented.
 - Self-reporting, contact, advertise, and promote-practice forms save to Firestore. They do not send email yet.
+- Footer newsletter signups save to `newsletterSubscribers` and are visible in the protected `/admin` Newsletter tab.
 - Email notifications should use Resend when implemented later.
 - Public Firestore form submissions include `submissionGuard` with a hidden honeypot and form-start timestamp. Firestore rules require an empty `website` field and at least 3 seconds between form render and submit.
 - A local admin-claim helper exists: `bun run admin:claim USER_UID_HERE`. It uses Firebase CLI login by default and can also use `GOOGLE_APPLICATION_CREDENTIALS` with a service account JSON kept outside the repo.
+- Interior pages intentionally use differentiated layout systems in `src/styles.css` (`care-playbook`, `dentist-radar`, `report-layout`, `ad-layout`, `provider-stage`, `help-hub`, `drugs-layout`). Preserve that separation instead of collapsing every secondary page back into the old shared two-card layout.

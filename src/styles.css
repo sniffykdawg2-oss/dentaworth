@@ -121,7 +121,8 @@ svg {
 }
 
 ::selection {
-  background: rgba(47, 143, 214, 0.2);
+  background: rgba(47, 143, 214, 0.13);
+  color: var(--ink);
 }
 
 /* ---------- Scroll reveal ---------- */
@@ -690,13 +691,12 @@ p {
   font-weight: 700;
   gap: 10px;
   justify-content: center;
-  letter-spacing: -0.005em;
+  letter-spacing: 0;
   min-height: 50px;
   padding: 0 24px;
   text-decoration: none;
   transition:
     transform 150ms var(--ease),
-    box-shadow 180ms var(--ease),
     background 160ms var(--ease),
     border-color 160ms var(--ease);
   will-change: transform;
@@ -718,14 +718,15 @@ p {
 }
 
 .button.primary {
-  background: var(--amber);
-  border-color: var(--accent-strong);
+  background: #dff3ff;
+  border-color: transparent;
   color: var(--amber-ink);
-  box-shadow: 5px 5px 0 rgba(47, 143, 214, 0.16);
+  box-shadow: none;
 }
 
 .button.primary:hover {
-  background: var(--amber-strong);
+  background: #d2ecfb;
+  border-color: transparent;
 }
 
 .button.primary:hover svg {
@@ -1564,10 +1565,25 @@ textarea {
    ========================================================================== */
 .page-hero {
   background: var(--bg);
+  isolation: isolate;
   overflow: hidden;
   padding-bottom: clamp(48px, 7vw, 88px);
   padding-top: clamp(56px, 8vw, 96px);
   position: relative;
+}
+
+.page-hero::after {
+  background:
+    linear-gradient(90deg, rgba(47, 143, 214, 0.14) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(47, 143, 214, 0.1) 1px, transparent 1px);
+  background-size: 44px 44px;
+  content: "";
+  inset: 0;
+  mask-image: linear-gradient(90deg, transparent 0%, #000 55%, transparent 100%);
+  opacity: 0.35;
+  pointer-events: none;
+  position: absolute;
+  z-index: -1;
 }
 
 .page-hero .eyebrow,
@@ -1603,7 +1619,9 @@ textarea {
 /* Variant: business / provider (deep blue) */
 .page-hero-business,
 .page-hero-provider {
-  background: var(--sky-deep);
+  background:
+    radial-gradient(circle at 82% 26%, rgba(201, 236, 255, 0.24), transparent 30%),
+    linear-gradient(135deg, var(--navy-900) 0%, var(--sky-deep) 68%, #3d8fc6 100%);
 }
 
 /* Variant: dentist + account + help (soft teal) */
@@ -1621,7 +1639,9 @@ textarea {
 }
 
 .page-hero-drugs {
-  background: var(--surface-2);
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.82) 0 2px, transparent 2px 44px),
+    linear-gradient(180deg, #f3efe3 0%, #eaf3fb 100%);
   border-bottom: 1.5px solid var(--ink);
 }
 
@@ -1899,6 +1919,812 @@ textarea {
 
 .contact-card a:hover {
   text-decoration: underline;
+}
+
+/* Differentiated interior page systems */
+.care-playbook {
+  display: grid;
+  gap: 22px;
+  grid-template-columns: minmax(280px, 0.9fr) minmax(0, 1.35fr);
+}
+
+.care-command {
+  background: var(--navy-900);
+  color: #fff;
+  display: grid;
+  gap: 16px;
+  padding: clamp(28px, 4vw, 44px);
+}
+
+.care-command h2,
+.care-command .eyebrow {
+  color: #fff;
+}
+
+.care-command p {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.care-checklist {
+  display: grid;
+  gap: 0;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.care-checklist article {
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  display: grid;
+  gap: 8px;
+  min-height: 180px;
+  padding: 24px;
+}
+
+.care-checklist article:nth-child(2),
+.care-checklist article:nth-child(3) {
+  background: #f4fbff;
+}
+
+.care-checklist svg,
+.method-stack svg,
+.dentist-comparison-strip svg,
+.ad-principles svg,
+.provider-flow svg,
+.contact-router svg,
+.help-map svg {
+  color: var(--accent);
+}
+
+.care-checklist h3,
+.method-stack h3,
+.dentist-comparison-strip h3,
+.ad-principles h3,
+.provider-flow h3,
+.contact-router h3,
+.help-map h3 {
+  font-size: 1.05rem;
+  margin-bottom: 2px;
+}
+
+.care-checklist p,
+.method-stack p,
+.dentist-comparison-strip p,
+.ad-principles p,
+.provider-flow p,
+.contact-router p,
+.help-map p,
+.about-manifesto p,
+.about-method-note p,
+.dentist-radar p,
+.provider-stage p,
+.news-timeline-intro p {
+  color: var(--muted);
+  margin-bottom: 0;
+}
+
+.question-ladder {
+  background: #d9effc;
+  border: 1.5px solid var(--accent-strong);
+  display: grid;
+  gap: 28px;
+  grid-template-columns: minmax(220px, 0.6fr) minmax(0, 1fr);
+  margin-top: 22px;
+  padding: clamp(24px, 4vw, 40px);
+}
+
+.question-ladder ol {
+  counter-reset: none;
+  display: grid;
+  gap: 10px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.question-ladder li {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.74);
+  border: 1px solid rgba(22, 104, 168, 0.22);
+  display: grid;
+  gap: 12px;
+  grid-template-columns: auto 1fr;
+  padding: 14px 16px;
+}
+
+.question-ladder span {
+  color: var(--navy);
+  font-family: var(--font-mono);
+  font-weight: 700;
+}
+
+.care-callout {
+  margin-top: 22px;
+}
+
+.about-manifesto {
+  align-items: stretch;
+  background: var(--surface);
+  border: 1.5px solid var(--ink);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 360px);
+}
+
+.about-manifesto > div {
+  padding: clamp(28px, 5vw, 52px);
+}
+
+.about-manifesto aside {
+  background: var(--navy-900);
+  color: #fff;
+  display: grid;
+  gap: 1px;
+}
+
+.about-manifesto aside span {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.08);
+  display: flex;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  font-weight: 700;
+  padding: 18px 22px;
+  text-transform: uppercase;
+}
+
+.method-stack {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 22px;
+}
+
+.method-stack article {
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  display: grid;
+  gap: 9px;
+  padding: clamp(22px, 3vw, 30px);
+}
+
+.method-stack article:nth-child(2) {
+  background: #f4fbff;
+  transform: translateY(18px);
+}
+
+.about-method-note {
+  background: transparent;
+  border-left: 6px solid var(--accent);
+  margin-top: 44px;
+  max-width: 900px;
+  padding: 8px 0 8px 24px;
+}
+
+.dentist-radar {
+  align-items: center;
+  background: #eef7f2;
+  border: 1.5px solid #bfdacb;
+  display: grid;
+  gap: 28px;
+  grid-template-columns: minmax(0, 1fr) 260px;
+  overflow: hidden;
+  padding: clamp(24px, 4vw, 42px);
+}
+
+.radar-visual {
+  align-items: center;
+  aspect-ratio: 1;
+  display: grid;
+  justify-items: center;
+  position: relative;
+}
+
+.radar-visual span {
+  border: 1.5px solid rgba(47, 143, 214, 0.32);
+  border-radius: 50%;
+  inset: calc(var(--i, 0) * 28px);
+  position: absolute;
+}
+
+.radar-visual span:nth-child(1) {
+  --i: 0;
+}
+
+.radar-visual span:nth-child(2) {
+  --i: 1;
+}
+
+.radar-visual span:nth-child(3) {
+  --i: 2;
+}
+
+.radar-visual svg {
+  background: var(--surface);
+  border: 1.5px solid var(--ink);
+  color: var(--navy);
+  height: 78px;
+  padding: 18px;
+  width: 78px;
+}
+
+.dentist-comparison-strip,
+.provider-flow,
+.contact-router {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 22px;
+}
+
+.dentist-comparison-strip article,
+.provider-flow article,
+.contact-router article {
+  background: var(--surface);
+  border-top: 4px solid var(--accent);
+  padding: 24px;
+}
+
+.report-layout {
+  align-items: start;
+  display: grid;
+  gap: 22px;
+  grid-template-columns: minmax(240px, 330px) minmax(0, 1fr);
+}
+
+.report-trust-rail {
+  display: grid;
+  gap: 12px;
+  position: sticky;
+  top: calc(var(--header-h) + 20px);
+}
+
+.report-trust-rail article {
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  padding: 20px;
+}
+
+.report-trust-rail svg {
+  color: var(--ok-ink);
+  margin-bottom: 12px;
+}
+
+.report-trust-rail h2 {
+  font-size: 1rem;
+  margin-bottom: 5px;
+}
+
+.report-trust-rail p {
+  color: var(--muted);
+  font-size: 0.92rem;
+  margin-bottom: 0;
+}
+
+.ad-layout {
+  align-items: start;
+  display: grid;
+  gap: 18px;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr) minmax(240px, 320px);
+}
+
+.ad-principles {
+  display: grid;
+  gap: 12px;
+}
+
+.ad-principles article {
+  background: rgba(255, 255, 255, 0.88);
+  border-left: 4px solid var(--accent-soft);
+  padding: 20px;
+}
+
+.ad-copy {
+  max-width: none;
+}
+
+.provider-stage {
+  align-items: stretch;
+  background: var(--navy-900);
+  color: #fff;
+  display: grid;
+  gap: 28px;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 380px);
+  padding: clamp(28px, 5vw, 54px);
+}
+
+.provider-stage h2,
+.provider-stage .eyebrow {
+  color: #fff;
+}
+
+.provider-stage .eyebrow::before {
+  background: var(--accent-soft);
+}
+
+.provider-profile-mock {
+  align-self: center;
+  background: #f7fbff;
+  border: 1.5px solid var(--accent-soft);
+  color: var(--navy);
+  display: grid;
+  gap: 10px;
+  padding: 22px;
+  transform: rotate(1deg);
+}
+
+.provider-profile-mock div {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+}
+
+.provider-profile-mock span {
+  border-top: 1px solid #cce4f3;
+  color: var(--ink-2);
+  padding-top: 10px;
+}
+
+.contact-router {
+  margin-bottom: 18px;
+  margin-top: 0;
+}
+
+.help-hub {
+  align-items: start;
+  display: grid;
+  gap: 34px;
+  grid-template-columns: minmax(230px, 310px) minmax(0, 1fr);
+}
+
+.help-map {
+  background: var(--navy-900);
+  color: #fff;
+  display: grid;
+  gap: 1px;
+  padding: 1px;
+}
+
+.help-map article {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 22px;
+}
+
+.help-map p {
+  color: rgba(255, 255, 255, 0.74);
+}
+
+.editorial-board,
+.news-timeline-intro {
+  background: var(--surface);
+  border-bottom: 1.5px solid var(--ink);
+  display: grid;
+  gap: 24px;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 420px);
+  margin-bottom: 18px;
+  max-width: 980px;
+  padding: clamp(24px, 4vw, 38px) 0;
+}
+
+.news-timeline-intro {
+  border: 1.5px solid var(--ink);
+  grid-template-columns: 1fr;
+  padding: clamp(24px, 4vw, 38px);
+}
+
+.editorial-board ul {
+  background: var(--navy-900);
+  color: #fff;
+  display: grid;
+  gap: 12px;
+  list-style: none;
+  margin: 0;
+  padding: 22px;
+}
+
+.editorial-board li {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+  padding-bottom: 12px;
+}
+
+.editorial-board li:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+/* Interior pages, sectionized pass. About keeps its bespoke manifesto styles. */
+.care-playbook,
+.question-ladder,
+.dentist-radar,
+.dentist-comparison-strip,
+.report-layout,
+.ad-layout,
+.provider-stage,
+.provider-flow,
+.contact-router,
+.contact-layout,
+.help-hub,
+.editorial-board,
+.news-timeline-intro,
+.drugs-layout {
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  padding-left: max(22px, calc((100vw - 1180px) / 2));
+  padding-right: max(22px, calc((100vw - 1180px) / 2));
+}
+
+.care-playbook,
+.dentist-radar,
+.report-layout,
+.provider-stage,
+.help-hub,
+.drugs-layout {
+  padding-bottom: clamp(70px, 9vw, 132px);
+  padding-top: clamp(70px, 9vw, 132px);
+}
+
+.question-ladder,
+.dentist-comparison-strip,
+.ad-layout,
+.provider-flow,
+.contact-router,
+.contact-layout,
+.editorial-board,
+.news-timeline-intro {
+  padding-bottom: clamp(58px, 8vw, 112px);
+  padding-top: clamp(58px, 8vw, 112px);
+}
+
+.care-playbook {
+  background:
+    linear-gradient(120deg, rgba(7, 28, 64, 0.94) 0%, rgba(11, 44, 99, 0.84) 44%, rgba(223, 243, 255, 0.94) 44.2%, rgba(247, 251, 255, 0.98) 100%);
+  gap: clamp(34px, 6vw, 78px);
+}
+
+.care-command {
+  background: transparent;
+  padding: 0;
+}
+
+.care-command h2,
+.dentist-radar h2,
+.provider-stage h2,
+.news-timeline-intro h2,
+.editorial-board h2 {
+  font-size: clamp(2.2rem, 5vw, 4.8rem);
+  line-height: 0.96;
+  max-width: 10ch;
+}
+
+.care-command p,
+.dentist-radar p,
+.provider-stage p,
+.news-timeline-intro p {
+  font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+  line-height: 1.7;
+  max-width: 58ch;
+}
+
+.care-checklist {
+  gap: 16px;
+}
+
+.care-checklist article {
+  background: rgba(255, 255, 255, 0.78);
+  border: 0;
+  min-height: 220px;
+  padding: clamp(24px, 3vw, 38px);
+}
+
+.care-checklist article:nth-child(2),
+.care-checklist article:nth-child(3) {
+  background: rgba(234, 243, 251, 0.9);
+}
+
+.care-checklist h3,
+.dentist-comparison-strip h3,
+.provider-flow h3,
+.contact-router h3,
+.help-map h3,
+.ad-principles h3 {
+  font-size: clamp(1.25rem, 2vw, 1.75rem);
+}
+
+.care-checklist svg,
+.dentist-comparison-strip svg,
+.provider-flow svg,
+.contact-router svg,
+.help-map svg,
+.ad-principles svg {
+  height: 34px;
+  width: 34px;
+}
+
+.question-ladder {
+  background:
+    radial-gradient(circle at 80% 22%, rgba(255, 255, 255, 0.65), transparent 30%),
+    linear-gradient(135deg, #dff3ff 0%, #f7fbff 62%, #eef7f2 100%);
+  border: 0;
+  margin-top: 0;
+}
+
+.question-ladder h2 {
+  font-size: clamp(2rem, 4vw, 3.6rem);
+  max-width: 9ch;
+}
+
+.question-ladder li {
+  background: transparent;
+  border: 0;
+  border-top: 1.5px solid rgba(11, 44, 99, 0.18);
+  font-size: clamp(1rem, 1.6vw, 1.22rem);
+  padding: 22px 0;
+}
+
+.question-ladder span {
+  color: var(--accent-strong);
+  font-size: 0.85rem;
+}
+
+.care-callout {
+  margin-top: 0;
+}
+
+.dentist-radar {
+  background:
+    linear-gradient(90deg, rgba(234, 247, 242, 0.92), rgba(244, 251, 255, 0.94)),
+    linear-gradient(90deg, rgba(47, 143, 214, 0.12) 1px, transparent 1px);
+  background-size: auto, 52px 52px;
+  border: 0;
+}
+
+.radar-visual {
+  justify-self: center;
+  width: min(330px, 100%);
+}
+
+.radar-visual span {
+  border-color: rgba(47, 143, 214, 0.42);
+}
+
+.radar-visual svg {
+  border: 0;
+  box-shadow: 0 24px 58px rgba(11, 44, 99, 0.18);
+  height: 104px;
+  padding: 24px;
+  width: 104px;
+}
+
+.dentist-comparison-strip,
+.provider-flow,
+.contact-router {
+  background: var(--surface);
+  gap: clamp(22px, 4vw, 52px);
+  margin-top: 0;
+}
+
+.dentist-comparison-strip article,
+.provider-flow article,
+.contact-router article {
+  background: transparent;
+  border: 0;
+  border-top: 1.5px solid var(--ink);
+  padding: 28px 0 0;
+}
+
+.report-layout {
+  background:
+    linear-gradient(90deg, #eef7f2 0%, #eef7f2 34%, #f7f5ef 34%, #f7f5ef 100%);
+  gap: clamp(36px, 6vw, 86px);
+  grid-template-columns: minmax(260px, 0.72fr) minmax(0, 1.28fr);
+}
+
+.report-trust-rail {
+  align-content: center;
+  gap: 0;
+  position: sticky;
+}
+
+.report-trust-rail article {
+  background: transparent;
+  border: 0;
+  border-bottom: 1.5px solid rgba(12, 91, 69, 0.22);
+  padding: 28px 0;
+}
+
+.report-trust-rail article:first-child {
+  border-top: 1.5px solid rgba(12, 91, 69, 0.22);
+}
+
+.report-trust-rail h2 {
+  font-size: clamp(1.25rem, 2vw, 1.65rem);
+}
+
+.report-form {
+  max-width: none;
+}
+
+.ad-layout {
+  background:
+    radial-gradient(circle at 18% 22%, rgba(143, 208, 245, 0.3), transparent 30%),
+    linear-gradient(135deg, var(--navy-900), var(--sky-deep));
+  color: #fff;
+  gap: clamp(28px, 5vw, 62px);
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr) minmax(240px, 320px);
+}
+
+.ad-layout .legal-copy,
+.ad-layout .contact-card,
+.ad-principles article {
+  background: rgba(255, 255, 255, 0.1);
+  border: 0;
+  box-shadow: none;
+  color: #fff;
+}
+
+.ad-layout h2,
+.ad-layout h3,
+.ad-layout a {
+  color: #fff;
+}
+
+.ad-layout p,
+.ad-layout .contact-card p {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.ad-principles article {
+  border-left: 0;
+  border-top: 1.5px solid rgba(255, 255, 255, 0.28);
+  padding: 28px 0;
+}
+
+.ad-layout .contact-card {
+  align-self: stretch;
+  border: 1.5px solid rgba(255, 255, 255, 0.22);
+  justify-content: center;
+  padding: 32px;
+}
+
+.provider-stage {
+  margin-top: 0;
+}
+
+.provider-profile-mock {
+  border: 0;
+  box-shadow: 18px 18px 0 rgba(143, 208, 245, 0.22);
+  min-height: 300px;
+  padding: clamp(26px, 4vw, 44px);
+}
+
+.provider-profile-mock strong {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2.4rem);
+}
+
+.provider-flow {
+  background: #f7fbff;
+}
+
+.contact-router {
+  background: #eef7f2;
+  margin-bottom: 0;
+}
+
+.contact-layout {
+  background: var(--surface);
+  gap: clamp(28px, 5vw, 68px);
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 380px);
+}
+
+.contact-layout .form-card,
+.contact-layout .contact-card {
+  max-width: none;
+}
+
+.help-hub {
+  background:
+    linear-gradient(90deg, var(--navy-900) 0%, var(--navy-900) 34%, var(--surface) 34%, var(--surface) 100%);
+  gap: clamp(38px, 6vw, 86px);
+}
+
+.help-map {
+  background: transparent;
+  padding: 0;
+}
+
+.help-map article {
+  background: transparent;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.22);
+  padding: 28px 0;
+}
+
+.help-map article:first-child {
+  border-top: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+.help-faq-list {
+  max-width: none;
+}
+
+.help-faq-item summary {
+  font-size: clamp(1.28rem, 2vw, 1.7rem);
+}
+
+.editorial-board {
+  background:
+    linear-gradient(90deg, var(--surface) 0%, var(--surface) 58%, var(--navy-900) 58%, var(--navy-900) 100%);
+  border-bottom: 0;
+  gap: clamp(28px, 5vw, 64px);
+  margin-bottom: 0;
+  max-width: none;
+}
+
+.editorial-board ul {
+  align-content: center;
+  background: transparent;
+  min-height: 320px;
+  padding: 0;
+}
+
+.editorial-board li {
+  font-size: clamp(1rem, 1.5vw, 1.22rem);
+}
+
+.news-timeline-intro {
+  background:
+    linear-gradient(90deg, rgba(11, 44, 99, 0.08) 1px, transparent 1px),
+    linear-gradient(180deg, #f7fbff 0%, var(--surface) 100%);
+  background-size: 58px 58px, auto;
+  border: 0;
+  margin-bottom: 0;
+  max-width: none;
+}
+
+.drugs-layout {
+  background:
+    linear-gradient(90deg, #f3efe3 0%, #f3efe3 34%, #f7fbff 34%, #f7fbff 100%);
+  gap: clamp(34px, 5vw, 72px);
+}
+
+.drugs-toolbar {
+  background: transparent;
+  border: 0;
+  padding: 0;
+}
+
+.drugs-disclaimer {
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.page-section > .inquiry-form {
+  background:
+    linear-gradient(90deg, rgba(223, 243, 255, 0.72), rgba(255, 255, 255, 0.96)),
+    linear-gradient(180deg, transparent 0%, rgba(11, 44, 99, 0.04) 100%);
+  border: 0;
+  box-shadow: none;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  margin-top: 0;
+  max-width: none;
+  padding:
+    clamp(58px, 8vw, 112px)
+    max(22px, calc((100vw - 920px) / 2));
+}
+
+.page-section > .inquiry-form::before {
+  color: var(--accent-strong);
+  content: "Start the conversation";
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.8rem);
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 4px;
+  max-width: 10ch;
+}
+
+.report-form,
+.contact-layout .form-card {
+  border: 0;
+  box-shadow: none;
 }
 
 /* ==========================================================================
@@ -2508,13 +3334,25 @@ textarea {
    Drugs A-Z
    ========================================================================== */
 .drugs-toolbar {
+  align-self: start;
+  background: var(--surface);
+  border: 1.5px solid var(--border-strong);
   display: grid;
   gap: 16px;
-  margin-bottom: 28px;
+  padding: 22px;
+  position: sticky;
+  top: calc(var(--header-h) + 20px);
+}
+
+.drugs-layout {
+  align-items: start;
+  display: grid;
+  gap: 26px;
+  grid-template-columns: minmax(240px, 330px) minmax(0, 1fr);
 }
 
 .drugs-search input {
-  max-width: 420px;
+  max-width: none;
 }
 
 .drugs-alpha-nav {
@@ -2561,6 +3399,12 @@ textarea {
   background: var(--surface);
   border: 1px solid var(--border-strong);
   padding: 20px;
+  transition: border-color 160ms var(--ease), transform 160ms var(--ease);
+}
+
+.drug-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
 }
 
 .drug-card .eyebrow {
@@ -3026,7 +3870,17 @@ textarea {
   .contact-layout,
   .admin-grid,
   .split-media-block,
-  .smile-section {
+  .smile-section,
+  .care-playbook,
+  .question-ladder,
+  .about-manifesto,
+  .dentist-radar,
+  .report-layout,
+  .ad-layout,
+  .provider-stage,
+  .help-hub,
+  .editorial-board,
+  .drugs-layout {
     grid-template-columns: 1fr;
   }
 
@@ -3056,8 +3910,29 @@ textarea {
   .content-grid,
   .directory-grid,
   .form-grid,
+  .care-checklist,
+  .method-stack,
+  .dentist-comparison-strip,
+  .provider-flow,
+  .contact-router,
   .footer-top {
     grid-template-columns: 1fr;
+  }
+
+  .method-stack article:nth-child(2),
+  .provider-profile-mock {
+    transform: none;
+  }
+
+  .report-trust-rail,
+  .drugs-toolbar {
+    position: static;
+  }
+
+  .radar-visual {
+    justify-self: center;
+    max-width: 240px;
+    width: 100%;
   }
 
   .procedure-grid {

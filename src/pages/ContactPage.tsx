@@ -1,5 +1,5 @@
 import { FormEvent, useState } from "react";
-import { ArrowRight, CheckCircle2, Mail } from "lucide-react";
+import { ArrowRight, CheckCircle2, Mail, MessageSquareText, PencilLine, TriangleAlert } from "lucide-react";
 import { buildContactMessageInput } from "../backend/contact";
 import { createContactMessage } from "../backend/repository";
 import { PageShell } from "../components/PageShell";
@@ -39,6 +39,19 @@ export function ContactPage() {
       variant="business"
     >
       <BackButton />
+      <section className="contact-router">
+        {[
+          { icon: PencilLine, title: "Corrections", text: "Send the county, procedure, and what looks wrong so an admin can review it." },
+          { icon: MessageSquareText, title: "Product notes", text: "Ask about the guide, provider profiles, or self-reported pricing." },
+          { icon: TriangleAlert, title: "Not urgent care", text: "Medical emergencies and treatment decisions belong with a licensed provider." },
+        ].map((item) => (
+          <article key={item.title}>
+            <item.icon size={22} aria-hidden="true" />
+            <h3>{item.title}</h3>
+            <p>{item.text}</p>
+          </article>
+        ))}
+      </section>
       <div className="contact-layout">
         <form className="form-card" onSubmit={handleSubmit} noValidate>
           <SpamTrap formStartedAt={formStartedAt} />

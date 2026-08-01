@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, BadgeCheck, Building2, MapPin, Sparkles } from "lucide-react";
 import { subscribeToPublishedDentistProfiles } from "../backend/repository";
 import { DentistProfileRecord } from "../backend/schema";
 import { getProcedureLabel } from "../pageHelpers";
@@ -26,6 +26,22 @@ export function FindADentistPage({ navigate }: { navigate: (href: string) => voi
       variant="dentist"
     >
       <BackButton />
+      <section className="dentist-radar">
+        <div>
+          <p className="eyebrow">Directory status</p>
+          <h2>Provider profiles are being built around useful context, not ad clutter.</h2>
+          <p>
+            The directory is designed to pair practice details with procedure coverage and local
+            price context. Published profiles appear below as they are reviewed.
+          </p>
+        </div>
+        <div className="radar-visual" aria-hidden="true">
+          <span />
+          <span />
+          <span />
+          <Building2 size={34} />
+        </div>
+      </section>
       {publishedDentists.length > 0 && (
         <section className="dentist-directory" aria-labelledby="dentist-directory-heading">
           <div className="section-heading split-heading compact-heading">
@@ -54,21 +70,18 @@ export function FindADentistPage({ navigate }: { navigate: (href: string) => voi
           </div>
         </section>
       )}
-      <div className="content-grid">
-        <article>
-          <h2>What is available now</h2>
-          <p>
-            The cost guide gives you a starting point for common procedures, including cleaning,
-            exam, X-ray, filling, whitening, extraction, root canal, crown, implant, and Invisalign.
-          </p>
-        </article>
-        <article>
-          <h2>What comes next</h2>
-          <p>
-            Future dentist discovery features can build on the same treatment and location data
-            model once the backend is connected.
-          </p>
-        </article>
+      <div className="dentist-comparison-strip">
+        {[
+          { icon: MapPin, title: "Location first", text: "Compare by Florida county so the directory matches the same geography as the price guide." },
+          { icon: BadgeCheck, title: "Reviewed profiles", text: "Admin-published profiles keep draft or archived listings away from public search." },
+          { icon: Sparkles, title: "Useful next steps", text: "Profiles can link out to a website or phone number without turning the page into a billboard." },
+        ].map((item) => (
+          <article key={item.title}>
+            <item.icon size={22} aria-hidden="true" />
+            <h3>{item.title}</h3>
+            <p>{item.text}</p>
+          </article>
+        ))}
       </div>
       <div className="callout-band">
         <div>
