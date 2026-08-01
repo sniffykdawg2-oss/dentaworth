@@ -1677,6 +1677,21 @@ textarea {
 
 .page-section {
   background: var(--surface-2);
+  position: relative;
+}
+
+.page-section:has(> .care-playbook),
+.page-section:has(> .dentist-radar),
+.page-section:has(> .report-layout),
+.page-section:has(> .ad-layout),
+.page-section:has(> .provider-stage),
+.page-section:has(> .contact-router),
+.page-section:has(> .help-hub),
+.page-section:has(> .editorial-board),
+.page-section:has(> .news-timeline-intro),
+.page-section:has(> .drugs-layout) {
+  padding-bottom: 0;
+  padding-top: 0;
 }
 
 /* ==========================================================================
@@ -1737,6 +1752,14 @@ textarea {
 
 .back-button svg {
   transform: rotate(180deg);
+}
+
+.page-section > .back-button {
+  left: max(20px, calc((100vw - 1180px) / 2));
+  margin: 0;
+  position: absolute;
+  top: -42px;
+  z-index: 5;
 }
 
 .security-note {
@@ -2383,6 +2406,16 @@ textarea {
   padding: 0;
 }
 
+.care-command .eyebrow,
+.question-ladder .eyebrow,
+.dentist-radar .eyebrow,
+.provider-stage .eyebrow,
+.news-timeline-intro .eyebrow,
+.editorial-board .eyebrow,
+.drug-card .eyebrow {
+  display: none;
+}
+
 .care-command h2,
 .dentist-radar h2,
 .provider-stage h2,
@@ -2572,13 +2605,13 @@ textarea {
 
 .ad-principles article {
   border-left: 0;
-  border-top: 1.5px solid rgba(255, 255, 255, 0.28);
-  padding: 28px 0;
+  border-top: 0;
+  padding: 0;
 }
 
 .ad-layout .contact-card {
   align-self: stretch;
-  border: 1.5px solid rgba(255, 255, 255, 0.22);
+  border: 0;
   justify-content: center;
   padding: 32px;
 }
@@ -2725,6 +2758,61 @@ textarea {
 .contact-layout .form-card {
   border: 0;
   box-shadow: none;
+}
+
+.ad-principles {
+  align-content: center;
+  gap: clamp(22px, 3vw, 36px);
+}
+
+.ad-principles article {
+  background: transparent;
+  display: grid;
+  gap: 14px;
+}
+
+.ad-principles p {
+  font-size: clamp(1rem, 1.45vw, 1.18rem);
+  line-height: 1.65;
+}
+
+.drugs-layout {
+  grid-template-columns: minmax(250px, 0.42fr) minmax(0, 1fr);
+}
+
+.drugs-grid {
+  gap: clamp(22px, 3vw, 36px);
+}
+
+.drug-card {
+  background: transparent;
+  border: 0;
+  border-top: 1.5px solid rgba(11, 44, 99, 0.18);
+  min-height: 190px;
+  padding: 22px 0 0;
+}
+
+.drug-card:hover {
+  border-color: rgba(11, 44, 99, 0.38);
+  transform: none;
+}
+
+.drug-card h3 {
+  font-size: clamp(1.35rem, 2vw, 1.85rem);
+}
+
+.drugs-toolbar {
+  align-content: start;
+  min-height: 420px;
+  padding-top: 8px;
+}
+
+.drugs-search input {
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.drugs-alpha-nav a {
+  background: rgba(255, 255, 255, 0.62);
 }
 
 /* ==========================================================================
