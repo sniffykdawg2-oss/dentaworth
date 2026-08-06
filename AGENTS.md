@@ -1,6 +1,6 @@
-# Dentaworth Project Notes
+# DentaWorth Project Notes
 
-Dentaworth is currently a Florida dental ratings and cost guide, with county-level cash price range estimates for common dental procedures and a self-reporting flow for submitted pricing. It may expand later into broader dental operations marketplace features, but the launch frontend is cost-guide-first.
+DentaWorth is currently a Florida dental cost guide, with county-level cash price range estimates for common dental procedures and a self-reporting flow for submitted pricing. It may expand later into broader dental operations marketplace features, but the launch frontend is cost-guide-first.
 
 The project was originally started on Wix and is being moved to a GitHub-backed codebase with Firebase hosting/services.
 
@@ -23,7 +23,7 @@ The project was originally started on Wix and is being moved to a GitHub-backed 
 - Storage rules have been deployed.
 - Launch frontend pages are: cost guide, get care now, find a dentist, self reporting, about, advertise with us, promote your practice, privacy policy, contact, sign in, and 404.
 - The public header is Healthgrades-inspired: hamburger drawer on the left, logo, treatment/location search in the middle, and sign-in/find-care actions on the right.
-- The owner notes specify a bottom disclaimer, treatment/state/county search controls, capitalized Dentaworth in public copy, back buttons on secondary pages, and a security reassurance on the self-reporting page.
+- The owner notes specify a bottom disclaimer, treatment/state/county search controls, capitalized DentaWorth in public copy, back buttons on secondary pages, and a security reassurance on the self-reporting page.
 - Backend docs live in `docs/backend.md`.
 - Public form writes currently go to Firestore collections `priceReports` and `contactMessages`; sign-in writes/reads `userProfiles/{uid}` for the signed-in user.
 - `/account` is the signed-in account center. It supports profile display-name updates and saved operations under `userProfiles/{uid}/savedOperations`.

@@ -23,14 +23,14 @@ export type Page =
   | "not-found";
 
 export const routeTitles: Record<Page, string> = {
-  home: "Florida dental ratings and cost guide",
+  home: "Florida dental cost guide",
   search: "Search results",
   "self-reporting": "Self reporting page",
-  about: "About Dentaworth",
+  about: "About DentaWorth",
   "privacy-policy": "Privacy Policy",
   "terms-of-use": "Terms of Use",
   contact: "Contact us",
-  "get-care-now": "Get care now",
+  "get-care-now": "Get Covered Now",
   "find-a-dentist": "Find a dentist",
   "advertise-with-us": "Advertise with us",
   "promote-your-practice": "Promote your practice",
@@ -96,8 +96,9 @@ export const footerColumns: FooterColumn[] = [
     heading: "For Patients",
     links: [
       { label: "Cost guide", href: "/" },
-      { label: "Get care now", href: "/get-care-now" },
-      { label: "Find a dentist", href: "/find-a-dentist" },
+      { label: "Get Covered Now", href: "/get-care-now" },
+      { label: "Get Dental Coverage", href: "/get-care-now" },
+      { label: "Find a Dentist", href: "/find-a-dentist" },
       { label: "Self-report prices", href: "/self-reporting" },
       { label: "Drugs A-Z", href: "/drugs-a-z" },
       { label: "Help Center", href: "/help-center" },
@@ -128,8 +129,8 @@ export const footerColumns: FooterColumn[] = [
 export const allPagesForPreview: Array<{ label: string; href: string; group: string }> = [
   { label: "Cost guide (home)", href: "/", group: "For Patients" },
   { label: "Search results (example)", href: "/search?treatment=Cleaning&county=Broward", group: "For Patients" },
-  { label: "Get care now", href: "/get-care-now", group: "For Patients" },
-  { label: "Find a dentist", href: "/find-a-dentist", group: "For Patients" },
+  { label: "Get Covered Now", href: "/get-care-now", group: "For Patients" },
+  { label: "Find a Dentist", href: "/find-a-dentist", group: "For Patients" },
   { label: "Self-report prices", href: "/self-reporting", group: "For Patients" },
   { label: "Drugs A-Z", href: "/drugs-a-z", group: "For Patients" },
   { label: "Help Center", href: "/help-center", group: "For Patients" },

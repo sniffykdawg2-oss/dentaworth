@@ -8,7 +8,7 @@ export function PromotePracticePage() {
     <PageShell
       eyebrow="Promote your practice"
       title="Promote your dental practice with pricing-aware visitors."
-      intro="Dentaworth is preparing practice promotion options for dental offices that want to be discovered by people comparing care costs."
+      intro="DentaWorth is preparing practice promotion options for dental offices that want to be discovered by people comparing care costs."
       variant="business"
     >
       <BackButton />

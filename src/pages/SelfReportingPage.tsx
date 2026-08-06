@@ -1,5 +1,6 @@
 import { FormEvent, useState } from "react";
 import { ArrowRight, CheckCircle2, FileCheck2, ShieldCheck, TimerReset } from "lucide-react";
+import { AuthUser } from "../backend/auth";
 import { counties, ProcedureKey } from "../content";
 import { createPriceReport } from "../backend/repository";
 import { buildPriceReportInput } from "../backend/validation";
@@ -22,7 +23,13 @@ const reportProcedureFields: Array<{ key: ProcedureKey; label: string }> = [
   { key: "invisalign", label: "Invisalign" },
 ];
 
-export function SelfReportingPage() {
+export function SelfReportingPage({
+  authUser,
+  navigate,
+}: {
+  authUser: AuthUser | null;
+  navigate: (href: string) => void;
+}) {
   const [status, setStatus] = useState<SubmissionStatus>("idle");
   const [errorMessage, setErrorMessage] = useState("");
   const [formStartedAt, setFormStartedAt] = useState(() => Date.now());
@@ -49,10 +56,38 @@ export function SelfReportingPage() {
     <PageShell
       eyebrow="Self reporting page"
       title="Help improve the pricing guide."
-      intro="Share dental procedure pricing you recently received or paid. Submissions help Dentaworth build better county-level estimates, but they are reviewed before being used."
+      intro="Submit recent dental prices or estimates to help DentaWorth track accurate costs in your county. Submissions are confirmed before being added to our database."
       variant="care"
     >
       <BackButton />
+      <section className="report-auth-gate" aria-labelledby="report-auth-heading">
+        <div>
+          <p className="eyebrow">{authUser ? "Signed in" : "Account required"}</p>
+          <h2 id="report-auth-heading">
+            {authUser ? "You're ready to enter self-reported pricing." : "Sign in before entering self-reported pricing."}
+          </h2>
+          <p>
+            Price reports are tied to an account so DentaWorth can reduce spam, review submissions, and keep the public guide cleaner.
+          </p>
+        </div>
+        <div className="report-auth-actions">
+          {!authUser ? (
+            <>
+              <button className="button primary" type="button" onClick={() => navigate("/sign-in")}>
+                Sign in
+                <ArrowRight size={18} aria-hidden="true" />
+              </button>
+              <button className="button secondary" type="button" onClick={() => navigate("/sign-in?action=create-account")}>
+                Create account
+              </button>
+            </>
+          ) : (
+            <button className="button secondary" type="button" onClick={() => navigate("/account")}>
+              Open account
+            </button>
+          )}
+        </div>
+      </section>
       <div className="report-layout">
         <aside className="report-trust-rail" aria-label="Reporting safeguards">
           {[
@@ -67,7 +102,7 @@ export function SelfReportingPage() {
             </article>
           ))}
         </aside>
-        <form className="form-card report-form" onSubmit={handleSubmit}>
+        <form className="form-card report-form" onSubmit={handleSubmit} aria-disabled={!authUser}>
           <SpamTrap formStartedAt={formStartedAt} />
           {status === "success" && (
             <div className="success-message" role="status">
@@ -113,7 +148,7 @@ export function SelfReportingPage() {
               placeholder="Share anything relevant, like whether insurance was involved or whether the quote included complications."
             />
           </label>
-          <button className="button primary" type="submit" disabled={status === "submitting"}>
+          <button className="button primary" type="submit" disabled={!authUser || status === "submitting"}>
             {status === "submitting" ? "Submitting..." : "Submit report"}
             <ArrowRight size={18} aria-hidden="true" />
           </button>

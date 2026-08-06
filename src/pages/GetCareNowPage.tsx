@@ -5,9 +5,9 @@ import { BackButton } from "../components/BackButton";
 export function GetCareNowPage({ navigate }: { navigate: (href: string) => void }) {
   return (
     <PageShell
-      eyebrow="Get care now"
+      eyebrow="Get Covered Now"
       title="Use the guide before you book dental care."
-      intro="Dentaworth helps you understand common cash price ranges before you contact a dental office."
+      intro="DentaWorth helps you understand common cash price ranges before you contact a dental office."
       variant="care"
     >
       <BackButton />
@@ -16,7 +16,7 @@ export function GetCareNowPage({ navigate }: { navigate: (href: string) => void 
           <p className="eyebrow">Before you call</p>
           <h2>Turn a price range into a cleaner phone call.</h2>
           <p>
-            Dentaworth does not replace a dentist's estimate, but it gives you enough context to ask
+            DentaWorth does not replace a dentist's estimate, but it gives you enough context to ask
             sharper questions. Use the range as a reference point, then ask the office what is
             included, what could change, and when payment is due.
           </p>

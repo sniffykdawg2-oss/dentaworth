@@ -56,7 +56,7 @@ export function AdminPage({ authUser, navigate }: { authUser: AuthUser | null; n
     return (
       <section className="auth-page">
         <div className="auth-copy">
-          <h1>Sign in to manage Dentaworth.</h1>
+          <h1>Sign in to manage DentaWorth.</h1>
           <p>Admin tools require Firebase Auth and an owner-approved admin claim.</p>
         </div>
         <div className="form-card auth-card">
@@ -183,7 +183,7 @@ export function AdminPage({ authUser, navigate }: { authUser: AuthUser | null; n
   return (
     <PageShell
       eyebrow="Admin dashboard"
-      title="Manage Dentaworth launch data."
+      title="Manage DentaWorth launch data."
       intro="Review public submissions, publish price ranges, maintain dentist profile records, and preview every site page from one protected workspace."
       variant="account"
     >

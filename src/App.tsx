@@ -59,7 +59,7 @@ export function App() {
       <main id="main-content">
         {page === "home" && <HomePage navigate={navigate} />}
         {page === "search" && <SearchResultsPage navigate={navigate} routeVersion={routeVersion} />}
-        {page === "self-reporting" && <SelfReportingPage />}
+        {page === "self-reporting" && <SelfReportingPage authUser={authUser} navigate={navigate} />}
         {page === "about" && <AboutPage navigate={navigate} />}
         {page === "privacy-policy" && <PrivacyPolicyPage />}
         {page === "terms-of-use" && <TermsOfUsePage />}
@@ -85,9 +85,9 @@ export function App() {
 }
 
 function PageMeta({ page }: { page: Page }) {
-  const title = `${routeTitles[page]} | Dentaworth`;
+  const title = `${routeTitles[page]} | DentaWorth`;
   const description =
-    "Dentaworth provides Florida dental ratings and cash price range estimates for common dental procedures.";
+    "DentaWorth provides Florida dental cash price range estimates by county for common dental procedures.";
 
   useEffect(() => {
     document.title = title;

@@ -6,7 +6,7 @@ export function NewsPage() {
   return (
     <PageShell
       eyebrow="News and features"
-      title="What's new at Dentaworth."
+      title="What's new at DentaWorth."
       intro="Product updates, new counties, and feature launches, posted as they happen."
       variant="editorial"
     >

@@ -10,16 +10,18 @@ type SubmissionStatus = "idle" | "submitting" | "success" | "error";
 type AuthGatewayPageProps = {
   authUser: AuthUser | null;
   initialAudience?: Audience;
+  initialStep?: AuthStep;
   navigate: (href: string) => void;
 };
 
 export function AuthGatewayPage({
   authUser,
   initialAudience = "patient",
+  initialStep = "audience",
   navigate,
 }: AuthGatewayPageProps) {
   const [audience, setAudience] = useState<Audience>(initialAudience);
-  const [step, setStep] = useState<AuthStep>("audience");
+  const [step, setStep] = useState<AuthStep>(initialStep);
   const [status, setStatus] = useState<SubmissionStatus>("idle");
   const [message, setMessage] = useState("");
 
@@ -267,7 +269,7 @@ export function AuthGatewayPage({
           </p>
         </div>
       </div>
-      <p className="auth-footer-copy">© 2026 DentaWorth • Dental Operations</p>
+      <p className="auth-footer-copy">© 2026 DentaWorth • DentaWorth LLC</p>
     </section>
   );
 }

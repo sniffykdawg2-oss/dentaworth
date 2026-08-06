@@ -28,7 +28,7 @@ export function Newsletter() {
 
   return (
     <form className="newsletter-form" onSubmit={handleSubmit} noValidate>
-      <h3>Get the Dentaworth newsletter</h3>
+      <h3>Get the DentaWorth newsletter</h3>
       <div aria-hidden="true" className="bot-field">
         <label>
           Website

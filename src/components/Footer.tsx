@@ -10,7 +10,7 @@ export function Footer({ navigate }: { navigate: (href: string) => void }) {
             <span>Denta</span>
             <span className="brand-worth">Worth</span>
           </a>
-          <p>Florida dental ratings and cash price range estimates.</p>
+          <p>Florida dental cash price range estimates by county.</p>
           <Newsletter />
         </div>
         {footerColumns.map((column) => (
@@ -18,7 +18,11 @@ export function Footer({ navigate }: { navigate: (href: string) => void }) {
             <h3>{column.heading}</h3>
             <nav aria-label={column.heading}>
               {column.links.map((item) => (
-                <a key={item.href} href={item.href} onClick={(event) => handleLinkClick(event, item.href, navigate)}>
+                <a
+                  key={`${column.heading}-${item.href}-${item.label}`}
+                  href={item.href}
+                  onClick={(event) => handleLinkClick(event, item.href, navigate)}
+                >
                   {item.label}
                 </a>
               ))}

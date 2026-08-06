@@ -95,14 +95,14 @@ export function AccountPage({ authUser, navigate }: { authUser: AuthUser | null;
   return (
     <PageShell
       eyebrow="Account center"
-      title="Your Dentaworth workspace."
+      title="Your DentaWorth workspace."
       intro="Manage account details, keep track of procedures you are researching, and prepare for future review tools."
       variant="account"
     >
       <div className="account-layout">
         <aside className="account-summary" aria-label="Account summary">
           <UserRound size={24} aria-hidden="true" />
-          <h2>{signedInUser.displayName || "Dentaworth account"}</h2>
+          <h2>{signedInUser.displayName || "DentaWorth account"}</h2>
           <p>{signedInUser.email}</p>
           <span>{signedInUser.isAdmin ? "Admin access" : "Standard access"}</span>
           <button className="button secondary" type="button" onClick={() => navigate("/")}>

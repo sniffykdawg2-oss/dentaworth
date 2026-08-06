@@ -83,22 +83,20 @@ export function Header({
         <div className="header-actions">
           <a
             className="header-provider-link"
+            href="/find-a-dentist"
+            onClick={(event) => handleLinkClick(event, "/find-a-dentist", navigate)}
+          >
+            Find a Dentist
+          </a>
+          <a
+            className="header-provider-link"
             href="/provider-login"
             onClick={(event) => handleLinkClick(event, "/provider-login", navigate)}
           >
-            For providers
+            For Providers
           </a>
-          {authUser ? (
-            <button className="header-link-button" type="button" onClick={() => navigate("/account")}>
-              Account
-            </button>
-          ) : (
-            <button className="header-link-button" type="button" onClick={() => navigate("/sign-in")}>
-              Sign in
-            </button>
-          )}
-          <button className="button primary compact" type="button" onClick={() => navigate("/find-a-dentist")}>
-            Find care
+          <button className="button primary compact" type="button" onClick={() => navigate("/get-care-now")}>
+            Get Dental Coverage
           </button>
         </div>
       </header>
@@ -123,7 +121,7 @@ export function Header({
               <nav aria-label={column.heading}>
                 {column.links.map((item) => (
                   <a
-                    key={item.href}
+                    key={`${column.heading}-${item.href}-${item.label}`}
                     href={item.href}
                     aria-current={currentPage === pageFromHref(item.href) ? "page" : undefined}
                     onClick={(event) => {
@@ -156,7 +154,7 @@ export function Header({
           )}
         </div>
         <div className="drawer-account">
-          <p>{authUser ? authUser.email : "Admin and owner tools"}</p>
+          <p>{authUser ? authUser.email : "Account access"}</p>
           <button className="button secondary" type="button" onClick={() => handleNav(authUser ? "/account" : "/sign-in")}>
             {authUser ? "Open account" : "Sign in"}
           </button>

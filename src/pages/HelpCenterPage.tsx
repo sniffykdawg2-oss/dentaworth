@@ -19,11 +19,6 @@ const faqs = [
       "Anyone can submit pricing they were quoted or charged through the self-reporting form. Submissions are reviewed before they influence the public guide, and personal contact details are kept separate from published pricing.",
   },
   {
-    question: "What does the county rating mean?",
-    answer:
-      "The rating reflects the overall pricing confidence and data coverage Dentaworth currently has for that county. It is not a review of any individual dentist.",
-  },
-  {
     question: "How do I get my practice listed or promoted?",
     answer:
       "Use the Promote your practice page to reach out. We're onboarding provider profiles and provider login access individually right now.",
@@ -39,15 +34,15 @@ export function HelpCenterPage() {
   return (
     <PageShell
       eyebrow="Help Center"
-      title="Answers about how Dentaworth works."
-      intro="Common questions about the cost guide, self-reporting, ratings, and getting a practice listed."
+      title="Answers about how DentaWorth works."
+      intro="Common questions about the cost guide, self-reporting, and getting a practice listed."
       variant="help"
     >
       <BackButton />
       <div className="help-hub">
         <aside className="help-map">
           {[
-            { icon: SearchCheck, title: "Using the guide", text: "How ranges, counties, ratings, and searches fit together." },
+            { icon: SearchCheck, title: "Using the guide", text: "How ranges, counties, and searches fit together." },
             { icon: ShieldQuestion, title: "Trust and review", text: "How submitted pricing is handled before anything public changes." },
             { icon: FileQuestion, title: "Provider questions", text: "How dentists and advertisers can ask about listings." },
           ].map((item) => (

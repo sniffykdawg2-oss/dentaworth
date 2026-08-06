@@ -8,7 +8,7 @@ export function AdvertiseWithUsPage() {
     <PageShell
       eyebrow="Advertise with us"
       title="Reach people researching dental care costs."
-      intro="Dentaworth is built for visitors who are actively comparing dental treatment pricing and looking for clearer next steps."
+      intro="DentaWorth is built for visitors who are actively comparing dental treatment pricing and looking for clearer next steps."
       variant="business"
     >
       <BackButton />
@@ -29,7 +29,7 @@ export function AdvertiseWithUsPage() {
         <div className="legal-copy ad-copy">
           <h2>Advertising inquiries</h2>
           <p>
-            Dentaworth can support advertising opportunities for dental organizations that want to
+            DentaWorth can support advertising opportunities for dental organizations that want to
             reach patients during the research phase. Advertising must remain clearly separate from
             cost guide methodology and informational content.
           </p>

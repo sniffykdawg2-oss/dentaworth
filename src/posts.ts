@@ -14,11 +14,11 @@ export type Post = {
 export const newsPosts: Post[] = [
   {
     slug: "dentaworth-is-live",
-    title: "Dentaworth is live",
+    title: "DentaWorth is live",
     date: "2026-07-26",
-    summary: "Dentaworth's Florida dental cost guide and self-reporting tool are now online.",
+    summary: "DentaWorth's Florida dental cost guide and self-reporting tool are now online.",
     body: [
-      "Dentaworth is now live at dentaworth.web.app, offering a county-level cost guide for common dental procedures across Florida.",
+      "DentaWorth is now live at dentaworth.web.app, offering a county-level cost guide for common dental procedures across Florida.",
       "The guide is built to give patients a starting point before they call around for care, and it grows over time as people self-report the prices they were actually quoted or charged.",
       "More updates will be posted here as new features, counties, and tools are added.",
     ],

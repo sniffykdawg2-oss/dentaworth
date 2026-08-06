@@ -7,21 +7,21 @@ export function TermsOfUsePage() {
       <BackButton />
       <div className="legal-copy">
         <p>
-          These Terms of Use ("Terms") govern your access to and use of Dentaworth, accessible from
+          These Terms of Use ("Terms") govern your access to and use of DentaWorth, accessible from
           dentaworth.com (the "Service"). By using the Service, you agree to these Terms. If you do
           not agree, please do not use the Service.
         </p>
         <h2>Informational purposes only</h2>
         <p>
-          Dentaworth provides estimated dental price ranges and related information for general
+          DentaWorth provides estimated dental price ranges and related information for general
           informational purposes only. Nothing on this site is a quote, offer, guarantee, medical
           advice, or financial advice. Actual costs depend on your specific treatment, provider, and
           circumstances, and can differ significantly from any range shown here.
         </p>
         <h2>Self-reported and third-party data</h2>
         <p>
-          Some content on Dentaworth, including self-reported pricing, is submitted by users and
-          reviewed before publication. Dentaworth does not independently verify the accuracy of
+          Some content on DentaWorth, including self-reported pricing, is submitted by users and
+          reviewed before publication. DentaWorth does not independently verify the accuracy of
           self-reported submissions and makes no guarantee as to their completeness or correctness.
         </p>
         <h2>Acceptable use</h2>
@@ -39,7 +39,7 @@ export function TermsOfUsePage() {
         <h2>Third-party links</h2>
         <p>
           The Service may link to dental practices, websites, or other third-party resources.
-          Dentaworth does not control and is not responsible for the content, policies, or practices
+          DentaWorth does not control and is not responsible for the content, policies, or practices
           of any third-party site.
         </p>
         <h2>No warranty</h2>
@@ -50,7 +50,7 @@ export function TermsOfUsePage() {
         </p>
         <h2>Limitation of liability</h2>
         <p>
-          To the fullest extent permitted by law, Dentaworth is not liable for any indirect,
+          To the fullest extent permitted by law, DentaWorth is not liable for any indirect,
           incidental, or consequential damages arising from your use of, or inability to use, the
           Service, including decisions made based on information found on the site.
         </p>

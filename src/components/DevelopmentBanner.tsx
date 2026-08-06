@@ -9,7 +9,7 @@ export function DevelopmentBanner() {
   return (
     <div className="dev-banner" role="status">
       <p>
-        Dentaworth is currently under active development and expansion. Some data, pricing, and
+        DentaWorth is currently under active development and expansion. Some data, pricing, and
         features are placeholders and the site is not yet ready for everyday use.
       </p>
       <button type="button" aria-label="Dismiss notice" onClick={() => setIsVisible(false)}>

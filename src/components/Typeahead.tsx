@@ -31,8 +31,7 @@ export function Typeahead({
 
   const matches = useMemo(() => {
     const normalized = value.trim().toLowerCase();
-    const pool = normalized ? options.filter((option) => option.toLowerCase().includes(normalized)) : options;
-    return pool.slice(0, 8);
+    return normalized ? options.filter((option) => option.toLowerCase().includes(normalized)) : options;
   }, [options, value]);
 
   function selectOption(option: string) {

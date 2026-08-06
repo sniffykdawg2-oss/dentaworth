@@ -89,14 +89,14 @@ export function HomePage({ navigate }: { navigate: (href: string) => void }) {
               <h2 id="home-services-heading">Compare common dental procedures.</h2>
             </div>
             <p>
-              From routine cleanings to major treatment, Dentaworth breaks procedures into three
+              From routine cleanings to major treatment, DentaWorth breaks procedures into three
               groups so you always know roughly where a quote should land before you book.
             </p>
             <ul className="plain-link-list">
               <li>
                 <span>Routine care</span>
                 <div>
-                  {["Cleaning", "Exam", "X-ray"].map((item) => (
+                  {["Cleaning", "Exam", "X-ray", "Whitening"].map((item) => (
                     <a key={item} href="#" onClick={(event) => { event.preventDefault(); navigate(`/search?treatment=${encodeURIComponent(item)}`); }}>
                       {item}
                     </a>
@@ -149,7 +149,7 @@ export function HomePage({ navigate }: { navigate: (href: string) => void }) {
           <h2 id="browse-heading">Find price context by county.</h2>
           <p>
             Dental cash prices can vary by local market. Here is a look at a few of the Florida
-            counties Dentaworth tracks pricing for.
+            counties DentaWorth tracks pricing for.
           </p>
           <div className="browse-stats">
             <div>
@@ -215,7 +215,7 @@ export function HomePage({ navigate }: { navigate: (href: string) => void }) {
         <div className="section-heading centered-heading">
           <h2 id="how-heading">A clearer path before you call around.</h2>
           <p>
-            Dentaworth is built to help people understand dental pricing earlier in the care
+            DentaWorth is built to help people understand dental pricing earlier in the care
             journey, without pretending estimates are final quotes.
           </p>
         </div>
@@ -276,7 +276,7 @@ export function HomePage({ navigate }: { navigate: (href: string) => void }) {
             </p>
             <div className="card-actions">
               <button className="button primary" type="button" onClick={() => navigate("/account")}>
-                Open account
+                Create account
                 <ArrowRight size={18} aria-hidden="true" />
               </button>
               <button className="button secondary" type="button" onClick={() => navigate("/self-reporting")}>
@@ -288,7 +288,7 @@ export function HomePage({ navigate }: { navigate: (href: string) => void }) {
             <FileText size={30} strokeWidth={1.75} aria-hidden="true" />
             <h3>For dental practices</h3>
             <p>
-              Dentaworth is preparing practice profiles and promotion options for offices that want
+              DentaWorth is preparing practice profiles and promotion options for offices that want
               to reach people researching treatment costs.
             </p>
             <div className="card-actions">

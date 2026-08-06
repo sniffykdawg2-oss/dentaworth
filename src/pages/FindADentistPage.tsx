@@ -21,15 +21,15 @@ export function FindADentistPage({ navigate }: { navigate: (href: string) => voi
   return (
     <PageShell
       eyebrow="Find a dentist"
-      title="Find a dentist with better pricing context."
-      intro="Dentaworth is preparing tools to help patients compare dental offices alongside county-level pricing information."
+      title="Find Quality Dental Care At A Cost That's Fair."
+      intro="Compare dental offices with county-level price context before you call."
       variant="dentist"
     >
       <BackButton />
       <section className="dentist-radar">
         <div>
           <p className="eyebrow">Directory status</p>
-          <h2>Provider profiles are being built around useful context, not ad clutter.</h2>
+          <h2>Provider profiles are being built around useful pricing context.</h2>
           <p>
             The directory is designed to pair practice details with procedure coverage and local
             price context. Published profiles appear below as they are reviewed.

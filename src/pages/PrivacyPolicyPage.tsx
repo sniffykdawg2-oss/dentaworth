@@ -7,9 +7,9 @@ export function PrivacyPolicyPage() {
       <BackButton />
       <div className="legal-copy">
         <p>
-          At Dentaworth ("we," "our," or "us"), accessible from dentaworth.com, one of our main
+          At DentaWorth ("we," "our," or "us"), accessible from dentaworth.com, one of our main
           priorities is the privacy of our visitors. This Privacy Policy contains types of
-          information that is collected and recorded by Dentaworth and how we use it.
+          information that is collected and recorded by DentaWorth and how we use it.
         </p>
         <p>
           If you have additional questions or require more information about our Privacy Policy, do
@@ -30,7 +30,7 @@ export function PrivacyPolicyPage() {
         </p>
         <h2>How we use your information</h2>
         <p>
-          Dentaworth uses collected data to provide, operate, and maintain our website and services;
+          DentaWorth uses collected data to provide, operate, and maintain our website and services;
           notify you about service changes or upcoming appointments; allow participation in
           interactive website features; provide patient support and process dental inquiries; gather
           analysis to improve the website; monitor usage; detect, prevent, and address technical
@@ -49,7 +49,7 @@ export function PrivacyPolicyPage() {
           share data with service providers who help operate the website or analyze usage, and they
           are obligated not to disclose or use it for other purposes. We may also disclose personal
           data when necessary to comply with a legal obligation, protect the rights or property of
-          Dentaworth, or protect the personal safety of users or the public.
+          DentaWorth, or protect the personal safety of users or the public.
         </p>
         <h2>Data security</h2>
         <p>

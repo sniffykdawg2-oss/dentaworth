@@ -1011,7 +1011,7 @@ export const countySlides = [
 ];
 
 export const disclaimerText =
-  "Cash price ranges are estimates only, for informational purposes only. They are not quotations and are non-binding. Price ranges are based on independent estimations and self-reported data. Dentaworth does not verify or guarantee accuracy. Treatment complications may affect pricing.";
+  "Cash price ranges are estimates only, for informational purposes only. They are not quotations and are non-binding. Price ranges are based on independent estimations and self-reported data. DentaWorth does not verify or guarantee accuracy. Treatment complications may affect pricing.";
 
 /** Each slogan is pre-split into two lines so the hero always reserves the
  * same two-line height — no empty gap for shorter phrases. */
