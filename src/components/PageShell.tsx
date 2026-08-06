@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { BackButton } from "./BackButton";
 
 export type PageHeroVariant =
   | "default"
@@ -28,6 +29,7 @@ export function PageShell({
   return (
     <>
       <section className={`page-hero page-hero-${variant}`}>
+        <BackButton />
         <h1>{title}</h1>
         <p>{intro}</p>
       </section>

@@ -1,6 +1,5 @@
 import { newsPosts } from "../posts";
 import { PageShell } from "../components/PageShell";
-import { BackButton } from "../components/BackButton";
 
 export function NewsPage() {
   return (
@@ -10,7 +9,6 @@ export function NewsPage() {
       intro="Product updates, new counties, and feature launches, posted as they happen."
       variant="editorial"
     >
-      <BackButton />
       <section className="news-timeline-intro">
         <p className="eyebrow">Product log</p>
         <h2>Launch notes, feature updates, and coverage changes will live here.</h2>

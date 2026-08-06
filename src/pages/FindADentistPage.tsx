@@ -4,7 +4,6 @@ import { subscribeToPublishedDentistProfiles } from "../backend/repository";
 import { DentistProfileRecord } from "../backend/schema";
 import { getProcedureLabel } from "../pageHelpers";
 import { PageShell } from "../components/PageShell";
-import { BackButton } from "../components/BackButton";
 
 export function FindADentistPage({ navigate }: { navigate: (href: string) => void }) {
   const [publishedDentists, setPublishedDentists] = useState<Array<{ id: string } & DentistProfileRecord>>([]);
@@ -25,7 +24,6 @@ export function FindADentistPage({ navigate }: { navigate: (href: string) => voi
       intro="Compare dental offices with county-level price context before you call."
       variant="dentist"
     >
-      <BackButton />
       <section className="dentist-radar">
         <div>
           <p className="eyebrow">Directory status</p>

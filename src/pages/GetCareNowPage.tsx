@@ -1,6 +1,5 @@
 import { ArrowRight, ClipboardCheck, MapPinned, PhoneCall, ReceiptText } from "lucide-react";
 import { PageShell } from "../components/PageShell";
-import { BackButton } from "../components/BackButton";
 
 export function GetCareNowPage({ navigate }: { navigate: (href: string) => void }) {
   return (
@@ -10,7 +9,6 @@ export function GetCareNowPage({ navigate }: { navigate: (href: string) => void 
       intro="DentaWorth helps you understand common cash price ranges before you contact a dental office."
       variant="care"
     >
-      <BackButton />
       <div className="care-playbook">
         <section className="care-command">
           <p className="eyebrow">Before you call</p>

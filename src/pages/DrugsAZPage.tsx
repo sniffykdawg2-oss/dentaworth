@@ -1,7 +1,6 @@
 import { useMemo, useState } from "react";
 import { drugDirectory, drugDirectoryDisclaimer } from "../drugs";
 import { PageShell } from "../components/PageShell";
-import { BackButton } from "../components/BackButton";
 
 const letters = Array.from(new Set(drugDirectory.map((drug) => drug.name[0].toUpperCase()))).sort();
 
@@ -23,7 +22,6 @@ export function DrugsAZPage() {
       intro="Browse medication names patients commonly encounter around dental treatment. This is a general directory, not medical advice."
       variant="drugs"
     >
-      <BackButton />
       <div className="drugs-layout">
         <aside className="drugs-toolbar">
           <label className="drugs-search">

@@ -1,10 +1,8 @@
 import { PageShell } from "../components/PageShell";
-import { BackButton } from "../components/BackButton";
 
 export function PrivacyPolicyPage() {
   return (
     <PageShell eyebrow="Privacy Policy" title="Privacy Policy" intro="Effective Date: June 27, 2026" variant="legal">
-      <BackButton />
       <div className="legal-copy">
         <p>
           At DentaWorth ("we," "our," or "us"), accessible from dentaworth.com, one of our main

@@ -1,6 +1,5 @@
 import { blogEmptyStateNote, blogPosts } from "../posts";
 import { PageShell } from "../components/PageShell";
-import { BackButton } from "../components/BackButton";
 
 export function BlogPage() {
   return (
@@ -10,7 +9,6 @@ export function BlogPage() {
       intro="Longer-form writing about reading estimates, navigating dental costs, and how the guide is built."
       variant="editorial"
     >
-      <BackButton />
       <section className="editorial-board">
         <div>
           <p className="eyebrow">Editorial queue</p>

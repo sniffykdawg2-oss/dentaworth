@@ -1,6 +1,5 @@
 import { Building2, MapPinned, MousePointerClick, SearchCheck } from "lucide-react";
 import { PageShell } from "../components/PageShell";
-import { BackButton } from "../components/BackButton";
 import { InquiryForm } from "../components/InquiryForm";
 
 export function PromotePracticePage() {
@@ -11,7 +10,6 @@ export function PromotePracticePage() {
       intro="DentaWorth is preparing practice promotion options for dental offices that want to be discovered by people comparing care costs."
       variant="business"
     >
-      <BackButton />
       <div className="provider-stage">
         <section>
           <p className="eyebrow">Practice profile foundation</p>

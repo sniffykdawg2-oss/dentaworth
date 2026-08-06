@@ -1,6 +1,5 @@
 import { FileQuestion, Mail, SearchCheck, ShieldQuestion } from "lucide-react";
 import { PageShell } from "../components/PageShell";
-import { BackButton } from "../components/BackButton";
 
 const faqs = [
   {
@@ -38,7 +37,6 @@ export function HelpCenterPage() {
       intro="Common questions about the cost guide, self-reporting, and getting a practice listed."
       variant="help"
     >
-      <BackButton />
       <div className="help-hub">
         <aside className="help-map">
           {[

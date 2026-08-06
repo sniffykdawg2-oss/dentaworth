@@ -1,6 +1,5 @@
 import { BarChart3, Eye, Mail, Megaphone } from "lucide-react";
 import { PageShell } from "../components/PageShell";
-import { BackButton } from "../components/BackButton";
 import { InquiryForm } from "../components/InquiryForm";
 
 export function AdvertiseWithUsPage() {
@@ -11,7 +10,6 @@ export function AdvertiseWithUsPage() {
       intro="DentaWorth is built for visitors who are actively comparing dental treatment pricing and looking for clearer next steps."
       variant="business"
     >
-      <BackButton />
       <div className="ad-layout">
         <section className="ad-principles">
           {[

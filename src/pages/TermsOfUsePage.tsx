@@ -1,10 +1,8 @@
 import { PageShell } from "../components/PageShell";
-import { BackButton } from "../components/BackButton";
 
 export function TermsOfUsePage() {
   return (
     <PageShell eyebrow="Terms of Use" title="Terms of Use" intro="Effective Date: June 27, 2026" variant="legal">
-      <BackButton />
       <div className="legal-copy">
         <p>
           These Terms of Use ("Terms") govern your access to and use of DentaWorth, accessible from

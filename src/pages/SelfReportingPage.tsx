@@ -5,7 +5,6 @@ import { counties, ProcedureKey } from "../content";
 import { createPriceReport } from "../backend/repository";
 import { buildPriceReportInput } from "../backend/validation";
 import { PageShell } from "../components/PageShell";
-import { BackButton } from "../components/BackButton";
 import { SpamTrap } from "../components/SpamTrap";
 
 type SubmissionStatus = "idle" | "submitting" | "success" | "error";
@@ -59,7 +58,6 @@ export function SelfReportingPage({
       intro="Submit recent dental prices or estimates to help DentaWorth track accurate costs in your county. Submissions are confirmed before being added to our database."
       variant="care"
     >
-      <BackButton />
       <section className="report-auth-gate" aria-labelledby="report-auth-heading">
         <div>
           <p className="eyebrow">{authUser ? "Signed in" : "Account required"}</p>

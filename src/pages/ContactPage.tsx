@@ -3,7 +3,6 @@ import { ArrowRight, CheckCircle2, Mail, MessageSquareText, PencilLine, Triangle
 import { buildContactMessageInput } from "../backend/contact";
 import { createContactMessage } from "../backend/repository";
 import { PageShell } from "../components/PageShell";
-import { BackButton } from "../components/BackButton";
 import { SpamTrap } from "../components/SpamTrap";
 
 type SubmissionStatus = "idle" | "submitting" | "success" | "error";
@@ -38,7 +37,6 @@ export function ContactPage() {
       intro="Send questions, corrections, pricing context, or partnership notes. Keep medical emergencies and urgent treatment questions with a licensed dental provider."
       variant="business"
     >
-      <BackButton />
       <section className="contact-router">
         {[
           { icon: PencilLine, title: "Corrections", text: "Send the county, procedure, and what looks wrong so an admin can review it." },

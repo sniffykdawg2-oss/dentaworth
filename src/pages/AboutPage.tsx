@@ -1,6 +1,5 @@
 import { ArrowRight, Database, SearchCheck, ShieldCheck } from "lucide-react";
 import { PageShell } from "../components/PageShell";
-import { BackButton } from "../components/BackButton";
 
 export function AboutPage({ navigate }: { navigate: (href: string) => void }) {
   return (
@@ -10,7 +9,6 @@ export function AboutPage({ navigate }: { navigate: (href: string) => void }) {
       intro="Our experience, and those of many friends and family, led us to realize that dental pricing is a mystery. DentaWorth can help eliminate the guesswork."
       variant="default"
     >
-      <BackButton />
       <section className="about-manifesto">
         <div>
           <p className="eyebrow">The simple idea</p>
