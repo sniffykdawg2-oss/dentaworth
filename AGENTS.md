@@ -33,6 +33,7 @@ The project was originally started on Wix and is being moved to a GitHub-backed 
 - Email/password sign-in is wired on `/sign-in`; Firebase Authentication must have the Email/Password provider enabled before real users can sign in. Private review/admin access still expects Firebase Auth custom claim `admin: true`.
 - `/sign-in` and `/provider-login` both render the shared `AuthGatewayPage`; provider login starts with Provider selected, while patient sign-in starts with Patient selected.
 - The homepage hero uses a local generated image at `public/images/dentaworth-hero.png`; keep it project-local so visual QA does not depend on remote stock image loading.
+- `/dev/loading-preview` previews the real DentaWorth loading animation. Use it to inspect/replay the loader instead of trying to catch the initial app load timing.
 
 ## Notes For Future Agents
 

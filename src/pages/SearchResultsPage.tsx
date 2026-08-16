@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { ArrowRight, MapPin, Search, Stethoscope, UserRound } from "lucide-react";
+import { ArrowRight, CircleDollarSign, MapPin, Search, Stethoscope, UserRound } from "lucide-react";
 import { countyCostRows, procedures, ProcedureKey } from "../content";
 import { getSearchFiltersFromUrl } from "../nav";
 import { subscribeToPublishedDentistProfiles, subscribeToPublishedPriceRanges } from "../backend/repository";
@@ -108,68 +108,85 @@ export function SearchResultsPage({ navigate, routeVersion }: { navigate: (href:
       </label>
 
       {filteredRows.length > 0 ? (
-        <div className="result-list">
-          {filteredRows.map((row) => {
-            const dentistsForCounty = publishedDentists.filter((profile) => profile.county === row.county);
-            const primaryDentist = dentistsForCounty[0];
+        <>
+          <div className="result-list">
+            {filteredRows.map((row) => {
+              const dentistsForCounty = publishedDentists.filter((profile) => profile.county === row.county);
+              const primaryDentist = dentistsForCounty[0];
 
-            return (
-              <article className="result-row" key={row.county}>
-                <div className="result-field result-field-procedure">
-                  <span className="result-field-label">Procedure</span>
-                  {resolvedProcedureKey ? (
+              return (
+                <article className="result-row" key={row.county}>
+                  <div className="result-field result-field-procedure">
+                    <span className="result-field-label">Procedure</span>
+                    {resolvedProcedureKey ? (
+                      <span className="result-field-value">
+                        <Stethoscope size={16} aria-hidden="true" />
+                        {getProcedureLabel(resolvedProcedureKey)}
+                      </span>
+                    ) : (
+                      <span className="result-field-value">All procedures</span>
+                    )}
+                  </div>
+                  <div className="result-field">
+                    <span className="result-field-label">Location</span>
                     <span className="result-field-value">
-                      <Stethoscope size={16} aria-hidden="true" />
-                      {getProcedureLabel(resolvedProcedureKey)}
+                      <MapPin size={16} aria-hidden="true" />
+                      {row.county}, FL
                     </span>
-                  ) : (
-                    <span className="result-field-value">All procedures</span>
+                  </div>
+                  <div className="result-field">
+                    <span className="result-field-label">Clinic / provider</span>
+                    <span className="result-field-value">
+                      <UserRound size={16} aria-hidden="true" />
+                      {primaryDentist ? primaryDentist.practiceName : "Provider details coming soon"}
+                    </span>
+                  </div>
+                  <div className="result-field result-field-price">
+                    <span className="result-field-label">Price range</span>
+                    <span className="result-field-value result-price">
+                      {resolvedProcedureKey
+                        ? `$${row[resolvedProcedureKey] || "Not yet available"}`
+                        : `${procedures.length} ranges`}
+                    </span>
+                  </div>
+                  <div className="result-field result-field-rating">
+                    <span className="result-field-label">Data confidence</span>
+                    <span className="result-field-value">{row.rating}</span>
+                  </div>
+                  <button className="button primary compact" type="button" onClick={() => navigate("/get-care-now")}>
+                    Get Covered Now
+                    <ArrowRight size={16} aria-hidden="true" />
+                  </button>
+                  {!resolvedProcedureKey && (
+                    <dl className="result-price-breakdown" aria-label={`${row.county} procedure price ranges`}>
+                      {procedures.map((procedure) => (
+                        <div key={procedure.key}>
+                          <dt>{procedure.label}</dt>
+                          <dd>${row[procedure.key]}</dd>
+                        </div>
+                      ))}
+                    </dl>
                   )}
-                </div>
-                <div className="result-field">
-                  <span className="result-field-label">Location</span>
-                  <span className="result-field-value">
-                    <MapPin size={16} aria-hidden="true" />
-                    {row.county}, FL
-                  </span>
-                </div>
-                <div className="result-field">
-                  <span className="result-field-label">Clinic / provider</span>
-                  <span className="result-field-value">
-                    <UserRound size={16} aria-hidden="true" />
-                    {primaryDentist ? primaryDentist.practiceName : "Provider details coming soon"}
-                  </span>
-                </div>
-                <div className="result-field result-field-price">
-                  <span className="result-field-label">Price range</span>
-                  <span className="result-field-value result-price">
-                    {resolvedProcedureKey
-                      ? `$${row[resolvedProcedureKey] || "Not yet available"}`
-                      : `${procedures.length} ranges`}
-                  </span>
-                </div>
-                <div className="result-field result-field-rating">
-                  <span className="result-field-label">Data confidence</span>
-                  <span className="result-field-value">{row.rating}</span>
-                </div>
-                <button className="button primary compact" type="button" onClick={() => navigate("/get-care-now")}>
-                  Get Covered Now
-                  <ArrowRight size={16} aria-hidden="true" />
-                </button>
-                {!resolvedProcedureKey && (
-                  <dl className="result-price-breakdown" aria-label={`${row.county} procedure price ranges`}>
-                    {procedures.map((procedure) => (
-                      <div key={procedure.key}>
-                        <dt>{procedure.label}</dt>
-                        <dd>${row[procedure.key]}</dd>
-                      </div>
-                    ))}
-                  </dl>
-                )}
-              </article>
-            );
-          })}
-        </div>
+                </article>
+              );
+            })}
+          </div>
+          <section className="results-next-step" aria-labelledby="results-next-step-heading">
+            <CircleDollarSign size={28} aria-hidden="true" />
+            <div>
+              <p className="eyebrow">Use the range well</p>
+              <h2 id="results-next-step-heading">A range is a conversation starter, not the final bill.</h2>
+              <p>
+                Ask what is included, whether complexity can change the price, and whether the office
+                can send the estimate in writing before you compare totals.
+              </p>
+            </div>
+            <button className="button secondary" type="button" onClick={() => navigate("/get-care-now")}>
+              Open the call checklist
+              <ArrowRight size={18} aria-hidden="true" />
+            </button>
+          </section>
+        </>
       ) : (
         <div className="empty-state">
           <h3>No matching results</h3>

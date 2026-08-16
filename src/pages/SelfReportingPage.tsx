@@ -60,7 +60,6 @@ export function SelfReportingPage({
     >
       <section className="report-auth-gate" aria-labelledby="report-auth-heading">
         <div>
-          <p className="eyebrow">{authUser ? "Signed in" : "Account required"}</p>
           <h2 id="report-auth-heading">
             {authUser ? "You're ready to enter self-reported pricing." : "Sign in before entering self-reported pricing."}
           </h2>
@@ -152,6 +151,21 @@ export function SelfReportingPage({
           </button>
         </form>
       </div>
+      <section className="report-quality-guide" aria-labelledby="report-quality-heading">
+        <div>
+          <h2 id="report-quality-heading">What makes a price report useful?</h2>
+          <p>
+            The most helpful submissions are recent, specific, and clear about whether the number
+            came from an estimate, a final bill, or a cash-pay quote.
+          </p>
+        </div>
+        <ul>
+          <li><span>Timing</span>Recent estimates are more useful than older bills.</li>
+          <li><span>Scope</span>Notes about X-rays, sedation, materials, and follow-up visits matter.</li>
+          <li><span>Payment context</span>Cash pay, financing, membership plans, and insurance can change the comparison.</li>
+          <li><span>County</span>County context helps the guide avoid mixing very different local markets.</li>
+        </ul>
+      </section>
     </PageShell>
   );
 }

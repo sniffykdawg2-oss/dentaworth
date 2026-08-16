@@ -20,6 +20,7 @@ export type Page =
   | "sign-in"
   | "account"
   | "admin"
+  | "loading-preview"
   | "not-found";
 
 export const routeTitles: Record<Page, string> = {
@@ -42,6 +43,7 @@ export const routeTitles: Record<Page, string> = {
   "sign-in": "Sign in",
   account: "Account center",
   admin: "Admin dashboard",
+  "loading-preview": "Loading preview",
   "not-found": "Page not found",
 };
 
@@ -65,6 +67,7 @@ const pathToPage: Record<string, Page> = {
   "/sign-in": "sign-in",
   "/account": "account",
   "/admin": "admin",
+  "/dev/loading-preview": "loading-preview",
 };
 
 export function getCurrentPage(): Page {
@@ -96,7 +99,6 @@ export const footerColumns: FooterColumn[] = [
     heading: "For Patients",
     links: [
       { label: "Cost guide", href: "/" },
-      { label: "Get Covered Now", href: "/get-care-now" },
       { label: "Get Dental Coverage", href: "/get-care-now" },
       { label: "Find a Dentist", href: "/find-a-dentist" },
       { label: "Self-report prices", href: "/self-reporting" },
@@ -143,6 +145,7 @@ export const allPagesForPreview: Array<{ label: string; href: string; group: str
   { label: "Contact us", href: "/contact", group: "Our Company" },
   { label: "Privacy Policy", href: "/privacy-policy", group: "Our Company" },
   { label: "Terms of Use", href: "/terms-of-use", group: "Our Company" },
+  { label: "Loading preview", href: "/dev/loading-preview", group: "Development" },
   { label: "Sign in", href: "/sign-in", group: "Account" },
   { label: "Account center", href: "/account", group: "Account" },
 ];

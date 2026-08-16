@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ArrowRight, BadgeCheck, Building2, MapPin, Sparkles } from "lucide-react";
+import { ArrowRight, BadgeCheck, Building2, ClipboardList, MapPin, PhoneCall, Sparkles } from "lucide-react";
 import { subscribeToPublishedDentistProfiles } from "../backend/repository";
 import { DentistProfileRecord } from "../backend/schema";
 import { getProcedureLabel } from "../pageHelpers";
@@ -81,6 +81,37 @@ export function FindADentistPage({ navigate }: { navigate: (href: string) => voi
           </article>
         ))}
       </div>
+      <section className="dentist-shortlist" aria-labelledby="dentist-shortlist-heading">
+        <div>
+          <p className="eyebrow">Shortlist builder</p>
+          <h2 id="dentist-shortlist-heading">Compare offices on the things that make the quote usable.</h2>
+        </div>
+        <div className="shortlist-grid">
+          {[
+            { icon: PhoneCall, title: "Call clarity", text: "Can the office explain what is included before you book?" },
+            { icon: ClipboardList, title: "Written estimate", text: "Will they send a treatment estimate with codes, assumptions, and payment terms?" },
+            { icon: BadgeCheck, title: "Profile status", text: "Published profiles should give contact context without replacing your own due diligence." },
+          ].map((item) => (
+            <article key={item.title}>
+              <item.icon size={24} aria-hidden="true" />
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+      {publishedDentists.length === 0 && (
+        <section className="directory-empty-panel" aria-label="Directory launch note">
+          <div>
+            <p className="eyebrow">Directory launch note</p>
+            <h2>Published profiles will appear here after review.</h2>
+          </div>
+          <p>
+            Until then, use the cost guide first, call multiple offices, and ask each office to
+            confirm what is included in the estimate before comparing totals.
+          </p>
+        </section>
+      )}
       <div className="callout-band">
         <div>
           <h2>Use the price tool first</h2>

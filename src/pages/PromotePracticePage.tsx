@@ -43,6 +43,17 @@ export function PromotePracticePage() {
           </article>
         ))}
       </div>
+      <section className="provider-detail-band" aria-labelledby="provider-detail-heading">
+        <div>
+          <p className="eyebrow">Profile quality</p>
+          <h2 id="provider-detail-heading">A useful listing answers practical patient questions.</h2>
+        </div>
+        <ul>
+          <li>Where is the office and which county should patients compare?</li>
+          <li>Which common procedures does the practice want to be found for?</li>
+          <li>What phone number, website, and profile notes should be reviewed before publishing?</li>
+        </ul>
+      </section>
       <InquiryForm
         buttonLabel="Send practice inquiry"
         messageLabel="Practice details"

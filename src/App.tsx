@@ -4,7 +4,7 @@ import { AuthUser, subscribeToAuth } from "./backend/auth";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
 import { Disclaimer } from "./components/Disclaimer";
-import { DevelopmentBanner } from "./components/DevelopmentBanner";
+import { DentaWorthLoader } from "./components/DentaWorthLoader";
 import { HomePage } from "./pages/HomePage";
 import { SearchResultsPage } from "./pages/SearchResultsPage";
 import { SelfReportingPage } from "./pages/SelfReportingPage";
@@ -24,13 +24,16 @@ import { BlogPage } from "./pages/BlogPage";
 import { SignInPage } from "./pages/SignInPage";
 import { AccountPage } from "./pages/AccountPage";
 import { AdminPage } from "./pages/AdminPage";
+import { LoadingPreviewPage } from "./pages/LoadingPreviewPage";
 import { NotFoundPage } from "./pages/NotFoundPage";
 
 export function App() {
   const [page, setPage] = useState<Page>(getCurrentPage);
   const [authUser, setAuthUser] = useState<AuthUser | null>(null);
   const [routeVersion, setRouteVersion] = useState(0);
+  const [isLoadingIntroVisible, setIsLoadingIntroVisible] = useState(true);
   const isAuthRoute = page === "sign-in" || page === "provider-login";
+  const isDevRoute = page === "loading-preview";
 
   useEffect(() => {
     function handlePopState() {
@@ -44,6 +47,11 @@ export function App() {
 
   useEffect(() => subscribeToAuth(setAuthUser), []);
 
+  useEffect(() => {
+    const timer = window.setTimeout(() => setIsLoadingIntroVisible(false), 1700);
+    return () => window.clearTimeout(timer);
+  }, []);
+
   function navigate(href: string) {
     window.history.pushState(null, "", href);
     setPage(getCurrentPage());
@@ -54,7 +62,7 @@ export function App() {
   return (
     <>
       <PageMeta page={page} />
-      {!isAuthRoute && <DevelopmentBanner />}
+      {isLoadingIntroVisible && !isAuthRoute && !isDevRoute && <DentaWorthLoader />}
       {!isAuthRoute && <Header currentPage={page} navigate={navigate} authUser={authUser} />}
       <main id="main-content">
         {page === "home" && <HomePage navigate={navigate} />}
@@ -76,6 +84,7 @@ export function App() {
         {page === "sign-in" && <SignInPage authUser={authUser} navigate={navigate} />}
         {page === "account" && <AccountPage authUser={authUser} navigate={navigate} />}
         {page === "admin" && <AdminPage authUser={authUser} navigate={navigate} />}
+        {page === "loading-preview" && <LoadingPreviewPage />}
         {page === "not-found" && <NotFoundPage navigate={navigate} />}
       </main>
       {!isAuthRoute && <Disclaimer />}

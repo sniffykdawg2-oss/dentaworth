@@ -88,6 +88,19 @@ export function ContactPage() {
           <p>Use email for corrections, self-reported price questions, or business inquiries.</p>
         </aside>
       </div>
+      <section className="contact-prep" aria-labelledby="contact-prep-heading">
+        <p className="eyebrow">Helpful details</p>
+        <h2 id="contact-prep-heading">Include enough context for a useful reply.</h2>
+        <div>
+          {[
+            "County and procedure if you are reporting a pricing issue.",
+            "Whether the number came from an estimate, bill, or office website.",
+            "Practice name and city for provider profile questions.",
+          ].map((item) => (
+            <span key={item}>{item}</span>
+          ))}
+        </div>
+      </section>
     </PageShell>
   );
 }

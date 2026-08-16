@@ -129,13 +129,25 @@ export function HomePage({ navigate }: { navigate: (href: string) => void }) {
               <ArrowRight size={18} aria-hidden="true" />
             </button>
           </div>
-          <figure className="split-media-figure">
-            <img
-              src="/images/procedures-overview.jpg"
-              alt="Dentist reviewing a treatment plan with a patient"
-              loading="lazy"
-            />
-          </figure>
+        </div>
+      </section>
+
+      <section className="section quote-anatomy" aria-labelledby="quote-anatomy-heading">
+        <div>
+          <h2 id="quote-anatomy-heading">What to check before a number becomes a decision.</h2>
+        </div>
+        <div className="quote-board">
+          {[
+            ["Scope", "Is this a complete treatment estimate or only a starting price?"],
+            ["Materials", "Does the quote assume a specific crown material, implant system, or lab fee?"],
+            ["Imaging", "Are exams, X-rays, scans, or follow-up visits included?"],
+            ["Payment", "Is the cash price tied to same-day payment, financing, or a membership plan?"],
+          ].map(([label, text]) => (
+            <article key={label}>
+              <span>{label}</span>
+              <p>{text}</p>
+            </article>
+          ))}
         </div>
       </section>
 

@@ -17,6 +17,16 @@ export function NewsPage() {
           invented awards, and no filler announcements.
         </p>
       </section>
+      <section className="release-principles" aria-labelledby="release-principles-heading">
+        <p className="eyebrow">Release notes</p>
+        <h2 id="release-principles-heading">Updates stay factual and specific.</h2>
+        <div>
+          <span>Feature changes</span>
+          <span>Coverage changes</span>
+          <span>Data workflow changes</span>
+          <span>Launch notes</span>
+        </div>
+      </section>
       {newsPosts.length > 0 ? (
         <div className="post-list">
           {newsPosts.map((post) => (

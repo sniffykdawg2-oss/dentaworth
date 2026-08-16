@@ -1,4 +1,4 @@
-import { ArrowRight, Database, SearchCheck, ShieldCheck } from "lucide-react";
+import { ArrowRight, Database, FileCheck2, SearchCheck, ShieldCheck } from "lucide-react";
 import { PageShell } from "../components/PageShell";
 
 export function AboutPage({ navigate }: { navigate: (href: string) => void }) {
@@ -11,7 +11,6 @@ export function AboutPage({ navigate }: { navigate: (href: string) => void }) {
     >
       <section className="about-manifesto">
         <div>
-          <p className="eyebrow">The simple idea</p>
           <h2>Our Mission</h2>
           <p>
             Empower patients by providing an online information marketplace for dental pricing. One
@@ -60,6 +59,36 @@ export function AboutPage({ navigate }: { navigate: (href: string) => void }) {
           guarantees, or rankings of individual dentists. That boundary matters. Real dental prices
           change with complexity, materials, sedation, imaging, and office policies.
           </p>
+      </section>
+      <section className="about-operating-system" aria-labelledby="about-operating-heading">
+        <div>
+          <h2 id="about-operating-heading">The product has rules on purpose.</h2>
+          <p>
+            Dental pricing is sensitive. The site should help people ask better questions without
+            acting like a dentist, broker, or guaranteed quote engine.
+          </p>
+        </div>
+        <div className="operating-grid">
+          {[
+            { icon: SearchCheck, title: "Search stays public", text: "People can research county-level ranges without creating an account." },
+            { icon: FileCheck2, title: "Reports are reviewed", text: "Self-reported prices are collected carefully before they influence public guidance." },
+            { icon: ShieldCheck, title: "Claims stay modest", text: "No fake rankings, no invented outcomes, and no pretending a range is a final quote." },
+          ].map((item) => (
+            <article key={item.title}>
+              <item.icon size={24} aria-hidden="true" />
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+      <section className="about-roadmap" aria-labelledby="about-roadmap-heading">
+        <h2 id="about-roadmap-heading">What gets stronger as people use it.</h2>
+        <ol>
+          <li><span>01</span>More reviewed price reports by county and procedure.</li>
+          <li><span>02</span>More published practice profiles with useful contact context.</li>
+          <li><span>03</span>Clearer patient education around estimates, coverage, and payment options.</li>
+        </ol>
       </section>
       <div className="callout-band">
         <div>

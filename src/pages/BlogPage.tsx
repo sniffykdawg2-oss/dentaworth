@@ -20,6 +20,16 @@ export function BlogPage() {
           <li>What to ask before paying cash for common dental procedures.</li>
         </ul>
       </section>
+      <section className="editorial-framework" aria-labelledby="blog-framework-heading">
+        <p className="eyebrow">Editorial promise</p>
+        <h2 id="blog-framework-heading">Every article should help someone make a calmer call.</h2>
+        <div>
+          <span>Estimate literacy</span>
+          <span>Cash-price questions</span>
+          <span>County context</span>
+          <span>Plain-language checklists</span>
+        </div>
+      </section>
       {blogPosts.length > 0 ? (
         <div className="post-list">
           {blogPosts.map((post) => (

@@ -220,6 +220,22 @@ export function AccountPage({ authUser, navigate }: { authUser: AuthUser | null;
           </section>
         </div>
       </div>
+      <section className="account-workflow" aria-labelledby="account-workflow-heading">
+        <p className="eyebrow">Account workflow</p>
+        <h2 id="account-workflow-heading">Use your account as a research notebook.</h2>
+        <div>
+          {[
+            ["Save", "Keep procedures and counties you are comparing in one place."],
+            ["Ask", "Bring better questions to offices before you book."],
+            ["Report", "After receiving a quote, self-report pricing to strengthen the guide."],
+          ].map(([title, text]) => (
+            <article key={title}>
+              <h3>{title}</h3>
+              <p>{text}</p>
+            </article>
+          ))}
+        </div>
+      </section>
     </PageShell>
   );
 }
