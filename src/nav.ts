@@ -6,7 +6,6 @@ export type Page =
   | "self-reporting"
   | "about"
   | "privacy-policy"
-  | "terms-of-use"
   | "contact"
   | "get-care-now"
   | "find-a-dentist"
@@ -17,6 +16,7 @@ export type Page =
   | "news"
   | "help-center"
   | "blog"
+  | "blog-post"
   | "sign-in"
   | "account"
   | "admin"
@@ -29,7 +29,6 @@ export const routeTitles: Record<Page, string> = {
   "self-reporting": "Self reporting page",
   about: "About DentaWorth",
   "privacy-policy": "Privacy Policy",
-  "terms-of-use": "Terms of Use",
   contact: "Contact us",
   "get-care-now": "Get Covered Now",
   "find-a-dentist": "Find a dentist",
@@ -40,6 +39,7 @@ export const routeTitles: Record<Page, string> = {
   news: "News and features",
   "help-center": "Help Center",
   blog: "Blog",
+  "blog-post": "Blog article",
   "sign-in": "Sign in",
   account: "Account center",
   admin: "Admin dashboard",
@@ -53,7 +53,6 @@ const pathToPage: Record<string, Page> = {
   "/self-reporting": "self-reporting",
   "/about": "about",
   "/privacy-policy": "privacy-policy",
-  "/terms-of-use": "terms-of-use",
   "/contact": "contact",
   "/get-care-now": "get-care-now",
   "/find-a-dentist": "find-a-dentist",
@@ -72,6 +71,7 @@ const pathToPage: Record<string, Page> = {
 
 export function getCurrentPage(): Page {
   const path = window.location.pathname.replace(/\/$/, "");
+  if (path.startsWith("/blog/") && path.length > 6) return "blog-post";
   return pathToPage[path] ?? "not-found";
 }
 
@@ -122,7 +122,6 @@ export const footerColumns: FooterColumn[] = [
       { label: "Blog", href: "/blog" },
       { label: "Contact us", href: "/contact" },
       { label: "Privacy Policy", href: "/privacy-policy" },
-      { label: "Terms of Use", href: "/terms-of-use" },
     ],
   },
 ];
@@ -144,7 +143,6 @@ export const allPagesForPreview: Array<{ label: string; href: string; group: str
   { label: "Blog", href: "/blog", group: "Our Company" },
   { label: "Contact us", href: "/contact", group: "Our Company" },
   { label: "Privacy Policy", href: "/privacy-policy", group: "Our Company" },
-  { label: "Terms of Use", href: "/terms-of-use", group: "Our Company" },
   { label: "Loading preview", href: "/dev/loading-preview", group: "Development" },
   { label: "Sign in", href: "/sign-in", group: "Account" },
   { label: "Account center", href: "/account", group: "Account" },

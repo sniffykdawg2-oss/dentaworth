@@ -8,6 +8,7 @@ export function AboutPage({ navigate }: { navigate: (href: string) => void }) {
       title="Why DentaWorth?"
       intro="Our experience, and those of many friends and family, led us to realize that dental pricing is a mystery. DentaWorth can help eliminate the guesswork."
       variant="default"
+      heroImage="/images/page-hero-smile-laugh.png"
     >
       <section className="about-manifesto">
         <div>

@@ -9,6 +9,7 @@ export function PromotePracticePage() {
       title="Promote your dental practice with pricing-aware visitors."
       intro="DentaWorth is preparing practice promotion options for dental offices that want to be discovered by people comparing care costs."
       variant="business"
+      heroImage="/images/page-hero-dentist-exam.png"
     >
       <div className="provider-stage">
         <section>

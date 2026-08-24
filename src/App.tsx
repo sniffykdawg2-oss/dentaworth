@@ -10,7 +10,6 @@ import { SearchResultsPage } from "./pages/SearchResultsPage";
 import { SelfReportingPage } from "./pages/SelfReportingPage";
 import { AboutPage } from "./pages/AboutPage";
 import { PrivacyPolicyPage } from "./pages/PrivacyPolicyPage";
-import { TermsOfUsePage } from "./pages/TermsOfUsePage";
 import { ContactPage } from "./pages/ContactPage";
 import { GetCareNowPage } from "./pages/GetCareNowPage";
 import { FindADentistPage } from "./pages/FindADentistPage";
@@ -21,6 +20,7 @@ import { ProviderLoginPage } from "./pages/ProviderLoginPage";
 import { NewsPage } from "./pages/NewsPage";
 import { HelpCenterPage } from "./pages/HelpCenterPage";
 import { BlogPage } from "./pages/BlogPage";
+import { BlogPostPage } from "./pages/BlogPostPage";
 import { SignInPage } from "./pages/SignInPage";
 import { AccountPage } from "./pages/AccountPage";
 import { AdminPage } from "./pages/AdminPage";
@@ -70,7 +70,6 @@ export function App() {
         {page === "self-reporting" && <SelfReportingPage authUser={authUser} navigate={navigate} />}
         {page === "about" && <AboutPage navigate={navigate} />}
         {page === "privacy-policy" && <PrivacyPolicyPage />}
-        {page === "terms-of-use" && <TermsOfUsePage />}
         {page === "contact" && <ContactPage />}
         {page === "get-care-now" && <GetCareNowPage navigate={navigate} />}
         {page === "find-a-dentist" && <FindADentistPage navigate={navigate} />}
@@ -81,6 +80,7 @@ export function App() {
         {page === "news" && <NewsPage />}
         {page === "help-center" && <HelpCenterPage />}
         {page === "blog" && <BlogPage />}
+        {page === "blog-post" && <BlogPostPage />}
         {page === "sign-in" && <SignInPage authUser={authUser} navigate={navigate} />}
         {page === "account" && <AccountPage authUser={authUser} navigate={navigate} />}
         {page === "admin" && <AdminPage authUser={authUser} navigate={navigate} />}

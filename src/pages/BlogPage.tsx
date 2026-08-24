@@ -1,4 +1,4 @@
-import { blogEmptyStateNote, blogPosts } from "../posts";
+import { blogPosts } from "../posts";
 import { PageShell } from "../components/PageShell";
 
 export function BlogPage() {
@@ -8,44 +8,25 @@ export function BlogPage() {
       title="Notes on dental cost transparency."
       intro="Longer-form writing about reading estimates, navigating dental costs, and how the guide is built."
       variant="editorial"
+      heroImage="/images/page-hero-family-outdoors.png"
     >
-      <section className="editorial-board">
-        <div>
-          <p className="eyebrow">Editorial queue</p>
-          <h2>Planned writing should help people read estimates without pretending to be medical advice.</h2>
-        </div>
-        <ul>
-          <li>How to compare two dental quotes without getting lost in jargon.</li>
-          <li>Why county-level ranges are useful but never the final word.</li>
-          <li>What to ask before paying cash for common dental procedures.</li>
-        </ul>
-      </section>
-      <section className="editorial-framework" aria-labelledby="blog-framework-heading">
-        <p className="eyebrow">Editorial promise</p>
-        <h2 id="blog-framework-heading">Every article should help someone make a calmer call.</h2>
-        <div>
-          <span>Estimate literacy</span>
-          <span>Cash-price questions</span>
-          <span>County context</span>
-          <span>Plain-language checklists</span>
-        </div>
-      </section>
-      {blogPosts.length > 0 ? (
-        <div className="post-list">
+      <div className="blog-gallery-heading">
+        <p className="eyebrow">DentaWorth blog</p>
+        <h2>Explore the latest from our blog.</h2>
+      </div>
+      <div className="post-list blog-gallery">
           {blogPosts.map((post) => (
-            <article key={post.slug} className="post-card">
+            <a key={post.slug} className="post-card" href={`/blog/${post.slug}`}>
+              <div className="post-card-image"><img src={post.image || "/images/mother-daughter-smile.jpg"} alt="" /></div>
+              <div className="post-card-body">
               <p className="post-date">{post.date}</p>
               <h2>{post.title}</h2>
               <p>{post.summary}</p>
-            </article>
+                <span className="button secondary">Read article <span aria-hidden="true">→</span></span>
+              </div>
+            </a>
           ))}
-        </div>
-      ) : (
-        <div className="empty-state">
-          <h3>No posts yet</h3>
-          <p>{blogEmptyStateNote}</p>
-        </div>
-      )}
+      </div>
     </PageShell>
   );
 }

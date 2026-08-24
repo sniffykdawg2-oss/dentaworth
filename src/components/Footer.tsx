@@ -10,6 +10,7 @@ export function Footer({ navigate }: { navigate: (href: string) => void }) {
             <span>Denta</span>
             <span className="brand-worth">Worth</span>
           </a>
+          <span className="footer-legal-name">DentaWorth LLC</span>
           <p>Florida dental cash price range estimates by county.</p>
           <Newsletter />
         </div>

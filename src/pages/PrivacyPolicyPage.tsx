@@ -7,6 +7,7 @@ export function PrivacyPolicyPage() {
       title="Privacy Policy"
       intro="This page is a placeholder while final legal language is prepared."
       variant="legal"
+      heroImage="/images/page-hero-child-smile.png"
     >
       <section className="legal-placeholder" aria-labelledby="privacy-placeholder-heading">
         <h2 id="privacy-placeholder-heading">Privacy policy coming soon.</h2>

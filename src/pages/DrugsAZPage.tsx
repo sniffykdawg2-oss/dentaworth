@@ -20,6 +20,7 @@ export function DrugsAZPage() {
       title="Look up dental medication terms."
       intro="Search medication names patients commonly hear around dental care. This is general information only, not medical advice."
       variant="drugs"
+      heroImage="/images/page-hero-dental-office.png"
     >
       <section className="drugs-lookup drugs-lookup-no-photo" aria-labelledby="drugs-lookup-heading">
         <div className="drugs-lookup-copy">

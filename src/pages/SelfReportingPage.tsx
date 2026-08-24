@@ -57,6 +57,7 @@ export function SelfReportingPage({
       title="Help improve the pricing guide."
       intro="Submit recent dental prices or estimates to help DentaWorth track accurate costs in your county. Submissions are confirmed before being added to our database."
       variant="care"
+      heroImage="/images/page-hero-smile-close.png"
     >
       <section className="report-auth-gate" aria-labelledby="report-auth-heading">
         <div>

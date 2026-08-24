@@ -1,5 +1,5 @@
 import { FormEvent, useEffect, useState } from "react";
-import { ArrowRight, Bookmark, CheckCircle2, UserRound } from "lucide-react";
+import { ArrowRight, Bookmark, CheckCircle2, ClipboardCheck, MapPin, UserRound } from "lucide-react";
 import { counties, treatmentOptions } from "../content";
 import {
   AuthUser,
@@ -98,13 +98,18 @@ export function AccountPage({ authUser, navigate }: { authUser: AuthUser | null;
       title="Your DentaWorth workspace."
       intro="Manage account details, keep track of procedures you are researching, and prepare for future review tools."
       variant="account"
+      heroImage="/images/procedures-overview.jpg"
     >
       <div className="account-layout">
         <aside className="account-summary" aria-label="Account summary">
           <UserRound size={24} aria-hidden="true" />
           <h2>{signedInUser.displayName || "DentaWorth account"}</h2>
           <p>{signedInUser.email}</p>
-          <span>{signedInUser.isAdmin ? "Admin access" : "Standard access"}</span>
+          {signedInUser.isAdmin && <span>Admin access</span>}
+          <div className="account-summary-meta">
+            <div><strong>{savedOperations.length}</strong><small>saved searches</small></div>
+            <div><strong>FL</strong><small>your guide</small></div>
+          </div>
           <button className="button secondary" type="button" onClick={() => navigate("/")}>
             Open cost guide
             <ArrowRight size={18} aria-hidden="true" />
@@ -118,6 +123,14 @@ export function AccountPage({ authUser, navigate }: { authUser: AuthUser | null;
         </aside>
 
         <div className="account-panels">
+          <section className="account-welcome" aria-label="Account overview">
+            <div>
+              <p className="eyebrow">Your research desk</p>
+              <h2>Make the next dental conversation easier.</h2>
+              <p>Keep the procedures, counties, and questions you want close before you call an office.</p>
+            </div>
+            <div className="account-welcome-mark" aria-hidden="true"><ClipboardCheck size={36} /><MapPin size={24} /></div>
+          </section>
           {(profileStatus === "error" || savedStatus === "error" || errorMessage) && (
             <div className="error-message" role="alert">
               {errorMessage}
@@ -235,6 +248,14 @@ export function AccountPage({ authUser, navigate }: { authUser: AuthUser | null;
             </article>
           ))}
         </div>
+      </section>
+      <section className="account-help-band" aria-labelledby="account-help-heading">
+        <div>
+          <p className="eyebrow">Need a hand?</p>
+          <h2 id="account-help-heading">Questions about your research or a price range?</h2>
+          <p>We can help point you to the right page, explain how the guide works, or review a correction.</p>
+        </div>
+        <button className="button primary" type="button" onClick={() => navigate("/contact")}>Contact DentaWorth <ArrowRight size={18} /></button>
       </section>
     </PageShell>
   );

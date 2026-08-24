@@ -23,6 +23,7 @@ export function FindADentistPage({ navigate }: { navigate: (href: string) => voi
       title="Find Quality Dental Care At A Cost That's Fair."
       intro="Compare dental offices with county-level price context before you call."
       variant="dentist"
+      heroImage="/images/page-hero-smile-braces.png"
     >
       <section className="dentist-radar">
         <div>

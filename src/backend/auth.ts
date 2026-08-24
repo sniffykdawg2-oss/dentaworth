@@ -51,7 +51,11 @@ export function subscribeToAuth(callback: (user: AuthUser | null) => void) {
     }
 
     const token = await firebaseUser.getIdTokenResult();
-    await upsertUserProfile(firebaseUser, Boolean(token.claims.admin));
+    try {
+      await upsertUserProfile(firebaseUser, Boolean(token.claims.admin));
+    } catch (error) {
+      console.warn("Signed in, but the profile could not be synchronized.", error);
+    }
 
     callback({
       uid: firebaseUser.uid,
@@ -69,7 +73,11 @@ export async function signInWithEmail(email: string, password: string) {
   const credential = await signInWithEmailAndPassword(configuredAuth, email, password);
   const token = await credential.user.getIdTokenResult();
 
-  await upsertUserProfile(credential.user, Boolean(token.claims.admin));
+  try {
+    await upsertUserProfile(credential.user, Boolean(token.claims.admin));
+  } catch (error) {
+    console.warn("Signed in, but the profile could not be synchronized.", error);
+  }
 
   return credential.user;
 }
@@ -79,7 +87,11 @@ export async function createAccountWithEmail(email: string, password: string) {
 
   await setPersistence(configuredAuth, browserLocalPersistence);
   const credential = await createUserWithEmailAndPassword(configuredAuth, email, password);
-  await upsertUserProfile(credential.user, false);
+  try {
+    await upsertUserProfile(credential.user, false);
+  } catch (error) {
+    console.warn("Account created, but the profile could not be synchronized.", error);
+  }
 
   return credential.user;
 }

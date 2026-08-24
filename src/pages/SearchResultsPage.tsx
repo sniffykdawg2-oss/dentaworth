@@ -150,7 +150,7 @@ export function SearchResultsPage({ navigate, routeVersion }: { navigate: (href:
                     </span>
                   </div>
                   <div className="result-field result-field-rating">
-                    <span className="result-field-label">Data confidence</span>
+                    <span className="result-field-label">Average rating</span>
                     <span className="result-field-value">{row.rating}</span>
                   </div>
                   <button className="button primary compact" type="button" onClick={() => navigate("/get-care-now")}>

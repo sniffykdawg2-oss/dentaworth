@@ -8,6 +8,7 @@ export function NewsPage() {
       title="What's new at DentaWorth."
       intro="Product updates, new counties, and feature launches, posted as they happen."
       variant="editorial"
+      heroImage="/images/page-hero-family-home.png"
     >
       <section className="news-timeline-intro">
         <p className="eyebrow">Product log</p>

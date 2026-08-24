@@ -8,6 +8,7 @@ export function GetCareNowPage({ navigate }: { navigate: (href: string) => void 
       title="Use the guide before you book dental care."
       intro="DentaWorth helps you understand common cash price ranges before you contact a dental office."
       variant="care"
+      heroImage="/images/page-hero-dentist-patient.png"
     >
       <div className="care-playbook">
         <section className="care-command">

@@ -36,6 +36,7 @@ export function ContactPage() {
       title="Get in touch about DentaWorth."
       intro="Send questions, corrections, pricing context, or partnership notes. Keep medical emergencies and urgent treatment questions with a licensed dental provider."
       variant="business"
+      heroImage="/images/page-hero-tools-tray.png"
     >
       <section className="contact-router">
         {[

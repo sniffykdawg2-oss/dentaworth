@@ -36,6 +36,7 @@ export function HelpCenterPage() {
       title="Answers about how DentaWorth works."
       intro="Common questions about the cost guide, self-reporting, and getting a practice listed."
       variant="help"
+      heroImage="/images/page-hero-smile-bright.png"
     >
       <div className="help-hub">
         <div className="help-intro-panel">

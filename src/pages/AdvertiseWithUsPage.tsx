@@ -1,4 +1,4 @@
-import { ArrowRight, BarChart3, Eye, Mail, Megaphone } from "lucide-react";
+import { ArrowRight, BarChart3, Eye, Megaphone } from "lucide-react";
 import { PageShell } from "../components/PageShell";
 import { InquiryForm } from "../components/InquiryForm";
 
@@ -9,8 +9,9 @@ export function AdvertiseWithUsPage() {
       title="Reach people researching dental care costs."
       intro="DentaWorth is built for visitors who are actively comparing dental treatment pricing and looking for clearer next steps."
       variant="business"
+      heroImage="/images/page-hero-tools-soft.png"
     >
-      <div className="ad-layout ad-layout-refresh">
+      <div className="ad-layout ad-layout-refresh ad-layout-simple">
         <section className="ad-principles" aria-label="Advertising principles">
           {[
             { icon: Eye, title: "High-intent readers", text: "Visitors are researching dental costs, not casually scrolling a generic local directory." },
@@ -43,11 +44,6 @@ export function AdvertiseWithUsPage() {
             <ArrowRight size={18} aria-hidden="true" />
           </a>
         </div>
-        <aside className="contact-card">
-          <Mail size={22} aria-hidden="true" />
-          <h2>Email</h2>
-          <a href="mailto:info@dentaworth.com">info@dentaworth.com</a>
-        </aside>
       </div>
       <section className="ad-fit-matrix" aria-labelledby="ad-fit-heading">
         <p className="eyebrow">Placement fit</p>

@@ -191,7 +191,7 @@ export function AuthGatewayPage({
               </label>
               <div className="auth-links">
                 <button type="button" onClick={() => changeStep("create-account")}>
-                  New to DentaWorth? <span>Create an account</span>
+                  <span className="auth-link-context">New to DentaWorth?</span>{" "}<span className="auth-link-action">Create an account</span>
                 </button>
                 <button type="button" onClick={() => changeStep("reset-password")}>
                   Forgot Password
@@ -258,11 +258,7 @@ export function AuthGatewayPage({
           )}
 
           <p className="auth-terms">
-            By continuing, you agree to our{" "}
-            <a href="/terms-of-use" onClick={(event) => handleLocalNav(event, "/terms-of-use")}>
-              terms
-            </a>{" "}
-            &{" "}
+            By continuing, you acknowledge our{" "}
             <a href="/privacy-policy" onClick={(event) => handleLocalNav(event, "/privacy-policy")}>
               privacy policy
             </a>

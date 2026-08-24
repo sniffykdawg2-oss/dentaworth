@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { CSSProperties, ReactNode } from "react";
 import { BackButton } from "./BackButton";
 
 export type PageHeroVariant =
@@ -19,16 +19,21 @@ export function PageShell({
   intro,
   children,
   variant = "default",
+  heroImage,
 }: {
   eyebrow: string;
   title: string;
   intro: string;
   children: ReactNode;
   variant?: PageHeroVariant;
+  heroImage?: string;
 }) {
   return (
     <>
-      <section className={`page-hero page-hero-${variant}`}>
+      <section
+        className={`page-hero page-hero-${variant}${heroImage ? " page-hero-with-image" : ""}`}
+        style={heroImage ? ({ "--hero-image": `url(${heroImage})` } as CSSProperties) : undefined}
+      >
         <BackButton />
         <h1>{title}</h1>
         <p>{intro}</p>

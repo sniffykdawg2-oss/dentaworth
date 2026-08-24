@@ -4,19 +4,37 @@ import { PriceRangeRecord } from "./backend/schema";
 export function readAuthError(error: unknown) {
   if (!(error instanceof Error)) return "Unable to sign in.";
 
-  if (error.message.includes("auth/invalid-credential")) {
+  const message = error.message.toLowerCase();
+
+  if (message.includes("permission-denied") || message.includes("missing or insufficient permissions")) {
+    return "Your account was recognized, but DentaWorth could not finish loading your profile. Please try again, and contact us if it keeps happening.";
+  }
+
+  if (message.includes("auth/invalid-credential") || message.includes("auth/wrong-password") || message.includes("auth/user-not-found")) {
     return "The email or password did not match an account.";
   }
 
-  if (error.message.includes("auth/operation-not-allowed")) {
+  if (message.includes("auth/email-already-in-use")) {
+    return "This email is already in use. Try signing in instead.";
+  }
+
+  if (message.includes("auth/weak-password")) {
+    return "Choose a stronger password with at least six characters.";
+  }
+
+  if (message.includes("auth/invalid-email")) {
+    return "Enter a valid email address.";
+  }
+
+  if (message.includes("auth/operation-not-allowed")) {
     return "Email/password sign-in is not enabled in Firebase Authentication yet.";
   }
 
-  if (error.message.includes("auth/too-many-requests")) {
+  if (message.includes("auth/too-many-requests")) {
     return "Too many attempts. Wait a bit and try again.";
   }
 
-  return error.message;
+  return "Something went wrong while connecting to DentaWorth. Please try again.";
 }
 
 export function getProcedureLabel(procedureKey: ProcedureKey) {
