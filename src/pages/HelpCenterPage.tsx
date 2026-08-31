@@ -1,4 +1,4 @@
-import { ArrowRight, FileQuestion, Mail, SearchCheck, ShieldQuestion } from "lucide-react";
+import { ArrowRight, FileQuestion, SearchCheck, ShieldQuestion } from "lucide-react";
 import { PageShell } from "../components/PageShell";
 
 const faqs = [
@@ -94,9 +94,9 @@ export function HelpCenterPage() {
           <h2>Still need help?</h2>
           <p>Reach out directly and a real person will follow up.</p>
         </div>
-        <a className="button primary" href="mailto:info@dentaworth.com">
-          <Mail size={18} aria-hidden="true" />
-          info@dentaworth.com
+        <a className="button primary" href="/contact">
+          Contact us
+          <ArrowRight size={18} aria-hidden="true" />
         </a>
       </div>
     </PageShell>

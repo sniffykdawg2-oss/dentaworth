@@ -34,6 +34,10 @@ export function HomePage({ navigate }: { navigate: (href: string) => void }) {
   return (
     <>
       <section className="hero guide-hero">
+        <video className="hero-video" autoPlay muted loop playsInline poster="/images/dentaworth-hero.png" aria-hidden="true">
+          <source src="/videos/dentaworth-hero.mp4" type="video/mp4" />
+        </video>
+        <div className="hero-atmosphere" aria-hidden="true" />
         <div className="hero-copy">
           <div className="hero-slogan-wrap">
             <h1 className={isHeroSloganExiting ? "hero-slogan is-exiting" : "hero-slogan"}>
@@ -78,12 +82,12 @@ export function HomePage({ navigate }: { navigate: (href: string) => void }) {
 
       <section
         ref={proceduresReveal.ref}
-        className={revealClass(proceduresReveal.isVisible, "section home-services")}
+        className={revealClass(proceduresReveal.isVisible, "section home-services journey-section")}
         aria-labelledby="home-services-heading"
       >
         <DotRing className="dot-ring-decoration" />
         <FlowLine className="flow-line-decoration home-services-flow" />
-        <div className="split-media-block">
+        <div className="journey-intro">
           <div className="split-media-copy">
             <div className="section-heading">
               <h2 id="home-services-heading">Compare common dental procedures.</h2>
@@ -92,59 +96,46 @@ export function HomePage({ navigate }: { navigate: (href: string) => void }) {
               From routine cleanings to major treatment, DentaWorth breaks procedures into three
               groups so you always know roughly where a quote should land before you book.
             </p>
-            <ul className="plain-link-list">
-              <li>
-                <span>Routine care</span>
-                <div>
-                  {["Cleaning", "Exam", "X-ray", "Whitening"].map((item) => (
-                    <a key={item} href="#" onClick={(event) => { event.preventDefault(); navigate(`/search?treatment=${encodeURIComponent(item)}`); }}>
-                      {item}
-                    </a>
-                  ))}
-                </div>
-              </li>
-              <li>
-                <span>Restorative work</span>
-                <div>
-                  {["Filling", "Crown, ceramic", "Root canal"].map((item) => (
-                    <a key={item} href="#" onClick={(event) => { event.preventDefault(); navigate(`/search?treatment=${encodeURIComponent(item)}`); }}>
-                      {item}
-                    </a>
-                  ))}
-                </div>
-              </li>
-              <li>
-                <span>Major treatment</span>
-                <div>
-                  {["Extraction", "Implant", "Invisalign"].map((item) => (
-                    <a key={item} href="#" onClick={(event) => { event.preventDefault(); navigate(`/search?treatment=${encodeURIComponent(item)}`); }}>
-                      {item}
-                    </a>
-                  ))}
-                </div>
-              </li>
-            </ul>
+            <p className="journey-lede">A simple way to move from “what does this cost?” to “what should i ask next?”</p>
             <button className="button secondary dark procedures-cta" type="button" onClick={() => navigate("/get-care-now")}>
               How to use the guide
               <ArrowRight size={18} aria-hidden="true" />
             </button>
+          </div>
+          <div className="journey-rail" aria-label="How to use the DentaWorth guide">
+            {[
+              { icon: Search, number: "01", title: "Search", text: "Start with a treatment and your Florida county." },
+              { icon: BarChart3, number: "02", title: "Compare", text: "See local cash price ranges, grouped by type of care." },
+              { icon: ClipboardCheck, number: "03", title: "Find your fit", text: "Take useful context into the conversation with a dental office." },
+            ].map(({ icon: JourneyIcon, number, title, text }) => {
+              return <article className="journey-step" key={number}>
+                <div className="journey-step-top"><span>{number}</span><JourneyIcon size={20} aria-hidden="true" /></div>
+                <h3>{title}</h3>
+                <p>{text}</p>
+              </article>;
+            })}
           </div>
         </div>
       </section>
 
       <section className="section quote-anatomy" aria-labelledby="quote-anatomy-heading">
         <div>
-          <h2 id="quote-anatomy-heading">What to check before a number becomes a decision.</h2>
+          <h2 id="quote-anatomy-heading">Questions worth asking.</h2>
+          <p className="quote-supporting-copy">A clearer quote starts with knowing what to ask before treatment begins.</p>
+          <button className="button secondary quote-faq-button" type="button" onClick={() => navigate("/help-center")}>
+            See what to ask
+            <ArrowRight size={18} aria-hidden="true" />
+          </button>
         </div>
         <div className="quote-board">
           {[
-            ["Scope", "Is this a complete treatment estimate or only a starting price?"],
-            ["Materials", "Does the quote assume a specific crown material, implant system, or lab fee?"],
-            ["Imaging", "Are exams, X-rays, scans, or follow-up visits included?"],
-            ["Payment", "Is the cash price tied to same-day payment, financing, or a membership plan?"],
-          ].map(([label, text]) => (
+            ["01", "Scope", "Is this the full treatment price?"],
+            ["02", "Materials", "Which materials are included?"],
+            ["03", "Imaging", "Are scans and follow-ups included?"],
+            ["04", "Payment", "Does this price require cash payment?"],
+          ].map(([number, label, text]) => (
             <article key={label}>
-              <span>{label}</span>
+              <span><b>{number}</b> {label}</span>
               <p>{text}</p>
             </article>
           ))}

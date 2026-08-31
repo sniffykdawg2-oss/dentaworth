@@ -25,7 +25,7 @@ import { AdminRecordList, AdminReviewPanel } from "../components/AdminPanels";
 type SubmissionStatus = "idle" | "submitting" | "success" | "error";
 
 export function AdminPage({ authUser, navigate }: { authUser: AuthUser | null; navigate: (href: string) => void }) {
-  const [activeTab, setActiveTab] = useState<"review" | "prices" | "dentists" | "newsletter" | "pages">("review");
+  const [activeTab, setActiveTab] = useState<"review" | "prices" | "dentists" | "newsletter" | "pages" | "fonts">("review");
   const [priceReports, setPriceReports] = useState<AdminPriceReportRecord[]>([]);
   const [contactMessages, setContactMessages] = useState<AdminContactMessageRecord[]>([]);
   const [priceRanges, setPriceRanges] = useState<AdminPriceRangeRecord[]>([]);
@@ -195,6 +195,7 @@ export function AdminPage({ authUser, navigate }: { authUser: AuthUser | null; n
             { id: "dentists", label: "Dentists" },
             { id: "newsletter", label: "Newsletter" },
             { id: "pages", label: "Pages" },
+            { id: "fonts", label: "Font previews" },
           ].map((tab) => (
             <button
               key={tab.id}
@@ -475,9 +476,25 @@ export function AdminPage({ authUser, navigate }: { authUser: AuthUser | null; n
             </div>
           </div>
         )}
+        {activeTab === "fonts" && <FontPreviewPanel />}
       </div>
     </PageShell>
   );
+}
+
+function FontPreviewPanel() {
+  const options = [
+    ["Editorial", "Georgia, serif", "Inter, Arial, sans-serif"],
+    ["Modern", "Arial, sans-serif", "Arial, sans-serif"],
+    ["Warm", "Trebuchet MS, sans-serif", "Georgia, serif"],
+    ["Technical", "ui-monospace, SFMono-Regular, monospace", "Inter, Arial, sans-serif"],
+  ];
+  return <div className="admin-panel font-preview-panel">
+    <div className="compact-heading"><p className="eyebrow">Design lab</p><h2>Homepage font directions</h2><p>Preview pairings against real DentaWorth copy. This is only a preview, it does not change the public homepage.</p></div>
+    <div className="font-preview-grid">{options.map(([name, display, body]) => <article className="font-preview-card" key={name} style={{ fontFamily: body }}>
+      <span>{name}</span><h3 style={{ fontFamily: display }}>Know before you go.</h3><p>Search by treatment and location to compare Florida dental price ranges before you call around.</p><button className="button secondary" type="button">Compare direction</button>
+    </article>)}</div>
+  </div>;
 }
 
 function groupPagesByGroup() {

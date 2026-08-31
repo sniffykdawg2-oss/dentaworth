@@ -34,6 +34,9 @@ The project was originally started on Wix and is being moved to a GitHub-backed 
 - `/sign-in` and `/provider-login` both render the shared `AuthGatewayPage`; provider login starts with Provider selected, while patient sign-in starts with Patient selected.
 - The homepage hero uses a local generated image at `public/images/dentaworth-hero.png`; keep it project-local so visual QA does not depend on remote stock image loading.
 - `/dev/loading-preview` previews the real DentaWorth loading animation. Use it to inspect/replay the loader instead of trying to catch the initial app load timing.
+- The homepage hero uses the optimized local video at `public/videos/dentaworth-hero.mp4` with `/images/dentaworth-hero.png` as its poster; the homepage procedure content is presented as the animated `Search → Compare → Find your fit` journey rail.
+- The public site uses the Editorial typography direction: Georgia display headlines with Inter body text. The Help Center bottom CTA routes to `/contact`.
+- The homepage compare section is intentionally image-free and uses the compact pale-green centered timeline; avoid reintroducing the old procedure photo background.
 
 ## Notes For Future Agents
 
