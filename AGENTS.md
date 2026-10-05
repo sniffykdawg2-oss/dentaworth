@@ -37,6 +37,7 @@ The project was originally started on Wix and is being moved to a GitHub-backed 
 - The homepage hero uses the optimized local video at `public/videos/dentaworth-hero.mp4` with `/images/dentaworth-hero.png` as its poster; the homepage procedure content is presented as the animated `Search → Compare → Find your fit` journey rail.
 - The public site uses the Editorial typography direction: Georgia display headlines with Inter body text. The Help Center bottom CTA routes to `/contact`.
 - The homepage compare section is intentionally image-free and uses the compact pale-green centered timeline; avoid reintroducing the old procedure photo background.
+- `/privacy-policy` contains the approved DentaWorth privacy policy effective June 27, 2026, including the contact address `privacy@dentaworth.com`; do not replace it with placeholder copy.
 
 ## Notes For Future Agents
 
