@@ -59,7 +59,7 @@ export function SelfReportingPage({
       variant="care"
       heroImage="/images/page-hero-smile-close.png"
     >
-      <section className="report-auth-gate" aria-labelledby="report-auth-heading">
+      <section className="report-auth-gate tone-dark" aria-labelledby="report-auth-heading" data-reveal="up">
         <div>
           <h2 id="report-auth-heading">
             {authUser ? "You're ready to enter self-reported pricing." : "Sign in before entering self-reported pricing."}
@@ -87,7 +87,7 @@ export function SelfReportingPage({
         </div>
       </section>
       <div className="report-layout">
-        <aside className="report-trust-rail" aria-label="Reporting safeguards">
+        <aside className="report-trust-rail" aria-label="Reporting safeguards" data-reveal="stagger">
           {[
             { icon: ShieldCheck, title: "Privacy boundary", text: "Only submit information you are comfortable sharing. Public guide content is separated from contact details." },
             { icon: FileCheck2, title: "Reviewed first", text: "Reports are stored as pending records and reviewed before they influence public ranges." },
@@ -100,7 +100,7 @@ export function SelfReportingPage({
             </article>
           ))}
         </aside>
-        <form className="form-card report-form" onSubmit={handleSubmit} aria-disabled={!authUser}>
+        <form className="form-card report-form" onSubmit={handleSubmit} aria-disabled={!authUser} data-reveal="up">
           <SpamTrap formStartedAt={formStartedAt} />
           {status === "success" && (
             <div className="success-message" role="status">
@@ -153,14 +153,14 @@ export function SelfReportingPage({
         </form>
       </div>
       <section className="report-quality-guide" aria-labelledby="report-quality-heading">
-        <div>
+        <div data-reveal="up">
           <h2 id="report-quality-heading">What makes a price report useful?</h2>
           <p>
             The most helpful submissions are recent, specific, and clear about whether the number
             came from an estimate, a final bill, or a cash-pay quote.
           </p>
         </div>
-        <ul>
+        <ul data-reveal="stagger">
           <li><span>Timing</span>Recent estimates are more useful than older bills.</li>
           <li><span>Scope</span>Notes about X-rays, sedation, materials, and follow-up visits matter.</li>
           <li><span>Payment context</span>Cash pay, financing, membership plans, and insurance can change the comparison.</li>

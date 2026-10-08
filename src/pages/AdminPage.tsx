@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from "react";
+import { CSSProperties, FormEvent, useEffect, useState } from "react";
 import { ArrowRight, CheckCircle2, ExternalLink } from "lucide-react";
 import { counties, procedures } from "../content";
 import { allPagesForPreview } from "../nav";
@@ -20,6 +20,7 @@ import {
 import { DentistProfileInput, PriceRangeInput, ReviewStatus } from "../backend/schema";
 import { formatProcedurePrices } from "../pageHelpers";
 import { PageShell } from "../components/PageShell";
+import { MaskHeading } from "../motion/MaskHeading";
 import { AdminRecordList, AdminReviewPanel } from "../components/AdminPanels";
 
 type SubmissionStatus = "idle" | "submitting" | "success" | "error";
@@ -54,16 +55,18 @@ export function AdminPage({ authUser, navigate }: { authUser: AuthUser | null; n
 
   if (!authUser) {
     return (
-      <section className="auth-page">
-        <div className="auth-copy">
-          <h1>Sign in to manage DentaWorth.</h1>
-          <p>Admin tools require Firebase Auth and an owner-approved admin claim.</p>
-        </div>
-        <div className="form-card auth-card">
-          <button className="button primary" type="button" onClick={() => navigate("/sign-in")}>
-            Sign in
-            <ArrowRight size={18} aria-hidden="true" />
-          </button>
+      <section className="auth-page tone-dark" data-hero>
+        <div className="container auth-page__inner">
+          <div className="auth-copy">
+            <MaskHeading as="h1" delay={80}>Sign in to manage DentaWorth.</MaskHeading>
+            <p data-reveal="up" style={{ "--delay": "420ms" } as CSSProperties}>Admin tools require Firebase Auth and an owner-approved admin claim.</p>
+          </div>
+          <div className="auth-card" data-reveal="up" style={{ "--delay": "560ms" } as CSSProperties}>
+            <button className="button primary" type="button" onClick={() => navigate("/sign-in")}>
+              Sign in
+              <ArrowRight size={18} aria-hidden="true" />
+            </button>
+          </div>
         </div>
       </section>
     );
@@ -449,8 +452,9 @@ export function AdminPage({ authUser, navigate }: { authUser: AuthUser | null; n
         {activeTab === "pages" && (
           <div className="admin-panel">
             <div className="compact-heading">
-              <p className="eyebrow">{allPagesForPreview.length} pages</p>
-              <h2>Preview every site page</h2>
+              <h2>
+                Preview every site page <span className="count-badge">{allPagesForPreview.length} pages</span>
+              </h2>
             </div>
             <div className="admin-pages-groups">
               {pageGroups.map(([group, links]) => (
@@ -490,7 +494,7 @@ function FontPreviewPanel() {
     ["Technical", "ui-monospace, SFMono-Regular, monospace", "Inter, Arial, sans-serif"],
   ];
   return <div className="admin-panel font-preview-panel">
-    <div className="compact-heading"><p className="eyebrow">Design lab</p><h2>Homepage font directions</h2><p>Preview pairings against real DentaWorth copy. This is only a preview, it does not change the public homepage.</p></div>
+    <div className="compact-heading"><h2>Homepage font directions</h2><p>Preview pairings against real DentaWorth copy. This is only a preview, it does not change the public homepage.</p></div>
     <div className="font-preview-grid">{options.map(([name, display, body]) => <article className="font-preview-card" key={name} style={{ fontFamily: body }}>
       <span>{name}</span><h3 style={{ fontFamily: display }}>Know before you go.</h3><p>Search by treatment and location to compare Florida dental price ranges before you call around.</p><button className="button secondary" type="button">Compare direction</button>
     </article>)}</div>

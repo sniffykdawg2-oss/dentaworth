@@ -14,8 +14,9 @@ export function AdminReviewPanel<T extends { id: string }>({
   return (
     <section className="admin-panel">
       <div className="compact-heading">
-        <p className="eyebrow">{records.length} pending</p>
-        <h2>{title}</h2>
+        <h2>
+          {title} <span className="count-badge">{records.length} pending</span>
+        </h2>
       </div>
       {records.length > 0 ? (
         <div className="admin-list">
@@ -47,8 +48,9 @@ export function AdminRecordList<T extends { id: string }>({
   return (
     <section className="admin-panel">
       <div className="compact-heading">
-        <p className="eyebrow">{records.length} records</p>
-        <h2>{title}</h2>
+        <h2>
+          {title} <span className="count-badge">{records.length} records</span>
+        </h2>
       </div>
       {records.length > 0 ? (
         <div className="admin-list">

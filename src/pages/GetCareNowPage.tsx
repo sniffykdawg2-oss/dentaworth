@@ -1,5 +1,6 @@
 import { ArrowRight, ClipboardCheck, CreditCard, FileSearch, MapPinned, PhoneCall, ReceiptText, ShieldQuestion } from "lucide-react";
 import { PageShell } from "../components/PageShell";
+import { MaskHeading } from "../motion/MaskHeading";
 
 export function GetCareNowPage({ navigate }: { navigate: (href: string) => void }) {
   return (
@@ -11,8 +12,8 @@ export function GetCareNowPage({ navigate }: { navigate: (href: string) => void 
       heroImage="/images/page-hero-dentist-patient.png"
     >
       <div className="care-playbook">
-        <section className="care-command">
-          <h2>Turn a price range into a cleaner phone call.</h2>
+        <section className="care-command tone-dark" data-reveal="up">
+          <MaskHeading delay={260}>Turn a price range into a cleaner phone call.</MaskHeading>
           <p>
             DentaWorth does not replace a dentist's estimate, but it gives you enough context to ask
             sharper questions. Use the range as a reference point, then ask the office what is
@@ -23,7 +24,7 @@ export function GetCareNowPage({ navigate }: { navigate: (href: string) => void 
             <ArrowRight size={18} aria-hidden="true" />
           </button>
         </section>
-        <section className="care-checklist" aria-label="Care booking checklist">
+        <section className="care-checklist" aria-label="Care booking checklist" data-reveal="stagger">
           {[
             { icon: MapPinned, title: "Match the county", text: "Search the county where you expect to receive care, not just where you live." },
             { icon: ReceiptText, title: "Ask what is included", text: "Confirm exams, X-rays, sedation, materials, follow-up visits, and lab fees." },
@@ -40,9 +41,9 @@ export function GetCareNowPage({ navigate }: { navigate: (href: string) => void 
       </div>
       <section className="question-ladder" aria-labelledby="question-ladder-heading">
         <div>
-          <h2 id="question-ladder-heading">Ask in this order.</h2>
+          <MaskHeading id="question-ladder-heading">Ask in this order.</MaskHeading>
         </div>
-        <ol>
+        <ol data-reveal="stagger">
           <li><span>01</span>Is this a consultation estimate, a full treatment estimate, or a starting price?</li>
           <li><span>02</span>Does the quote assume a routine case, or could complexity change the final price?</li>
           <li><span>03</span>What payment options are available for patients paying cash?</li>
@@ -50,7 +51,7 @@ export function GetCareNowPage({ navigate }: { navigate: (href: string) => void 
         </ol>
       </section>
       <section className="coverage-redesign" aria-labelledby="coverage-redesign-heading">
-        <div className="coverage-redesign-copy">
+        <div className="coverage-redesign-copy" data-reveal="up">
           <h2 id="coverage-redesign-heading">Keep the quote, coverage, and payment plan separate.</h2>
           <p>
             One office number can hide several different decisions. Before you compare prices, sort
@@ -58,7 +59,7 @@ export function GetCareNowPage({ navigate }: { navigate: (href: string) => void 
             would actually pay.
           </p>
         </div>
-        <div className="coverage-redesign-list">
+        <div className="coverage-redesign-list" data-reveal="stagger">
           {[
             { icon: ShieldQuestion, label: "01", title: "Coverage", text: "Ask about waiting periods, exclusions, annual maximums, and whether the dentist is in network." },
             { icon: FileSearch, label: "02", title: "Estimate", text: "Ask for procedure codes and whether the written number includes exams, imaging, materials, and follow-up visits." },
@@ -75,7 +76,7 @@ export function GetCareNowPage({ navigate }: { navigate: (href: string) => void 
           ))}
         </div>
       </section>
-      <div className="care-next-step">
+      <div className="care-next-step tone-dark" data-reveal="up">
         <div>
           <h2>Already received a quote?</h2>
           <p>Share it after care or after receiving a written estimate so the guide gets stronger.</p>

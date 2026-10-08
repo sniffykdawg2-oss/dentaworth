@@ -86,6 +86,8 @@ export function getSearchFiltersFromUrl() {
 }
 
 export function handleLinkClick(event: MouseEvent<HTMLAnchorElement>, href: string, navigate: (href: string) => void) {
+  // Let the browser handle new-tab / new-window clicks normally.
+  if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
   event.preventDefault();
   navigate(href);
 }

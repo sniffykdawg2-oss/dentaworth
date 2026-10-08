@@ -1,6 +1,10 @@
+import { useRef } from "react";
 import { PageShell } from "../components/PageShell";
+import { ReadingProgress } from "../motion/ReadingProgress";
 
 export function PrivacyPolicyPage() {
+  const policyRef = useRef<HTMLElement>(null);
+
   return (
     <PageShell
       eyebrow="Privacy Policy"
@@ -9,9 +13,14 @@ export function PrivacyPolicyPage() {
       variant="legal"
       heroImage="/images/page-hero-child-smile.png"
     >
-      <article className="legal-copy privacy-policy-copy" aria-labelledby="privacy-policy-title">
+      <ReadingProgress targetRef={policyRef} />
+      <article
+        className="legal-copy privacy-policy-copy"
+        aria-labelledby="privacy-policy-title"
+        data-reveal="fade"
+        ref={policyRef}
+      >
         <header className="privacy-policy-header">
-          <p className="privacy-policy-kicker">DentaWorth privacy policy</p>
           <h2 id="privacy-policy-title">Privacy Policy for Dentaworth</h2>
           <p className="privacy-policy-date">
             <strong>Effective Date:</strong> June 27, 2026

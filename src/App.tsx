@@ -26,14 +26,22 @@ import { AccountPage } from "./pages/AccountPage";
 import { AdminPage } from "./pages/AdminPage";
 import { LoadingPreviewPage } from "./pages/LoadingPreviewPage";
 import { NotFoundPage } from "./pages/NotFoundPage";
+import { holdIntro, prefersReducedMotion, releaseIntro } from "./motion/motion";
+
+const INTRO_RELEASE_MS = 1150;
+const INTRO_TOTAL_MS = 1700;
 
 export function App() {
   const [page, setPage] = useState<Page>(getCurrentPage);
   const [authUser, setAuthUser] = useState<AuthUser | null>(null);
   const [routeVersion, setRouteVersion] = useState(0);
-  const [isLoadingIntroVisible, setIsLoadingIntroVisible] = useState(true);
   const isAuthRoute = page === "sign-in" || page === "provider-login";
   const isDevRoute = page === "loading-preview";
+  const [isLoadingIntroVisible, setIsLoadingIntroVisible] = useState(() => {
+    const shouldPlay = !isAuthRoute && !isDevRoute && !prefersReducedMotion();
+    if (shouldPlay) holdIntro();
+    return shouldPlay;
+  });
 
   useEffect(() => {
     function handlePopState() {
@@ -47,24 +55,34 @@ export function App() {
 
   useEffect(() => subscribeToAuth(setAuthUser), []);
 
+  // The intro curtain starts lifting at INTRO_RELEASE_MS; first-screen entrances play as it does.
   useEffect(() => {
-    const timer = window.setTimeout(() => setIsLoadingIntroVisible(false), 1700);
-    return () => window.clearTimeout(timer);
-  }, []);
+    if (!isLoadingIntroVisible) return;
+    const releaseTimer = window.setTimeout(releaseIntro, INTRO_RELEASE_MS);
+    const hideTimer = window.setTimeout(() => setIsLoadingIntroVisible(false), INTRO_TOTAL_MS);
+    return () => {
+      window.clearTimeout(releaseTimer);
+      window.clearTimeout(hideTimer);
+    };
+  }, [isLoadingIntroVisible]);
 
   function navigate(href: string) {
     window.history.pushState(null, "", href);
     setPage(getCurrentPage());
     setRouteVersion((version) => version + 1);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    // Jump (not glide) to the top so the new page isn't scrolled past, and move focus
+    // to the new content for keyboard and screen-reader users.
+    window.scrollTo({ top: 0, behavior: "instant" });
+    window.requestAnimationFrame(() => document.getElementById("main-content")?.focus({ preventScroll: true }));
   }
 
   return (
     <>
       <PageMeta page={page} />
-      {isLoadingIntroVisible && !isAuthRoute && !isDevRoute && <DentaWorthLoader />}
+      {isLoadingIntroVisible && <DentaWorthLoader />}
       {!isAuthRoute && <Header currentPage={page} navigate={navigate} authUser={authUser} />}
-      <main id="main-content">
+      <main id="main-content" tabIndex={-1}>
+        <div className="route-view" key={page}>
         {page === "home" && <HomePage navigate={navigate} />}
         {page === "search" && <SearchResultsPage navigate={navigate} routeVersion={routeVersion} />}
         {page === "self-reporting" && <SelfReportingPage authUser={authUser} navigate={navigate} />}
@@ -78,14 +96,15 @@ export function App() {
         {page === "drugs-a-z" && <DrugsAZPage />}
         {page === "provider-login" && <ProviderLoginPage authUser={authUser} navigate={navigate} />}
         {page === "news" && <NewsPage />}
-        {page === "help-center" && <HelpCenterPage />}
-        {page === "blog" && <BlogPage />}
-        {page === "blog-post" && <BlogPostPage />}
+        {page === "help-center" && <HelpCenterPage navigate={navigate} />}
+        {page === "blog" && <BlogPage navigate={navigate} />}
+        {page === "blog-post" && <BlogPostPage navigate={navigate} />}
         {page === "sign-in" && <SignInPage authUser={authUser} navigate={navigate} />}
         {page === "account" && <AccountPage authUser={authUser} navigate={navigate} />}
         {page === "admin" && <AdminPage authUser={authUser} navigate={navigate} />}
         {page === "loading-preview" && <LoadingPreviewPage />}
         {page === "not-found" && <NotFoundPage navigate={navigate} />}
+        </div>
       </main>
       {!isAuthRoute && <Disclaimer />}
       {!isAuthRoute && <Footer navigate={navigate} />}

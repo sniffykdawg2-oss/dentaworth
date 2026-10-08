@@ -1,5 +1,6 @@
-import { newsPosts } from "../posts";
+import { formatPostDate, newsPosts } from "../posts";
 import { PageShell } from "../components/PageShell";
+import { MaskHeading } from "../motion/MaskHeading";
 
 export function NewsPage() {
   return (
@@ -11,17 +12,19 @@ export function NewsPage() {
       heroImage="/images/page-hero-family-home.png"
     >
       <section className="news-timeline-intro">
-        <p className="eyebrow">Product log</p>
-        <h2>Launch notes, feature updates, and coverage changes will live here.</h2>
-        <p>
+        <div>
+          <MaskHeading>Launch notes, feature updates, and coverage changes will live here.</MaskHeading>
+        </div>
+        <p data-reveal="up">
           The news page is intentionally factual: product updates only, no pretend press, no
           invented awards, and no filler announcements.
         </p>
       </section>
       <section className="release-principles" aria-labelledby="release-principles-heading">
-        <p className="eyebrow">Release notes</p>
-        <h2 id="release-principles-heading">Updates stay factual and specific.</h2>
         <div>
+          <h2 id="release-principles-heading">Updates stay factual and specific.</h2>
+        </div>
+        <div data-reveal="stagger">
           <span>Feature changes</span>
           <span>Coverage changes</span>
           <span>Data workflow changes</span>
@@ -29,12 +32,14 @@ export function NewsPage() {
         </div>
       </section>
       {newsPosts.length > 0 ? (
-        <div className="post-list">
+        <div className="post-list news-list" data-reveal="stagger">
           {newsPosts.map((post) => (
-            <article key={post.slug} className="post-card">
-              <p className="post-date">{post.date}</p>
-              <h2>{post.title}</h2>
-              <p>{post.summary}</p>
+            <article key={post.slug} className="post-card news-card">
+              <p className="post-date">{formatPostDate(post.date)}</p>
+              <div>
+                <h2>{post.title}</h2>
+                <p>{post.summary}</p>
+              </div>
             </article>
           ))}
         </div>

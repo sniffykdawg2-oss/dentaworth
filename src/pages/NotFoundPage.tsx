@@ -3,9 +3,8 @@ import { PageShell } from "../components/PageShell";
 export function NotFoundPage({ navigate }: { navigate: (href: string) => void }) {
   return (
     <PageShell eyebrow="404" title="That page is not in the guide." intro="The page may have moved, or the link may be wrong.">
-      <section className="not-found-panel">
+      <section className="not-found-panel" data-reveal="up">
         <div>
-          <p className="eyebrow">Try a safer path</p>
           <h2>Most visitors are looking for one of these.</h2>
         </div>
         <div>

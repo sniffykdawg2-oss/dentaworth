@@ -1,0 +1,202 @@
+/* ==========================================================================
+   Motion primitives
+   Driven by src/motion/motion.ts. Every hidden pre-state is scoped to
+   html.motion-ok, so content is always visible without JS and for visitors
+   who prefer reduced motion. Entrances use keyframes with backwards fill:
+   once they finish, the element falls back to its normal styles and hover
+   transitions are not delayed or overridden.
+   ========================================================================== */
+
+@keyframes dw-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, var(--rise), 0);
+  }
+}
+
+@keyframes dw-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes dw-media {
+  from {
+    clip-path: inset(14% 0 0 0 round var(--r-lg));
+    transform: translate3d(0, 48px, 0);
+  }
+}
+
+@keyframes dw-media-img {
+  from {
+    transform: scale(1.14);
+  }
+}
+
+@keyframes dw-line {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+/* ---------- Pre-states (only while motion is enabled) ---------- */
+.motion-ok [data-reveal="up"]:not([data-inview]),
+.motion-ok [data-reveal="fade"]:not([data-inview]),
+.motion-ok [data-reveal="stagger"]:not([data-inview]) > * {
+  opacity: 0;
+}
+
+.motion-ok [data-reveal="media"]:not([data-inview]) {
+  clip-path: inset(14% 0 0 0 round var(--r-lg));
+  opacity: 0;
+}
+
+.motion-ok [data-reveal="line"]:not([data-inview]) {
+  transform: scaleX(0);
+}
+
+/* ---------- Entrances ---------- */
+.motion-ok [data-reveal="up"][data-inview] {
+  animation: dw-rise var(--dur-reveal) var(--ease-out) backwards;
+  animation-delay: var(--delay, 0ms);
+}
+
+.motion-ok [data-reveal="fade"][data-inview] {
+  animation: dw-fade var(--dur-reveal) var(--ease-standard) backwards;
+  animation-delay: var(--delay, 0ms);
+}
+
+.motion-ok [data-reveal="stagger"][data-inview] > * {
+  animation: dw-rise var(--dur-reveal) var(--ease-out) backwards;
+  animation-delay: calc(var(--delay, 0ms) + min(var(--i, 0), 8) * var(--stagger));
+}
+
+.motion-ok [data-reveal="media"][data-inview] {
+  animation: dw-media 1.25s var(--ease-out) backwards;
+  animation-delay: var(--delay, 0ms);
+}
+
+.motion-ok [data-reveal="media"][data-inview] :is(img, video) {
+  animation: dw-media-img 1.8s var(--ease-out) backwards;
+  animation-delay: var(--delay, 0ms);
+}
+
+.motion-ok [data-reveal="line"] {
+  transform-origin: left center;
+}
+
+.motion-ok [data-reveal="line"][data-inview] {
+  animation: dw-line 1.3s var(--ease-in-out) backwards;
+  animation-delay: var(--delay, 0ms);
+}
+
+/* ---------- Image parallax inside frames (data-parallax) ---------- */
+.motion-ok [data-parallax] > img {
+  transform: translate3d(0, calc(var(--parallax, 0) * -7%), 0) scale(1.16);
+  will-change: transform;
+}
+
+/* ==========================================================================
+   Accent-mask headline (src/motion/MaskHeading.tsx)
+   1. Each line's block grows left → right (staggered per line).
+   2. All blocks hold while every line is covered; the text switches on.
+   3. Blocks retract to the right, uncovering text, collapse to a caret, fade.
+   ========================================================================== */
+
+.mask-heading {
+  position: relative;
+  --mask-start: var(--delay, 0ms);
+  --mask-cover: calc(var(--mask-start) + (var(--lines, 1) - 1) * var(--mask-stagger) + var(--mask-grow));
+}
+
+.mask-heading__blocks {
+  display: none;
+}
+
+.motion-ok .mask-heading__blocks {
+  display: block;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.mask-heading__block {
+  position: absolute;
+  background: var(--accent-block);
+  clip-path: inset(0 100% 0 0);
+  opacity: 1;
+}
+
+.motion-ok .mask-heading:not([data-inview]) .mask-heading__text {
+  opacity: 0;
+}
+
+.motion-ok .mask-heading[data-inview] .mask-heading__text {
+  animation: dw-mask-text 1ms linear both;
+  animation-delay: var(--mask-cover);
+}
+
+.motion-ok .mask-heading[data-inview] .mask-heading__block {
+  animation:
+    dw-mask-grow var(--mask-grow) var(--ease-in-out) both,
+    dw-mask-retract var(--mask-retract) var(--ease-out) forwards;
+  animation-delay:
+    calc(var(--mask-start) + var(--line, 0) * var(--mask-stagger)),
+    calc(var(--mask-cover) + 60ms + var(--line, 0) * var(--mask-stagger));
+}
+
+@keyframes dw-mask-text {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes dw-mask-grow {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes dw-mask-retract {
+  0% {
+    clip-path: inset(0 0 0 0);
+    opacity: 1;
+  }
+  78% {
+    clip-path: inset(0 0 0 calc(100% - 0.07em));
+    opacity: 1;
+  }
+  100% {
+    clip-path: inset(0 0 0 calc(100% - 0.07em));
+    opacity: 0;
+  }
+}
+
+/* ---------- Route change ---------- */
+@keyframes dw-page-in {
+  from {
+    opacity: 0;
+  }
+}
+
+.motion-ok .route-view {
+  animation: dw-page-in 420ms var(--ease-standard) backwards;
+}
+
+/* ---------- Reduced motion: no transforms, no loops ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,381 @@
+/* ==========================================================================
+   Sign-in gateway (/sign-in, /provider-login)
+   Centered card on paper. Choosing Provider wipes a navy panel across the
+   whole screen (and back for Patient). Everything rises in on load, and the
+   card's contents rise again on every step change.
+   ========================================================================== */
+
+.auth-gateway {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  justify-items: center;
+  gap: clamp(24px, 3.4vw, 40px);
+  min-height: 100vh;
+  min-height: 100svh;
+  overflow: hidden;
+  padding: clamp(32px, 6vw, 72px) var(--gutter) 28px;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.auth-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--navy-950);
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 820ms var(--ease-in-out);
+}
+
+.auth-gateway.is-provider .auth-backdrop {
+  clip-path: inset(0 0 0 0);
+}
+
+.auth-logo {
+  color: var(--navy-800);
+  font-size: clamp(2.4rem, 1.5rem + 3vw, 3.75rem);
+  transition: color 600ms var(--ease-in-out) 120ms;
+}
+
+.auth-gateway.is-provider .auth-logo {
+  color: var(--white);
+}
+
+.auth-page-back {
+  position: absolute;
+  top: clamp(20px, 3vw, 36px);
+  right: var(--gutter);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 16px 0 12px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-pill);
+  background: rgba(255, 255, 255, 0.6);
+  color: var(--navy-900);
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition:
+    border-color var(--dur-hover) var(--ease-out),
+    background-color 600ms var(--ease-in-out),
+    color 600ms var(--ease-in-out);
+}
+
+.auth-page-back:hover {
+  border-color: var(--navy-900);
+  background: var(--white);
+}
+
+.auth-gateway.is-provider .auth-page-back {
+  border-color: rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--white);
+}
+
+.auth-gateway.is-provider .auth-page-back:hover {
+  border-color: var(--white);
+}
+
+.auth-page-back svg,
+.auth-back svg {
+  transition: transform var(--dur-hover) var(--ease-out);
+}
+
+.auth-page-back:hover svg,
+.auth-back:hover svg {
+  transform: translateX(-3px);
+}
+
+.auth-panel-shell {
+  align-self: center;
+  width: min(100%, 560px);
+  padding: clamp(28px, 4.4vw, 52px);
+  border-radius: var(--r-lg);
+  background: var(--white);
+  box-shadow: var(--shadow-3);
+}
+
+.auth-panel {
+  display: grid;
+  gap: 22px;
+}
+
+.auth-footer-copy {
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: color 600ms var(--ease-in-out);
+}
+
+.auth-gateway.is-provider .auth-footer-copy {
+  color: rgba(214, 226, 244, 0.72);
+}
+
+/* ---------- Entrances ---------- */
+.motion-ok .auth-logo {
+  animation: dw-rise 900ms var(--ease-out) 60ms backwards;
+}
+
+.motion-ok .auth-panel-shell {
+  animation: dw-rise 1000ms var(--ease-out) 150ms backwards;
+  --rise: 56px;
+}
+
+.motion-ok .auth-page-back,
+.motion-ok .auth-footer-copy {
+  animation: dw-fade 900ms var(--ease-standard) 520ms backwards;
+}
+
+/* Card contents: replayed on every step because the panel is keyed by step. */
+.motion-ok .auth-panel > :not(form),
+.motion-ok .auth-form > :not(.error-message, .success-message) {
+  animation: dw-rise 720ms var(--ease-out) backwards;
+  animation-delay: calc(240ms + var(--n, 0) * 70ms);
+  --rise: 22px;
+}
+
+.auth-panel > :nth-child(2),
+.auth-form > :nth-child(2) {
+  --n: 1;
+}
+
+.auth-panel > :nth-child(3),
+.auth-form > :nth-child(3) {
+  --n: 2;
+}
+
+.auth-panel > :nth-child(4),
+.auth-form > :nth-child(4) {
+  --n: 3;
+}
+
+.auth-panel > :nth-child(5),
+.auth-form > :nth-child(5) {
+  --n: 4;
+}
+
+.auth-panel > :nth-child(n + 6),
+.auth-form > :nth-child(n + 6) {
+  --n: 5;
+}
+
+.auth-panel > .auth-terms {
+  --n: 6;
+}
+
+/* ---------- Card contents ---------- */
+.auth-back {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 0;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.auth-back:hover {
+  color: var(--navy-900);
+}
+
+.auth-panel h1 {
+  color: var(--navy-900);
+  font-size: clamp(2.2rem, 1.6rem + 2vw, 3.25rem);
+  text-align: center;
+}
+
+.audience-picker {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.audience-option {
+  display: grid;
+  align-content: space-between;
+  justify-items: start;
+  gap: 40px;
+  min-height: 164px;
+  padding: 22px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-md);
+  background: var(--white);
+  color: var(--navy-900);
+  text-align: left;
+  transition:
+    background-color 420ms var(--ease-out),
+    border-color 420ms var(--ease-out),
+    color 420ms var(--ease-out),
+    transform var(--dur-micro) var(--ease-standard),
+    box-shadow 420ms var(--ease-out);
+}
+
+.audience-option span {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+.audience-option:hover {
+  border-color: var(--navy-800);
+}
+
+.audience-option:active {
+  transform: scale(0.98);
+}
+
+.audience-option.is-selected {
+  border-color: var(--navy-800);
+  background: var(--navy-800);
+  color: var(--white);
+  box-shadow: 0 18px 34px -18px rgba(11, 44, 99, 0.7);
+}
+
+.audience-option svg {
+  transition: color 420ms var(--ease-out), transform 520ms var(--ease-out);
+}
+
+.audience-option.is-selected svg {
+  color: var(--sky-300);
+  transform: translateY(-2px);
+}
+
+.auth-submit {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 54px;
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--r-sm);
+  background: var(--navy-800);
+  color: var(--white);
+  font-weight: 600;
+}
+
+.auth-submit::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--sky-600);
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform 460ms var(--ease-out);
+}
+
+.auth-submit:hover:not(:disabled)::before {
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+.auth-submit svg {
+  transition: transform var(--dur-hover) var(--ease-out);
+}
+
+.auth-submit:hover:not(:disabled) svg {
+  transform: translateX(3px);
+}
+
+.auth-submit:disabled {
+  opacity: 0.6;
+}
+
+.auth-form {
+  display: grid;
+  gap: 18px;
+}
+
+.auth-form label {
+  display: grid;
+  gap: 8px;
+  color: var(--ink-2);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.auth-form label > span {
+  position: relative;
+  display: block;
+}
+
+.auth-form label > span svg {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  color: var(--muted);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.auth-form label > span input {
+  padding-left: 46px;
+}
+
+.auth-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px 16px;
+}
+
+.auth-links button {
+  padding: 2px 0;
+  border: 0;
+  background: none;
+  color: var(--sky-600);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-align: left;
+}
+
+.auth-links button:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
+
+.auth-link-context {
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.auth-terms {
+  color: var(--muted);
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.auth-terms a {
+  color: var(--navy-800);
+  font-weight: 600;
+}
+
+@media (max-width: 560px) {
+  .auth-gateway {
+    padding-top: 84px;
+  }
+
+  .auth-page-back {
+    top: 20px;
+  }
+
+  .audience-option {
+    min-height: 136px;
+    padding: 18px;
+  }
+
+  .audience-option span {
+    font-size: 1.35rem;
+  }
+}

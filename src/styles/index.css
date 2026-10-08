@@ -1,0 +1,14 @@
+/* DentaWorth stylesheet entry. Order matters: tokens → base → motion →
+   shared components → chrome → page-level layers → hover layer (last, so its
+   transitions extend the page rules). */
+@import "./tokens.css";
+@import "./base.css";
+@import "./motion.css";
+@import "./components.css";
+@import "./chrome.css";
+@import "./home.css";
+@import "./interior.css";
+@import "./pages.css";
+@import "./auth.css";
+@import "./admin.css";
+@import "./hover.css";

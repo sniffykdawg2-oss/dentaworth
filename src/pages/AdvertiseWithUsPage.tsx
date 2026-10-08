@@ -1,5 +1,6 @@
 import { ArrowRight, BarChart3, Eye, Megaphone } from "lucide-react";
 import { PageShell } from "../components/PageShell";
+import { MaskHeading } from "../motion/MaskHeading";
 import { InquiryForm } from "../components/InquiryForm";
 
 export function AdvertiseWithUsPage() {
@@ -12,7 +13,7 @@ export function AdvertiseWithUsPage() {
       heroImage="/images/page-hero-tools-soft.png"
     >
       <div className="ad-layout ad-layout-refresh ad-layout-simple">
-        <section className="ad-principles" aria-label="Advertising principles">
+        <section className="ad-principles" aria-label="Advertising principles" data-reveal="stagger">
           {[
             { icon: Eye, title: "High-intent readers", text: "Visitors are researching dental costs, not casually scrolling a generic local directory." },
             { icon: Megaphone, title: "Clear placement rules", text: "Advertising has to be labeled and visually separated from guide methodology." },
@@ -25,8 +26,8 @@ export function AdvertiseWithUsPage() {
             </article>
           ))}
         </section>
-        <div className="ad-copy">
-          <h2>Advertising inquiries</h2>
+        <div className="ad-copy" data-reveal="up">
+          <MaskHeading>Advertising inquiries</MaskHeading>
           <p>
             DentaWorth can support advertising opportunities for dental organizations that want to
             reach patients during the research phase. Advertising must remain clearly separate from
@@ -46,9 +47,10 @@ export function AdvertiseWithUsPage() {
         </div>
       </div>
       <section className="ad-fit-matrix" aria-labelledby="ad-fit-heading">
-        <p className="eyebrow">Placement fit</p>
-        <h2 id="ad-fit-heading">Advertising should support the research task.</h2>
         <div>
+          <h2 id="ad-fit-heading">Advertising should support the research task.</h2>
+        </div>
+        <div className="ad-fit-list" data-reveal="stagger">
           {[
             ["Good fit", "Dental organizations, coverage partners, and patient-facing services that help people compare next steps."],
             ["Bad fit", "Anything that looks like pay-to-rank, hides sponsorship, or makes a guide estimate look like a recommendation."],
@@ -62,6 +64,7 @@ export function AdvertiseWithUsPage() {
         </div>
       </section>
       <InquiryForm
+        title="Send an advertising inquiry"
         buttonLabel="Send advertising inquiry"
         messageLabel="Advertising goals"
         source="advertising-page"

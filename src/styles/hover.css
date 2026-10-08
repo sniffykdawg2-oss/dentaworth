@@ -1,0 +1,285 @@
+/* ==========================================================================
+   Hover layer
+   One small, consistent vocabulary for elements that had no hover feedback:
+   - cards lift 4px, firm their border, and fill their icon square
+   - editorial list rows nudge right and turn their number sky
+   - chips firm their border and turn their square
+   Only for real pointers (no sticky hover on touch). Colour changes apply
+   to everyone; movement is skipped for reduced-motion visitors.
+   ========================================================================== */
+
+/* ---------- Transition setup ---------- */
+:is(
+    .care-checklist,
+    .dentist-comparison-strip,
+    .shortlist-grid,
+    .method-stack,
+    .operating-grid,
+    .contact-router,
+    .ad-principles,
+    .provider-flow,
+    .help-map,
+    .report-trust-rail
+  )
+  > article,
+.directory-grid > article,
+.drug-card,
+.saved-item,
+.audience-panel,
+.account-workflow-steps article,
+.admin-list > article,
+.font-preview-card {
+  transition:
+    transform var(--dur-hover) var(--ease-out),
+    border-color var(--dur-hover) var(--ease-out),
+    box-shadow var(--dur-hover) var(--ease-out),
+    background-color var(--dur-hover) var(--ease-out);
+}
+
+:is(
+    .care-checklist,
+    .dentist-comparison-strip,
+    .shortlist-grid,
+    .method-stack,
+    .operating-grid,
+    .contact-router,
+    .ad-principles,
+    .provider-flow,
+    .help-map,
+    .report-trust-rail
+  )
+  > article
+  > svg:first-child,
+.icon-tile,
+.coverage-redesign-list article > svg,
+.contact-card > svg,
+.drugs-explainer > svg,
+.results-next-step > svg {
+  transition:
+    background-color var(--dur-hover) var(--ease-out),
+    color var(--dur-hover) var(--ease-out),
+    transform var(--dur-hover) var(--ease-out);
+}
+
+:is(.question-ladder, .about-roadmap) li,
+.coverage-redesign-list article,
+:is(.report-quality-guide, .provider-detail-band) li,
+.ad-fit-list article,
+.news-card,
+.journey-step h3,
+.about-principles li {
+  transition:
+    transform var(--dur-hover) var(--ease-out),
+    color var(--dur-hover) var(--ease-out),
+    background-color var(--dur-hover) var(--ease-out);
+}
+
+/* Keeps the reading-focus fade (home.css) alongside the hover nudge. */
+.process-step {
+  transition:
+    opacity 600ms var(--ease-out),
+    transform var(--dur-hover) var(--ease-out);
+}
+
+:is(.question-ladder, .about-roadmap) li span,
+.coverage-redesign-list article > span,
+.news-card h2,
+.process-step h3,
+.about-principles__rule,
+.browse-stats > div,
+.drug-card img,
+.provider-profile-mock > span,
+.provider-profile-mock > span::after,
+:is(.release-principles > div, .contact-prep > div) > span,
+:is(.release-principles > div, .contact-prep > div) > span::before,
+.help-faq-item summary,
+.legal-copy a,
+.brand,
+.header-search label {
+  transition:
+    color var(--dur-hover) var(--ease-out),
+    background-color var(--dur-hover) var(--ease-out),
+    border-color var(--dur-hover) var(--ease-out),
+    transform var(--dur-hover) var(--ease-out),
+    width 520ms var(--ease-out),
+    opacity var(--dur-hover) var(--ease-out);
+}
+
+@media (hover: hover) {
+  /* ---------- Cards ---------- */
+  :is(
+      .care-checklist,
+      .dentist-comparison-strip,
+      .shortlist-grid,
+      .method-stack,
+      .operating-grid,
+      .contact-router,
+      .ad-principles,
+      .provider-flow,
+      .help-map,
+      .report-trust-rail
+    )
+    > article:hover,
+  .directory-grid > article:hover,
+  .drug-card:hover,
+  .saved-item:hover,
+  .admin-list > article:hover,
+  .font-preview-card:hover {
+    border-color: var(--line-strong);
+    box-shadow: var(--shadow-2);
+  }
+
+  :is(
+      .care-checklist,
+      .dentist-comparison-strip,
+      .shortlist-grid,
+      .method-stack,
+      .operating-grid,
+      .contact-router,
+      .ad-principles,
+      .provider-flow,
+      .help-map,
+      .report-trust-rail
+    )
+    > article:hover
+    > svg:first-child,
+  .journey-step:hover .icon-tile,
+  .process-step:hover .icon-tile,
+  .coverage-redesign-list article:hover > svg {
+    background: var(--navy-800);
+    color: var(--white);
+  }
+
+  .home-how .process-step:hover .icon-tile {
+    background: var(--sky-300);
+    color: var(--navy-950);
+  }
+
+  .audience-panel:hover {
+    box-shadow: var(--shadow-3);
+  }
+
+  .audience-panel:hover .icon-tile {
+    background: var(--sky-300);
+    color: var(--navy-950);
+  }
+
+  .audience-panel--practices:hover .icon-tile {
+    background: var(--navy-800);
+    color: var(--white);
+  }
+
+  .account-workflow-steps article:hover {
+    border-top-color: var(--sky-500);
+  }
+
+  .journey-step:hover h3,
+  .news-card:hover h2 {
+    color: var(--sky-600);
+  }
+
+  .browse-stats > div:hover {
+    border-top-color: var(--sky-500);
+  }
+
+  /* ---------- Editorial list rows ---------- */
+  :is(.question-ladder, .about-roadmap) li:hover span,
+  .coverage-redesign-list article:hover > span {
+    color: var(--sky-500);
+  }
+
+  .process-step:hover h3 {
+    color: var(--sky-300);
+  }
+
+  .about-principles li:hover .about-principles__rule {
+    width: 100%;
+  }
+
+  /* ---------- Chips + small UI ---------- */
+  :is(.release-principles > div, .contact-prep > div) > span:hover {
+    border-color: var(--sky-500);
+  }
+
+  :is(.release-principles > div, .contact-prep > div) > span:hover::before {
+    transform: rotate(45deg);
+  }
+
+  .provider-profile-mock > span:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .provider-profile-mock > span:hover::after {
+    background: var(--sky-300);
+  }
+
+  .help-faq-item summary:hover {
+    color: var(--sky-600);
+  }
+
+  .help-faq-item summary:hover svg {
+    transform: rotate(90deg);
+  }
+
+  .help-faq-item[open] summary:hover svg {
+    transform: rotate(135deg);
+  }
+
+  .legal-copy a:hover {
+    color: var(--navy-800);
+    text-decoration-thickness: 2px;
+  }
+
+  .brand:hover {
+    opacity: 0.82;
+  }
+
+  .header-search label:hover {
+    background: var(--surface-2);
+  }
+
+  .header-search label:first-of-type:hover {
+    border-radius: 9px 0 0 9px;
+  }
+}
+
+/* Movement only when the visitor hasn't asked for reduced motion. */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  :is(
+      .care-checklist,
+      .dentist-comparison-strip,
+      .shortlist-grid,
+      .method-stack,
+      .operating-grid,
+      .contact-router,
+      .ad-principles,
+      .provider-flow,
+      .help-map,
+      .report-trust-rail
+    )
+    > article:hover,
+  .directory-grid > article:hover,
+  .drug-card:hover,
+  .saved-item:hover,
+  .audience-panel:hover,
+  .admin-list > article:hover,
+  .font-preview-card:hover {
+    transform: translateY(-4px);
+  }
+
+  .journey-step:hover .icon-tile {
+    transform: translateY(-3px);
+  }
+
+  .drug-card:hover img {
+    transform: scale(1.05);
+  }
+
+  :is(.question-ladder, .about-roadmap) li:hover,
+  .coverage-redesign-list article:hover,
+  :is(.report-quality-guide, .provider-detail-band) li:hover,
+  .ad-fit-list article:hover,
+  .process-step:hover {
+    transform: translateX(6px);
+  }
+}

@@ -1,4 +1,7 @@
-import { useEffect, useState } from "react";
+import { CSSProperties, useEffect, useState } from "react";
+import { prefersReducedMotion } from "../motion/motion";
+import { toWebp } from "../media";
+import { MaskHeading } from "../motion/MaskHeading";
 
 export type CountySlide = {
   name: string;
@@ -6,41 +9,55 @@ export type CountySlide = {
   alt: string;
 };
 
+const SLIDE_MS = 7000;
+
 export function CountySlideshow({ slides }: { slides: CountySlide[] }) {
   const [index, setIndex] = useState(0);
+  const [isAutoplay] = useState(() => !prefersReducedMotion());
 
   useEffect(() => {
-    if (slides.length < 2) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (slides.length < 2 || !isAutoplay) return;
 
-    const id = setInterval(() => {
+    const id = window.setTimeout(() => {
       setIndex((current) => (current + 1) % slides.length);
-    }, 7000);
-    return () => clearInterval(id);
-  }, [slides.length]);
+    }, SLIDE_MS);
+    return () => window.clearTimeout(id);
+  }, [index, isAutoplay, slides.length]);
 
   const active = slides[index];
 
   return (
-    <div className="county-slideshow">
+    <div className="county-slideshow" style={{ "--slide-ms": `${SLIDE_MS}ms` } as CSSProperties}>
       <div className="county-slideshow-frame">
         {slides.map((slide, slideIndex) => (
           <img
             key={slide.name}
-            src={slide.src}
+            src={toWebp(slide.src)}
             alt={slide.alt}
             className={slideIndex === index ? "is-active" : ""}
+            aria-hidden={slideIndex === index ? undefined : true}
             loading={slideIndex === 0 ? "eager" : "lazy"}
+            decoding="async"
           />
         ))}
+        <div className="county-slideshow-caption">
+          <MaskHeading as="p" key={active.name}>
+            {active.name}
+          </MaskHeading>
+        </div>
       </div>
-      <div className="county-slideshow-caption">
-        <span className="county-slideshow-eyebrow">Florida county</span>
-        <p>{active.name}</p>
-      </div>
-      <div className="county-slideshow-dots">
+      <div className="county-slideshow-dots" role="group" aria-label="Choose a county photo">
         {slides.map((slide, slideIndex) => (
-          <span key={slide.name} className={slideIndex === index ? "is-active" : ""} />
+          <button
+            key={slide.name}
+            type="button"
+            className={slideIndex === index ? "is-active" : ""}
+            aria-label={`Show ${slide.name}`}
+            aria-current={slideIndex === index ? "true" : undefined}
+            onClick={() => setIndex(slideIndex)}
+          >
+            {slideIndex === index && isAutoplay && <span className="county-slideshow-progress" key={index} />}
+          </button>
         ))}
       </div>
     </div>

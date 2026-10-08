@@ -1,7 +1,11 @@
-import { blogPosts } from "../posts";
+import { ArrowRight } from "lucide-react";
+import { blogPosts, formatPostDate } from "../posts";
 import { PageShell } from "../components/PageShell";
+import { MaskHeading } from "../motion/MaskHeading";
+import { handleLinkClick } from "../nav";
+import { toWebp } from "../media";
 
-export function BlogPage() {
+export function BlogPage({ navigate }: { navigate: (href: string) => void }) {
   return (
     <PageShell
       eyebrow="Blog"
@@ -11,21 +15,29 @@ export function BlogPage() {
       heroImage="/images/page-hero-family-outdoors.png"
     >
       <div className="blog-gallery-heading">
-        <p className="eyebrow">DentaWorth blog</p>
-        <h2>Explore the latest from our blog.</h2>
+        <MaskHeading>Explore the latest from our blog.</MaskHeading>
       </div>
-      <div className="post-list blog-gallery">
-          {blogPosts.map((post) => (
-            <a key={post.slug} className="post-card" href={`/blog/${post.slug}`}>
-              <div className="post-card-image"><img src={post.image || "/images/mother-daughter-smile.jpg"} alt="" /></div>
-              <div className="post-card-body">
-              <p className="post-date">{post.date}</p>
+      <div className="post-list blog-gallery" data-reveal="stagger">
+        {blogPosts.map((post) => (
+          <a
+            key={post.slug}
+            className="post-card"
+            href={`/blog/${post.slug}`}
+            onClick={(event) => handleLinkClick(event, `/blog/${post.slug}`, navigate)}
+          >
+            <div className="post-card-image">
+              <img src={toWebp(post.image || "/images/mother-daughter-smile.jpg")} alt="" loading="lazy" decoding="async" />
+            </div>
+            <div className="post-card-body">
+              <p className="post-date">{formatPostDate(post.date)}</p>
               <h2>{post.title}</h2>
               <p>{post.summary}</p>
-                <span className="button secondary">Read article <span aria-hidden="true">→</span></span>
-              </div>
-            </a>
-          ))}
+              <span className="post-card-link">
+                Read article <ArrowRight size={16} aria-hidden="true" />
+              </span>
+            </div>
+          </a>
+        ))}
       </div>
     </PageShell>
   );

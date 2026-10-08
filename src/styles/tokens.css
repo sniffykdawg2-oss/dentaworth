@@ -1,0 +1,183 @@
+/* ==========================================================================
+   DentaWorth design tokens
+   Brand hues are unchanged from the launch site (navy "Denta", sky "Worth",
+   warm paper). Everything else in the stylesheet reads from these values.
+   ========================================================================== */
+
+:root {
+  /* Brand: navy */
+  --navy-950: #050f24;
+  --navy-900: #071c40;
+  --navy-850: #0a2452;
+  --navy-800: #0b2c63; /* wordmark "Denta" */
+  --navy-700: #123a7a;
+  --navy-600: #1d4b91;
+
+  /* Brand: sky */
+  --sky-600: #1668a8; /* accent text on light surfaces (AA) */
+  --sky-500: #2f8fd6; /* wordmark "Worth", accent blocks */
+  --sky-400: #5aa9e2;
+  --sky-300: #8fd0f5; /* accent on navy */
+  --sky-200: #c9ecff;
+  --sky-100: #e2f0fb;
+  --sky-50: #f0f7fd;
+
+  /* Paper + ink */
+  --paper: #f7f5ef;
+  --paper-2: #efebe1;
+  --paper-3: #e4dfd2;
+  --white: #ffffff;
+  --ink: #0c1830;
+  --ink-2: #29374f;
+  --muted: #56627a;
+  --muted-2: #677185;
+
+  /* Feedback */
+  --ok-bg: #e6f5ee;
+  --ok-ink: #0c5b45;
+  --err-bg: #fdece8;
+  --err-ink: #9a2d1f;
+
+  /* Type */
+  --font-display: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+
+  --text-display-xl: clamp(3.25rem, 1.4rem + 6.4vw, 8.25rem);
+  --text-display-l: clamp(2.5rem, 1.35rem + 4.1vw, 5.5rem);
+  --text-display-m: clamp(2.05rem, 1.35rem + 2.5vw, 3.85rem);
+  --text-display-s: clamp(1.6rem, 1.25rem + 1.2vw, 2.35rem);
+  --text-h3: clamp(1.25rem, 1.12rem + 0.45vw, 1.55rem);
+  --text-lead: clamp(1.0625rem, 0.99rem + 0.32vw, 1.3rem);
+  --text-body: 1rem;
+  --text-small: 0.875rem;
+  --text-label: 0.75rem;
+
+  --leading-display: 1.02;
+  --leading-heading: 1.12;
+  --leading-body: 1.62;
+  --tracking-display: -0.028em;
+  --tracking-label: 0.14em;
+
+  /* Space + layout */
+  --gutter: clamp(20px, 4.2vw, 56px);
+  --container: 1320px;
+  --container-narrow: 880px;
+  --section-y: clamp(88px, 10.5vw, 168px);
+  --section-y-tight: clamp(64px, 7.5vw, 112px);
+  --stack: clamp(72px, 9vw, 136px); /* gap between interior page chapters */
+  --header-height: 76px; /* replaced at runtime with the measured header */
+
+  /* Shape */
+  --r-xs: 4px;
+  --r-sm: 8px;
+  --r-md: 14px;
+  --r-lg: 22px;
+  --r-pill: 999px;
+
+  /* Elevation */
+  --shadow-1: 0 1px 2px rgba(5, 15, 36, 0.06), 0 1px 1px rgba(5, 15, 36, 0.04);
+  --shadow-2: 0 18px 40px -22px rgba(5, 15, 36, 0.32), 0 2px 6px -2px rgba(5, 15, 36, 0.06);
+  --shadow-3: 0 40px 90px -40px rgba(5, 15, 36, 0.55), 0 8px 22px -12px rgba(5, 15, 36, 0.2);
+
+  /* Motion (design tokens, not measured from any reference site) */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-micro: 180ms;
+  --dur-hover: 320ms;
+  --dur-reveal: 900ms;
+  --stagger: 85ms;
+  --rise: 32px;
+  --mask-grow: 440ms;
+  --mask-retract: 620ms;
+  --mask-stagger: 110ms;
+
+  /* Semantic tone (light by default; .tone-dark flips these) */
+  --fg: var(--ink);
+  --fg-2: var(--ink-2);
+  --fg-muted: var(--muted);
+  --heading: var(--navy-900);
+  --surface: var(--white);
+  --surface-2: var(--paper);
+  --line: rgba(11, 44, 99, 0.12);
+  --line-strong: rgba(11, 44, 99, 0.24);
+  --accent-text: var(--sky-600);
+  --accent-block: var(--sky-500);
+  --icon-bg: var(--sky-100);
+  --icon-fg: var(--sky-600);
+
+  --btn-primary-bg: var(--navy-800);
+  --btn-primary-fg: var(--white);
+  --btn-primary-wipe: var(--sky-600);
+  --btn-primary-wipe-fg: var(--white);
+  --btn-secondary-border: var(--line-strong);
+  --btn-secondary-fg: var(--navy-800);
+  --btn-secondary-wipe: var(--navy-800);
+  --btn-secondary-wipe-fg: var(--white);
+
+  --field-bg: var(--white);
+  --field-fg: var(--ink);
+  --field-border: rgba(11, 44, 99, 0.2);
+  --field-placeholder: var(--muted-2);
+}
+
+.tone-dark {
+  --fg: #f4f7fc;
+  --fg-2: rgba(232, 240, 251, 0.86);
+  --fg-muted: rgba(214, 226, 244, 0.72);
+  --heading: var(--white);
+  --surface: rgba(255, 255, 255, 0.045);
+  --surface-2: rgba(255, 255, 255, 0.07);
+  --line: rgba(201, 236, 255, 0.14);
+  --line-strong: rgba(201, 236, 255, 0.28);
+  --accent-text: var(--sky-300);
+  --accent-block: var(--sky-500);
+  --icon-bg: rgba(143, 208, 245, 0.12);
+  --icon-fg: var(--sky-300);
+
+  --btn-primary-bg: var(--sky-300);
+  --btn-primary-fg: var(--navy-950);
+  --btn-primary-wipe: var(--white);
+  --btn-primary-wipe-fg: var(--navy-950);
+  --btn-secondary-border: rgba(255, 255, 255, 0.32);
+  --btn-secondary-fg: var(--white);
+  --btn-secondary-wipe: var(--white);
+  --btn-secondary-wipe-fg: var(--navy-950);
+
+  --field-bg: rgba(255, 255, 255, 0.06);
+  --field-fg: var(--white);
+  --field-border: rgba(201, 236, 255, 0.24);
+  --field-placeholder: rgba(214, 226, 244, 0.55);
+
+  color: var(--fg);
+}
+
+/* A light surface nested inside a dark region (e.g. a white card on navy). */
+.tone-light {
+  --fg: var(--ink);
+  --fg-2: var(--ink-2);
+  --fg-muted: var(--muted);
+  --heading: var(--navy-900);
+  --surface: var(--white);
+  --surface-2: var(--paper);
+  --line: rgba(11, 44, 99, 0.12);
+  --line-strong: rgba(11, 44, 99, 0.24);
+  --accent-text: var(--sky-600);
+  --icon-bg: var(--sky-100);
+  --icon-fg: var(--sky-600);
+  --btn-primary-bg: var(--navy-800);
+  --btn-primary-fg: var(--white);
+  --btn-primary-wipe: var(--sky-600);
+  --btn-primary-wipe-fg: var(--white);
+  --btn-secondary-border: var(--line-strong);
+  --btn-secondary-fg: var(--navy-800);
+  --btn-secondary-wipe: var(--navy-800);
+  --btn-secondary-wipe-fg: var(--white);
+  --field-bg: var(--white);
+  --field-fg: var(--ink);
+  --field-border: rgba(11, 44, 99, 0.2);
+  --field-placeholder: var(--muted-2);
+
+  color: var(--fg);
+}

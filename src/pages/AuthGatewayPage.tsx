@@ -116,18 +116,18 @@ export function AuthGatewayPage({
 
   return (
     <section className={isProvider ? "auth-gateway is-provider" : "auth-gateway"}>
-      <div className="auth-art auth-art-rings" aria-hidden="true" />
-      <div className="auth-art auth-art-flow" aria-hidden="true" />
+      {/* Navy panel that wipes across the screen when Provider is chosen, and back for Patient. */}
+      <div className="auth-backdrop" aria-hidden="true" />
       <button className="auth-page-back" type="button" onClick={handlePageBack}>
         <ArrowLeft size={18} aria-hidden="true" />
         Back
       </button>
-      <a className="auth-logo" href="/" onClick={(event) => { event.preventDefault(); navigate("/"); }}>
+      <a className="auth-logo brand" href="/" onClick={(event) => { event.preventDefault(); navigate("/"); }}>
         <span>Denta</span>
         <span className="brand-worth">Worth</span>
       </a>
 
-      <div className="auth-panel-shell">
+      <div className="auth-panel-shell tone-light">
         <div className="auth-panel" key={step}>
           {step !== "audience" && (
             <button className="auth-back" type="button" onClick={() => changeStep("audience")}>
@@ -138,7 +138,6 @@ export function AuthGatewayPage({
 
           {step === "audience" && (
             <>
-              <p className="auth-kicker">Account access</p>
               <h1>Who are you signing in as?</h1>
               <div className="audience-picker" role="radiogroup" aria-label="Choose account type">
                 <button
@@ -171,7 +170,7 @@ export function AuthGatewayPage({
 
           {step === "sign-in" && (
             <form className="auth-form" onSubmit={handleSignIn} noValidate>
-              <p className="auth-kicker">{isProvider ? "Provider access" : "Patient access"}</p>
+              <p className="sr-only">{isProvider ? "Provider access" : "Patient access"}</p>
               <h1>Welcome back.</h1>
               {authUser && <AuthSuccessMessage message={`Signed in as ${authUser.email}.`} />}
               {status === "error" && <AuthErrorMessage message={message} />}
@@ -206,7 +205,7 @@ export function AuthGatewayPage({
 
           {step === "create-account" && (
             <form className="auth-form" onSubmit={handleCreateAccount} noValidate>
-              <p className="auth-kicker">{isProvider ? "Provider account" : "Patient account"}</p>
+              <p className="sr-only">{isProvider ? "Provider account" : "Patient account"}</p>
               <h1>Create your account.</h1>
               {status === "error" && <AuthErrorMessage message={message} />}
               <label>
@@ -239,7 +238,6 @@ export function AuthGatewayPage({
 
           {step === "reset-password" && (
             <form className="auth-form" onSubmit={handleReset} noValidate>
-              <p className="auth-kicker">Password help</p>
               <h1>Reset your password.</h1>
               {status === "success" && <AuthSuccessMessage message={message} />}
               {status === "error" && <AuthErrorMessage message={message} />}

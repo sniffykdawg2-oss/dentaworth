@@ -1,0 +1,538 @@
+/* ==========================================================================
+   Shared components
+   ========================================================================== */
+
+/* ---------- Buttons ----------
+   Rectangular actions (the launch review's call), with a fill that wipes
+   in from the left on hover: the same block motif as the headline masks. */
+.button {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 50px;
+  padding: 0 24px;
+  overflow: hidden;
+  border: 1px solid transparent;
+  border-radius: var(--r-sm);
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    color var(--dur-hover) var(--ease-out),
+    border-color var(--dur-hover) var(--ease-out),
+    background-color var(--dur-hover) var(--ease-out),
+    transform var(--dur-micro) var(--ease-standard);
+}
+
+.button::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  background: var(--wipe, transparent);
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform 460ms var(--ease-out);
+}
+
+.button svg {
+  transition: transform var(--dur-hover) var(--ease-out);
+}
+
+.button:hover:not(:disabled)::before,
+.button:focus-visible::before {
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+.button:hover:not(:disabled) svg:last-child {
+  transform: translateX(3px);
+}
+
+.button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.button:disabled {
+  opacity: 0.5;
+}
+
+.button.primary {
+  --wipe: var(--btn-primary-wipe);
+  background: var(--btn-primary-bg);
+  color: var(--btn-primary-fg);
+}
+
+.button.primary:hover:not(:disabled),
+.button.primary:focus-visible {
+  color: var(--btn-primary-wipe-fg);
+}
+
+.button.secondary {
+  --wipe: var(--btn-secondary-wipe);
+  background: transparent;
+  border-color: var(--btn-secondary-border);
+  color: var(--btn-secondary-fg);
+}
+
+.button.secondary:hover:not(:disabled),
+.button.secondary:focus-visible {
+  border-color: var(--btn-secondary-wipe);
+  color: var(--btn-secondary-wipe-fg);
+}
+
+.button.compact {
+  min-height: 42px;
+  padding: 0 18px;
+  font-size: 0.875rem;
+}
+
+.text-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+  border: 0;
+  background: none;
+  color: var(--accent-text);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.28em;
+  transition: text-decoration-color var(--dur-hover) var(--ease-out), color var(--dur-hover) var(--ease-out);
+}
+
+.text-button:hover {
+  text-decoration-color: currentColor;
+}
+
+/* Inline arrow link used in editorial copy. */
+.arrow-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--accent-text);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.arrow-link svg {
+  transition: transform var(--dur-hover) var(--ease-out);
+}
+
+.arrow-link:hover svg {
+  transform: translateX(4px);
+}
+
+.card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* ---------- Back button ---------- */
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 38px;
+  padding: 0 14px 0 10px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-pill);
+  background: transparent;
+  color: var(--fg-2);
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: border-color var(--dur-hover) var(--ease-out), color var(--dur-hover) var(--ease-out), background-color var(--dur-hover) var(--ease-out);
+}
+
+.back-button svg {
+  transition: transform var(--dur-hover) var(--ease-out);
+}
+
+.back-button:hover {
+  border-color: var(--fg);
+  color: var(--fg);
+}
+
+.back-button:hover svg {
+  transform: translateX(-3px);
+}
+
+/* ---------- Icon tile ---------- */
+.icon-tile,
+.tile > svg:first-child {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  padding: 11px;
+  border-radius: var(--r-sm);
+  background: var(--icon-bg);
+  color: var(--icon-fg);
+}
+
+/* ---------- Tile: the shared informational card ---------- */
+.tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: clamp(24px, 2.4vw, 34px);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: var(--surface);
+}
+
+.tile h3 {
+  margin-top: 8px;
+  font-size: clamp(1.25rem, 1.1rem + 0.4vw, 1.5rem);
+}
+
+.tile p {
+  color: var(--fg-muted);
+}
+
+/* ---------- Section header (heading + aside copy) ---------- */
+.split-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.85fr);
+  gap: clamp(28px, 6vw, 120px);
+  align-items: end;
+}
+
+.split-head__aside {
+  display: grid;
+  gap: 20px;
+  justify-items: start;
+  color: var(--fg-muted);
+  font-size: var(--text-lead);
+  line-height: 1.55;
+}
+
+.split-head__aside p + p {
+  margin-top: 0;
+}
+
+.centered-head {
+  display: grid;
+  justify-items: center;
+  max-width: 920px;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.centered-head > p {
+  max-width: 60ch;
+  margin-top: 22px;
+  color: var(--fg-muted);
+  font-size: var(--text-lead);
+}
+
+@media (max-width: 900px) {
+  .split-head {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+}
+
+/* ---------- Forms ---------- */
+.form-card {
+  display: grid;
+  gap: 20px;
+  padding: clamp(24px, 3.2vw, 44px);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow-2);
+}
+
+.form-card > h2 {
+  font-size: var(--text-display-s);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+@media (max-width: 640px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form-card label,
+.field {
+  display: grid;
+  gap: 8px;
+  color: var(--fg-2);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+/* :where() keeps these defaults at element-level specificity so component rules can override them. */
+:where(input:not([type="checkbox"], [type="radio"], [type="hidden"])),
+:where(select, textarea) {
+  width: 100%;
+  min-height: 52px;
+  padding: 0 16px;
+  border: 1px solid var(--field-border);
+  border-radius: var(--r-sm);
+  background: var(--field-bg);
+  color: var(--field-fg);
+  font-size: 1rem;
+  font-weight: 400;
+  transition: border-color var(--dur-micro) var(--ease-standard), box-shadow var(--dur-micro) var(--ease-standard), background-color var(--dur-micro) var(--ease-standard);
+}
+
+textarea {
+  min-height: 132px;
+  padding: 14px 16px;
+  line-height: 1.55;
+  resize: vertical;
+}
+
+select {
+  appearance: none;
+  padding-right: 44px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5' fill='none' stroke='%2356627a' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-position: right 18px center;
+  background-repeat: no-repeat;
+  background-size: 12px 8px;
+}
+
+::placeholder {
+  color: var(--field-placeholder);
+  opacity: 1;
+}
+
+:where(input, select, textarea):where(:hover:not(:disabled, [readonly])) {
+  border-color: var(--line-strong);
+}
+
+:where(input, select, textarea):focus-visible {
+  outline: none;
+  border-color: var(--sky-500);
+  box-shadow: 0 0 0 4px rgba(47, 143, 214, 0.2);
+}
+
+:where(input[readonly]) {
+  background: var(--surface-2);
+  color: var(--fg-muted);
+}
+
+input:disabled,
+select:disabled,
+textarea:disabled {
+  opacity: 0.6;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+}
+
+.checkbox-group label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+}
+
+input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--navy-800);
+}
+
+/* ---------- Feedback ---------- */
+.success-message,
+.error-message {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 14px 16px;
+  border-radius: var(--r-sm);
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+.success-message {
+  background: var(--ok-bg);
+  color: var(--ok-ink);
+}
+
+.success-message svg {
+  margin-top: 1px;
+}
+
+.error-message {
+  background: var(--err-bg);
+  color: var(--err-ink);
+}
+
+.empty-state {
+  display: grid;
+  gap: 8px;
+  justify-items: start;
+  padding: clamp(28px, 3vw, 40px);
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--r-md);
+  background: var(--surface-2);
+  color: var(--fg-muted);
+}
+
+.empty-state h3 {
+  font-size: 1.35rem;
+}
+
+/* ---------- Chips ---------- */
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.chip-row > span,
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 40px;
+  padding: 8px 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  background: var(--surface);
+  color: var(--fg-2);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.chip-row > span::before,
+.chip::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  flex: none;
+  background: var(--accent-block);
+}
+
+/* ---------- Typeahead ---------- */
+.typeahead {
+  position: relative;
+  display: grid;
+  gap: 8px;
+}
+
+.typeahead > label {
+  color: var(--fg-2);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.typeahead-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  z-index: 30;
+  max-height: 288px;
+  padding: 6px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border: 1px solid rgba(11, 44, 99, 0.14);
+  border-radius: var(--r-md);
+  background: var(--white);
+  box-shadow: var(--shadow-3);
+  list-style: none;
+  animation: dw-menu-in 220ms var(--ease-out);
+}
+
+.typeahead-menu.is-above {
+  top: auto;
+  bottom: 60px; /* input height (52px) + 8px gap */
+  animation-name: dw-menu-in-up;
+}
+
+@keyframes dw-menu-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+@keyframes dw-menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+.typeahead-menu li button {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 42px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: var(--r-sm);
+  background: transparent;
+  color: var(--ink);
+  font-size: 0.95rem;
+  text-align: left;
+}
+
+.typeahead-menu li button:hover,
+.typeahead-menu li button.is-active {
+  background: var(--sky-50);
+  color: var(--navy-800);
+}
+
+.typeahead-menu li button.is-active {
+  box-shadow: inset 3px 0 0 var(--sky-500);
+}
+
+/* ---------- Callout band (shared closing CTA on interior pages) ---------- */
+.callout-band {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 28px;
+  align-items: center;
+  padding: clamp(32px, 4.4vw, 64px);
+  border-radius: var(--r-lg);
+  background: var(--navy-900);
+  color: #f4f7fc;
+  overflow: hidden;
+  position: relative;
+}
+
+.callout-band h2 {
+  color: var(--white);
+  font-size: var(--text-display-s);
+}
+
+.callout-band p {
+  margin-top: 10px;
+  color: rgba(214, 226, 244, 0.78);
+  font-size: var(--text-lead);
+}
+
+@media (max-width: 760px) {
+  .callout-band {
+    grid-template-columns: 1fr;
+    justify-items: start;
+  }
+}

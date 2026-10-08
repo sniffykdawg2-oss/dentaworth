@@ -5,6 +5,7 @@ import { getSearchFiltersFromUrl } from "../nav";
 import { subscribeToPublishedDentistProfiles, subscribeToPublishedPriceRanges } from "../backend/repository";
 import { DentistProfileRecord, PriceRangeRecord } from "../backend/schema";
 import { buildCountyRowsFromPriceRanges, getProcedureLabel } from "../pageHelpers";
+import { MaskHeading } from "../motion/MaskHeading";
 
 function resolveProcedureKey(rawTreatment: string): ProcedureKey | null {
   const normalized = rawTreatment.trim().toLowerCase();
@@ -87,112 +88,117 @@ export function SearchResultsPage({ navigate, routeVersion }: { navigate: (href:
   const countyLabel = resolvedCounty || (rawFilters.county ? rawFilters.county : "Florida (all counties)");
 
   return (
-    <section className="search-results-page">
-      <div className="search-results-header">
-        <h1>
-          Showing results for: <span>{treatmentLabel}</span> in <span>{countyLabel}</span>
-        </h1>
-        <button className="text-button" type="button" onClick={() => navigate("/")}>
-          Edit your search
-        </button>
-      </div>
-
-      <label className="search-refine-bar">
-        <Search size={19} aria-hidden="true" />
-        <input
-          type="search"
-          placeholder="Search these results by county, provider, or procedure"
-          value={refineQuery}
-          onChange={(event) => setRefineQuery(event.target.value)}
-        />
-      </label>
-
-      {filteredRows.length > 0 ? (
-        <>
-          <div className="result-list">
-            {filteredRows.map((row) => {
-              const dentistsForCounty = publishedDentists.filter((profile) => profile.county === row.county);
-              const primaryDentist = dentistsForCounty[0];
-
-              return (
-                <article className="result-row" key={row.county}>
-                  <div className="result-field result-field-procedure">
-                    <span className="result-field-label">Procedure</span>
-                    {resolvedProcedureKey ? (
-                      <span className="result-field-value">
-                        <Stethoscope size={16} aria-hidden="true" />
-                        {getProcedureLabel(resolvedProcedureKey)}
-                      </span>
-                    ) : (
-                      <span className="result-field-value">All procedures</span>
-                    )}
-                  </div>
-                  <div className="result-field">
-                    <span className="result-field-label">Location</span>
-                    <span className="result-field-value">
-                      <MapPin size={16} aria-hidden="true" />
-                      {row.county}, FL
-                    </span>
-                  </div>
-                  <div className="result-field">
-                    <span className="result-field-label">Clinic / provider</span>
-                    <span className="result-field-value">
-                      <UserRound size={16} aria-hidden="true" />
-                      {primaryDentist ? primaryDentist.practiceName : "Provider details coming soon"}
-                    </span>
-                  </div>
-                  <div className="result-field result-field-price">
-                    <span className="result-field-label">Price range</span>
-                    <span className="result-field-value result-price">
-                      {resolvedProcedureKey
-                        ? `$${row[resolvedProcedureKey] || "Not yet available"}`
-                        : `${procedures.length} ranges`}
-                    </span>
-                  </div>
-                  <div className="result-field result-field-rating">
-                    <span className="result-field-label">Average rating</span>
-                    <span className="result-field-value">{row.rating}</span>
-                  </div>
-                  <button className="button primary compact" type="button" onClick={() => navigate("/get-care-now")}>
-                    Get Covered Now
-                    <ArrowRight size={16} aria-hidden="true" />
-                  </button>
-                  {!resolvedProcedureKey && (
-                    <dl className="result-price-breakdown" aria-label={`${row.county} procedure price ranges`}>
-                      {procedures.map((procedure) => (
-                        <div key={procedure.key}>
-                          <dt>{procedure.label}</dt>
-                          <dd>${row[procedure.key]}</dd>
-                        </div>
-                      ))}
-                    </dl>
-                  )}
-                </article>
-              );
-            })}
-          </div>
-          <section className="results-next-step" aria-labelledby="results-next-step-heading">
-            <CircleDollarSign size={28} aria-hidden="true" />
-            <div>
-              <p className="eyebrow">Use the range well</p>
-              <h2 id="results-next-step-heading">A range is a conversation starter, not the final bill.</h2>
-              <p>
-                Ask what is included, whether complexity can change the price, and whether the office
-                can send the estimate in writing before you compare totals.
-              </p>
-            </div>
-            <button className="button secondary" type="button" onClick={() => navigate("/get-care-now")}>
-              Open the call checklist
-              <ArrowRight size={18} aria-hidden="true" />
-            </button>
-          </section>
-        </>
-      ) : (
-        <div className="empty-state">
-          <h3>No matching results</h3>
-          <p>Try clearing the refine search box, or edit your search to a different county or treatment.</p>
+    <>
+      <section className="results-hero tone-dark" data-hero>
+        <div className="container search-results-header">
+          <MaskHeading as="h1" key={routeVersion} delay={80}>
+            Showing results for: <span>{treatmentLabel}</span> in <span>{countyLabel}</span>
+          </MaskHeading>
+          <button className="text-button" type="button" onClick={() => navigate("/")} data-reveal="fade">
+            Edit your search
+          </button>
         </div>
-      )}
-    </section>
+      </section>
+      <section className="search-results-page">
+        <div className="container search-results-body">
+          <label className="search-refine-bar">
+            <Search size={19} aria-hidden="true" />
+            <input
+              type="search"
+              aria-label="Search these results"
+              placeholder="Search these results by county, provider, or procedure"
+              value={refineQuery}
+              onChange={(event) => setRefineQuery(event.target.value)}
+            />
+          </label>
+
+          {filteredRows.length > 0 ? (
+            <>
+              <div className="result-list" data-reveal="stagger">
+                {filteredRows.map((row) => {
+                  const dentistsForCounty = publishedDentists.filter((profile) => profile.county === row.county);
+                  const primaryDentist = dentistsForCounty[0];
+
+                  return (
+                    <article className="result-row" key={row.county}>
+                      <div className="result-field result-field-procedure">
+                        <span className="result-field-label">Procedure</span>
+                        {resolvedProcedureKey ? (
+                          <span className="result-field-value">
+                            <Stethoscope size={16} aria-hidden="true" />
+                            {getProcedureLabel(resolvedProcedureKey)}
+                          </span>
+                        ) : (
+                          <span className="result-field-value">All procedures</span>
+                        )}
+                      </div>
+                      <div className="result-field">
+                        <span className="result-field-label">Location</span>
+                        <span className="result-field-value">
+                          <MapPin size={16} aria-hidden="true" />
+                          {row.county}, FL
+                        </span>
+                      </div>
+                      <div className="result-field">
+                        <span className="result-field-label">Clinic / provider</span>
+                        <span className="result-field-value">
+                          <UserRound size={16} aria-hidden="true" />
+                          {primaryDentist ? primaryDentist.practiceName : "Provider details coming soon"}
+                        </span>
+                      </div>
+                      <div className="result-field result-field-price">
+                        <span className="result-field-label">Price range</span>
+                        <span className="result-field-value result-price">
+                          {resolvedProcedureKey
+                            ? `$${row[resolvedProcedureKey] || "Not yet available"}`
+                            : `${procedures.length} ranges`}
+                        </span>
+                      </div>
+                      <div className="result-field result-field-rating">
+                        <span className="result-field-label">Average rating</span>
+                        <span className="result-field-value">{row.rating}</span>
+                      </div>
+                      <button className="button primary compact" type="button" onClick={() => navigate("/get-care-now")}>
+                        Get Covered Now
+                        <ArrowRight size={16} aria-hidden="true" />
+                      </button>
+                      {!resolvedProcedureKey && (
+                        <dl className="result-price-breakdown" aria-label={`${row.county} procedure price ranges`}>
+                          {procedures.map((procedure) => (
+                            <div key={procedure.key}>
+                              <dt>{procedure.label}</dt>
+                              <dd>${row[procedure.key]}</dd>
+                            </div>
+                          ))}
+                        </dl>
+                      )}
+                    </article>
+                  );
+                })}
+              </div>
+              <section className="results-next-step tone-dark" aria-labelledby="results-next-step-heading" data-reveal="up">
+                <CircleDollarSign size={28} aria-hidden="true" />
+                <div>
+                  <h2 id="results-next-step-heading">A range is a conversation starter, not the final bill.</h2>
+                  <p>
+                    Ask what is included, whether complexity can change the price, and whether the office
+                    can send the estimate in writing before you compare totals.
+                  </p>
+                </div>
+                <button className="button secondary" type="button" onClick={() => navigate("/get-care-now")}>
+                  Open the call checklist
+                  <ArrowRight size={18} aria-hidden="true" />
+                </button>
+              </section>
+            </>
+          ) : (
+            <div className="empty-state">
+              <h3>No matching results</h3>
+              <p>Try clearing the refine search box, or edit your search to a different county or treatment.</p>
+            </div>
+          )}
+        </div>
+      </section>
+    </>
   );
 }

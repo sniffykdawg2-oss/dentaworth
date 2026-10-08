@@ -68,3 +68,10 @@ export const blogPosts: Post[] = [
 
 export const blogEmptyStateNote =
   "Longer articles about dental cost transparency, how to read a treatment estimate, and using the guide effectively are in progress. Check back soon.";
+
+/** "2026-07-26" → "July 26, 2026" (parsed as a calendar date, so no timezone shift). */
+export function formatPostDate(isoDate: string) {
+  const [year, month, day] = isoDate.split("-").map(Number);
+  if (!year || !month || !day) return isoDate;
+  return new Date(year, month - 1, day).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
+}

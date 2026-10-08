@@ -7,11 +7,13 @@ import { SpamTrap } from "./SpamTrap";
 type SubmissionStatus = "idle" | "submitting" | "success" | "error";
 
 export function InquiryForm({
+  title,
   buttonLabel,
   messageLabel,
   source,
   topic,
 }: {
+  title?: string;
   buttonLabel: string;
   messageLabel: string;
   source: "advertising-page" | "practice-promotion-page";
@@ -40,8 +42,9 @@ export function InquiryForm({
   }
 
   return (
-    <form className="form-card inquiry-form" onSubmit={handleSubmit} noValidate>
+    <form className="form-card inquiry-form" onSubmit={handleSubmit} noValidate data-reveal="up">
       <SpamTrap formStartedAt={formStartedAt} />
+      {title && <h2>{title}</h2>}
       {status === "success" && (
         <div className="success-message" role="status">
           <CheckCircle2 size={19} aria-hidden="true" />

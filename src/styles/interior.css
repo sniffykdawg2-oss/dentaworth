@@ -1,0 +1,413 @@
+/* ==========================================================================
+   Interior page frame (components/PageShell.tsx) and shared interior
+   patterns. Each route keeps its own composition (see pages.css); these are
+   the common building blocks those compositions are made from.
+   ========================================================================== */
+
+/* ---------- Hero ---------- */
+.page-hero {
+  position: relative;
+  z-index: 2; /* lets the framed photo overlap down into the page body */
+  isolation: isolate;
+  margin-top: calc(var(--header-height) * -1);
+  padding-top: calc(var(--header-height) + clamp(36px, 5vw, 76px));
+  padding-bottom: clamp(56px, 6.5vw, 104px);
+  background: var(--navy-950);
+}
+
+.page-hero__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(32px, 5vw, 96px);
+  align-items: end;
+}
+
+.page-hero-with-image .page-hero__inner {
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+}
+
+.page-hero__copy {
+  display: grid;
+  justify-items: start;
+  gap: clamp(22px, 2.4vw, 32px);
+  padding-bottom: 8px;
+}
+
+.page-hero__title {
+  max-width: 17ch;
+  color: var(--white);
+  font-size: clamp(2.4rem, 1.25rem + 3.5vw, 4.85rem);
+  letter-spacing: -0.03em;
+  line-height: 1.02;
+}
+
+.page-hero__intro {
+  max-width: 52ch;
+  color: var(--fg-2);
+  font-size: var(--text-lead);
+  line-height: 1.55;
+}
+
+.page-hero__media {
+  position: relative;
+  z-index: 2;
+  aspect-ratio: 5 / 4;
+  margin-bottom: calc(clamp(56px, 6.5vw, 104px) * -1 - 72px);
+  overflow: hidden;
+  border-radius: var(--r-lg);
+  background: var(--navy-800);
+  box-shadow: var(--shadow-3);
+}
+
+.page-hero__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---------- Body ---------- */
+.page-body {
+  position: relative;
+  background: var(--paper);
+  padding-block: clamp(64px, 8vw, 120px) var(--section-y);
+}
+
+.page-body.has-hero-media {
+  padding-top: calc(clamp(64px, 8vw, 120px) + 40px);
+}
+
+.page-body__inner {
+  display: grid;
+  gap: var(--stack);
+}
+
+.page-body__inner > * {
+  min-width: 0;
+}
+
+@media (max-width: 900px) {
+  .page-hero-with-image .page-hero__inner {
+    grid-template-columns: 1fr;
+  }
+
+  .page-hero__media {
+    aspect-ratio: 16 / 10;
+    margin-bottom: -96px;
+  }
+
+  .page-body.has-hero-media {
+    padding-top: calc(96px + 48px);
+  }
+}
+
+/* ==========================================================================
+   Shared interior patterns
+   ========================================================================== */
+
+/* Split: heading block on the left, content on the right. */
+.question-ladder,
+.coverage-redesign,
+.report-quality-guide,
+.provider-detail-band,
+.dentist-shortlist,
+.about-operating-system,
+.about-method-note,
+.help-scenario-grid,
+.drugs-explainer,
+.news-timeline-intro,
+.release-principles,
+.contact-prep,
+.ad-fit-matrix,
+.account-workflow {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: clamp(28px, 5vw, 96px);
+  align-items: start;
+}
+
+:is(
+    .question-ladder,
+    .coverage-redesign,
+    .report-quality-guide,
+    .provider-detail-band,
+    .dentist-shortlist,
+    .about-operating-system,
+    .help-scenario-grid,
+    .ad-fit-matrix,
+    .account-workflow
+  )
+  h2 {
+  font-size: var(--text-display-m);
+}
+
+:is(.coverage-redesign-copy, .report-quality-guide > div, .about-operating-system > div:first-child) p {
+  margin-top: 20px;
+  color: var(--fg-muted);
+  font-size: 1.0625rem;
+}
+
+@media (max-width: 900px) {
+  .question-ladder,
+  .coverage-redesign,
+  .report-quality-guide,
+  .provider-detail-band,
+  .dentist-shortlist,
+  .about-operating-system,
+  .about-method-note,
+  .help-scenario-grid,
+  .drugs-explainer,
+  .news-timeline-intro,
+  .release-principles,
+  .contact-prep,
+  .ad-fit-matrix,
+  .account-workflow {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Tile grids: the shared informational card, arranged per page. */
+.care-checklist,
+.dentist-comparison-strip,
+.shortlist-grid,
+.method-stack,
+.operating-grid,
+.contact-router,
+.ad-principles,
+.provider-flow,
+.help-map,
+.report-trust-rail,
+.directory-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  gap: 16px;
+}
+
+:is(
+    .care-checklist,
+    .dentist-comparison-strip,
+    .shortlist-grid,
+    .method-stack,
+    .operating-grid,
+    .contact-router,
+    .ad-principles,
+    .provider-flow,
+    .help-map,
+    .report-trust-rail
+  )
+  > article {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: clamp(24px, 2.4vw, 32px);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: var(--surface);
+}
+
+:is(
+    .care-checklist,
+    .dentist-comparison-strip,
+    .shortlist-grid,
+    .method-stack,
+    .operating-grid,
+    .contact-router,
+    .ad-principles,
+    .provider-flow,
+    .help-map,
+    .report-trust-rail
+  )
+  > article
+  > svg:first-child {
+  width: 46px;
+  height: 46px;
+  margin-bottom: 14px;
+  padding: 12px;
+  border-radius: var(--r-sm);
+  background: var(--icon-bg);
+  color: var(--icon-fg);
+}
+
+:is(
+    .care-checklist,
+    .dentist-comparison-strip,
+    .shortlist-grid,
+    .method-stack,
+    .operating-grid,
+    .contact-router,
+    .ad-principles,
+    .provider-flow,
+    .help-map,
+    .report-trust-rail
+  )
+  > article
+  :is(h2, h3) {
+  font-size: clamp(1.25rem, 1.12rem + 0.4vw, 1.5rem);
+  letter-spacing: -0.015em;
+}
+
+:is(
+    .care-checklist,
+    .dentist-comparison-strip,
+    .shortlist-grid,
+    .method-stack,
+    .operating-grid,
+    .contact-router,
+    .ad-principles,
+    .provider-flow,
+    .help-map,
+    .report-trust-rail
+  )
+  > article
+  p {
+  color: var(--fg-muted);
+}
+
+/* Numbered editorial lists. */
+.question-ladder ol,
+.about-roadmap ol {
+  display: grid;
+  border-top: 1px solid var(--line-strong);
+  list-style: none;
+}
+
+.question-ladder li,
+.about-roadmap li {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  gap: 16px;
+  align-items: baseline;
+  padding-block: clamp(20px, 2.4vw, 30px);
+  border-bottom: 1px solid var(--line-strong);
+  color: var(--heading);
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 1.05rem + 0.65vw, 1.7rem);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+}
+
+.question-ladder li span,
+.about-roadmap li span {
+  color: var(--accent-text);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+
+/* Bulleted rule lists. */
+.report-quality-guide ul,
+.provider-detail-band ul {
+  display: grid;
+  border-top: 1px solid var(--line-strong);
+  list-style: none;
+}
+
+.report-quality-guide li,
+.provider-detail-band li {
+  display: grid;
+  grid-template-columns: minmax(0, 180px) minmax(0, 1fr);
+  gap: 20px;
+  padding-block: 20px;
+  border-bottom: 1px solid var(--line-strong);
+  color: var(--fg-2);
+  font-size: 1.0625rem;
+}
+
+.provider-detail-band li {
+  grid-template-columns: 24px minmax(0, 1fr);
+}
+
+.provider-detail-band li::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  margin-top: 0.55em;
+  background: var(--accent-block);
+}
+
+.report-quality-guide li span {
+  color: var(--heading);
+  font-weight: 600;
+}
+
+@media (max-width: 560px) {
+  .report-quality-guide li {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+}
+
+/* Dark rounded panels inside the paper body. */
+.care-command,
+.report-auth-gate,
+.help-contact-band,
+.account-help-band,
+.results-next-step,
+.care-next-step {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(32px, 4.4vw, 64px);
+  border-radius: var(--r-lg);
+  background: var(--navy-900);
+}
+
+:is(.care-command, .report-auth-gate, .help-contact-band, .account-help-band, .results-next-step, .care-next-step) h2 {
+  font-size: var(--text-display-s);
+}
+
+:is(.care-command, .report-auth-gate, .help-contact-band, .account-help-band, .results-next-step, .care-next-step) p {
+  margin-top: 14px;
+  color: var(--fg-muted);
+  font-size: 1.0625rem;
+}
+
+.help-contact-band,
+.account-help-band,
+.care-next-step {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 28px;
+  align-items: center;
+}
+
+@media (max-width: 760px) {
+  .help-contact-band,
+  .account-help-band,
+  .care-next-step {
+    grid-template-columns: 1fr;
+    justify-items: start;
+  }
+}
+
+/* Chip strips. */
+.release-principles > div,
+.contact-prep > div {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: start;
+  gap: 10px;
+}
+
+:is(.release-principles > div, .contact-prep > div) > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 42px;
+  padding: 9px 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  background: var(--surface);
+  color: var(--fg-2);
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+:is(.release-principles > div, .contact-prep > div) > span::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  flex: none;
+  background: var(--accent-block);
+}

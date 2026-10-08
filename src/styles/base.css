@@ -1,0 +1,235 @@
+/* ==========================================================================
+   Base: reset, typography, layout primitives
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--navy-950);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 100%;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--header-height) + 16px);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--paper);
+  color: var(--fg);
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+  overflow-x: clip;
+}
+
+body.has-open-drawer {
+  overflow: hidden;
+}
+
+#main-content {
+  display: block;
+  background: var(--paper);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  color: var(--heading);
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  font-weight: 600;
+  letter-spacing: -0.018em;
+  line-height: var(--leading-heading);
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: var(--text-display-l);
+  letter-spacing: var(--tracking-display);
+  line-height: var(--leading-display);
+}
+
+h2 {
+  font-size: var(--text-display-m);
+  letter-spacing: -0.024em;
+  line-height: 1.05;
+}
+
+h3 {
+  font-size: var(--text-h3);
+}
+
+p {
+  margin: 0;
+  text-wrap: pretty;
+}
+
+p + p {
+  margin-top: 1em;
+}
+
+a {
+  color: inherit;
+  text-underline-offset: 0.2em;
+}
+
+img,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+svg {
+  display: block;
+  flex-shrink: 0;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+ol,
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+dl,
+dd {
+  margin: 0;
+}
+
+figure {
+  margin: 0;
+}
+
+:focus-visible {
+  outline: 3px solid var(--sky-500);
+  outline-offset: 3px;
+  border-radius: var(--r-xs);
+}
+
+::selection {
+  background: var(--sky-200);
+  color: var(--navy-950);
+}
+
+/* ---------- Accessibility helpers ---------- */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 200;
+  padding: 12px 18px;
+  border-radius: var(--r-sm);
+  background: var(--white);
+  color: var(--navy-900);
+  font-weight: 600;
+  text-decoration: none;
+  transform: translateY(calc(-100% - 24px));
+  transition: transform var(--dur-hover) var(--ease-out);
+}
+
+.skip-link:focus-visible {
+  box-shadow: var(--shadow-2);
+  transform: none;
+}
+
+#main-content:focus {
+  outline: none;
+}
+
+/* Hidden honeypot field used by the spam guard on public forms. */
+.bot-field {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* ---------- Layout primitives ---------- */
+.container {
+  width: 100%;
+  max-width: calc(var(--container) + var(--gutter) * 2);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.container-narrow {
+  width: 100%;
+  max-width: calc(var(--container-narrow) + var(--gutter) * 2);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  position: relative;
+  padding-block: var(--section-y);
+}
+
+.tone-dark.section,
+.section.tone-dark {
+  background: var(--navy-950);
+}
+
+/* ---------- Type helpers ---------- */
+.lead {
+  color: var(--fg-2);
+  font-size: var(--text-lead);
+  line-height: 1.55;
+}
+
+.muted {
+  color: var(--fg-muted);
+}
+
+.mono-label {
+  color: var(--fg-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}

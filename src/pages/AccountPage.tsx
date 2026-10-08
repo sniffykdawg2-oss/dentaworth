@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from "react";
+import { CSSProperties, FormEvent, useEffect, useState } from "react";
 import { ArrowRight, Bookmark, CheckCircle2, ClipboardCheck, MapPin, UserRound } from "lucide-react";
 import { counties, treatmentOptions } from "../content";
 import {
@@ -10,6 +10,7 @@ import {
   updateAccountProfile,
 } from "../backend/auth";
 import { PageShell } from "../components/PageShell";
+import { MaskHeading } from "../motion/MaskHeading";
 
 type SubmissionStatus = "idle" | "submitting" | "success" | "error";
 
@@ -26,16 +27,18 @@ export function AccountPage({ authUser, navigate }: { authUser: AuthUser | null;
 
   if (!authUser) {
     return (
-      <section className="auth-page">
-        <div className="auth-copy">
-          <h1>Sign in to view your account.</h1>
-          <p>Saved operations, profile settings, and future review tools live behind sign in.</p>
-        </div>
-        <div className="form-card auth-card">
-          <button className="button primary" type="button" onClick={() => navigate("/sign-in")}>
-            Sign in
-            <ArrowRight size={18} aria-hidden="true" />
-          </button>
+      <section className="auth-page tone-dark" data-hero>
+        <div className="container auth-page__inner">
+          <div className="auth-copy">
+            <MaskHeading as="h1" delay={80}>Sign in to view your account.</MaskHeading>
+            <p data-reveal="up" style={{ "--delay": "420ms" } as CSSProperties}>Saved operations, profile settings, and future review tools live behind sign in.</p>
+          </div>
+          <div className="auth-card" data-reveal="up" style={{ "--delay": "560ms" } as CSSProperties}>
+            <button className="button primary" type="button" onClick={() => navigate("/sign-in")}>
+              Sign in
+              <ArrowRight size={18} aria-hidden="true" />
+            </button>
+          </div>
         </div>
       </section>
     );
@@ -101,7 +104,7 @@ export function AccountPage({ authUser, navigate }: { authUser: AuthUser | null;
       heroImage="/images/procedures-overview.jpg"
     >
       <div className="account-layout">
-        <aside className="account-summary" aria-label="Account summary">
+        <aside className="account-summary tone-dark" aria-label="Account summary" data-reveal="up">
           <UserRound size={24} aria-hidden="true" />
           <h2>{signedInUser.displayName || "DentaWorth account"}</h2>
           <p>{signedInUser.email}</p>
@@ -123,9 +126,8 @@ export function AccountPage({ authUser, navigate }: { authUser: AuthUser | null;
         </aside>
 
         <div className="account-panels">
-          <section className="account-welcome" aria-label="Account overview">
+          <section className="account-welcome" aria-label="Account overview" data-reveal="up">
             <div>
-              <p className="eyebrow">Your research desk</p>
               <h2>Make the next dental conversation easier.</h2>
               <p>Keep the procedures, counties, and questions you want close before you call an office.</p>
             </div>
@@ -203,7 +205,6 @@ export function AccountPage({ authUser, navigate }: { authUser: AuthUser | null;
           <section className="saved-operations" aria-labelledby="saved-operations-heading">
             <div className="section-heading split-heading compact-heading">
               <div>
-                <p className="eyebrow">Saved operations</p>
                 <h2 id="saved-operations-heading">Procedures you are tracking</h2>
               </div>
             </div>
@@ -234,9 +235,10 @@ export function AccountPage({ authUser, navigate }: { authUser: AuthUser | null;
         </div>
       </div>
       <section className="account-workflow" aria-labelledby="account-workflow-heading">
-        <p className="eyebrow">Account workflow</p>
-        <h2 id="account-workflow-heading">Use your account as a research notebook.</h2>
         <div>
+          <MaskHeading id="account-workflow-heading">Use your account as a research notebook.</MaskHeading>
+        </div>
+        <div className="account-workflow-steps" data-reveal="stagger">
           {[
             ["Save", "Keep procedures and counties you are comparing in one place."],
             ["Ask", "Bring better questions to offices before you book."],
@@ -249,13 +251,15 @@ export function AccountPage({ authUser, navigate }: { authUser: AuthUser | null;
           ))}
         </div>
       </section>
-      <section className="account-help-band" aria-labelledby="account-help-heading">
+      <section className="account-help-band tone-dark" aria-labelledby="account-help-heading" data-reveal="up">
         <div>
-          <p className="eyebrow">Need a hand?</p>
           <h2 id="account-help-heading">Questions about your research or a price range?</h2>
           <p>We can help point you to the right page, explain how the guide works, or review a correction.</p>
         </div>
-        <button className="button primary" type="button" onClick={() => navigate("/contact")}>Contact DentaWorth <ArrowRight size={18} /></button>
+        <button className="button primary" type="button" onClick={() => navigate("/contact")}>
+          Contact DentaWorth
+          <ArrowRight size={18} aria-hidden="true" />
+        </button>
       </section>
     </PageShell>
   );

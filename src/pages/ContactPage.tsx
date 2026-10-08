@@ -1,8 +1,9 @@
-import { FormEvent, useState } from "react";
+import { CSSProperties, FormEvent, useState } from "react";
 import { ArrowRight, CheckCircle2, Mail, MessageSquareText, PencilLine, TriangleAlert } from "lucide-react";
 import { buildContactMessageInput } from "../backend/contact";
 import { createContactMessage } from "../backend/repository";
 import { PageShell } from "../components/PageShell";
+import { MaskHeading } from "../motion/MaskHeading";
 import { SpamTrap } from "../components/SpamTrap";
 
 type SubmissionStatus = "idle" | "submitting" | "success" | "error";
@@ -38,7 +39,7 @@ export function ContactPage() {
       variant="business"
       heroImage="/images/page-hero-tools-tray.png"
     >
-      <section className="contact-router">
+      <section className="contact-router" data-reveal="stagger">
         {[
           { icon: PencilLine, title: "Corrections", text: "Send the county, procedure, and what looks wrong so an admin can review it." },
           { icon: MessageSquareText, title: "Product notes", text: "Ask about the guide, provider profiles, or self-reported pricing." },
@@ -52,7 +53,7 @@ export function ContactPage() {
         ))}
       </section>
       <div className="contact-layout">
-        <form className="form-card" onSubmit={handleSubmit} noValidate>
+        <form className="form-card" onSubmit={handleSubmit} noValidate data-reveal="up">
           <SpamTrap formStartedAt={formStartedAt} />
           {status === "success" && (
             <div className="success-message" role="status">
@@ -82,7 +83,7 @@ export function ContactPage() {
             <ArrowRight size={18} aria-hidden="true" />
           </button>
         </form>
-        <aside className="contact-card">
+        <aside className="contact-card tone-dark" data-reveal="up" style={{ "--delay": "120ms" } as CSSProperties}>
           <Mail size={22} aria-hidden="true" />
           <h2>Email</h2>
           <a href="mailto:info@dentaworth.com">info@dentaworth.com</a>
@@ -90,9 +91,10 @@ export function ContactPage() {
         </aside>
       </div>
       <section className="contact-prep" aria-labelledby="contact-prep-heading">
-        <p className="eyebrow">Helpful details</p>
-        <h2 id="contact-prep-heading">Include enough context for a useful reply.</h2>
         <div>
+          <MaskHeading id="contact-prep-heading">Include enough context for a useful reply.</MaskHeading>
+        </div>
+        <div data-reveal="stagger">
           {[
             "County and procedure if you are reporting a pricing issue.",
             "Whether the number came from an estimate, bill, or office website.",

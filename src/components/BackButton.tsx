@@ -1,9 +1,9 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 
 export function BackButton() {
   return (
     <button className="back-button" type="button" onClick={() => window.history.back()}>
-      <ArrowRight size={17} aria-hidden="true" />
+      <ArrowLeft size={16} aria-hidden="true" />
       Back
     </button>
   );

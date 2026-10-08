@@ -1,5 +1,7 @@
+import { CSSProperties } from "react";
 import { Building2, MapPinned, MousePointerClick, SearchCheck } from "lucide-react";
 import { PageShell } from "../components/PageShell";
+import { MaskHeading } from "../motion/MaskHeading";
 import { InquiryForm } from "../components/InquiryForm";
 
 export function PromotePracticePage() {
@@ -13,15 +15,14 @@ export function PromotePracticePage() {
     >
       <div className="provider-stage">
         <section>
-          <p className="eyebrow">Practice profile foundation</p>
-          <h2>Show up where patients are already comparing cost context.</h2>
-          <p>
+          <MaskHeading>Show up where patients are already comparing cost context.</MaskHeading>
+          <p data-reveal="up" style={{ "--delay": "240ms" } as CSSProperties}>
             Provider profiles can include service coverage, county, city, contact details, website,
             and launch notes. Admins publish profiles only after review, so drafts do not leak into
             the public directory.
           </p>
         </section>
-        <div className="provider-profile-mock" aria-label="Example practice profile layout">
+        <div className="provider-profile-mock" aria-label="Example practice profile layout" data-reveal="up">
           <div>
             <Building2 size={26} aria-hidden="true" />
             <strong>Practice profile</strong>
@@ -31,7 +32,7 @@ export function PromotePracticePage() {
           <span>Website and phone</span>
         </div>
       </div>
-      <div className="provider-flow">
+      <div className="provider-flow" data-reveal="stagger">
         {[
           { icon: SearchCheck, title: "1. Review fit", text: "Make sure the practice details match the directory's patient-first purpose." },
           { icon: MapPinned, title: "2. Build profile", text: "Add location, services, phone, website, and notes in the admin dashboard." },
@@ -45,17 +46,17 @@ export function PromotePracticePage() {
         ))}
       </div>
       <section className="provider-detail-band" aria-labelledby="provider-detail-heading">
-        <div>
-          <p className="eyebrow">Profile quality</p>
+        <div data-reveal="up">
           <h2 id="provider-detail-heading">A useful listing answers practical patient questions.</h2>
         </div>
-        <ul>
+        <ul data-reveal="stagger">
           <li>Where is the office and which county should patients compare?</li>
           <li>Which common procedures does the practice want to be found for?</li>
           <li>What phone number, website, and profile notes should be reviewed before publishing?</li>
         </ul>
       </section>
       <InquiryForm
+        title="Send a practice inquiry"
         buttonLabel="Send practice inquiry"
         messageLabel="Practice details"
         source="practice-promotion-page"
